@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml' xmlns:py='http://genshi.edgewall.org/' lang='en'>
+<head>
+<meta charset='utf-8'/>
+<title>${posts[0].Subject}</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>${posts[0].Subject}</h1>
+<section py:for='no, post in enumerate(posts)' id='post${no + 1}'>
+<h5>${post.From} at <a href='#post${no + 1}'>${post.Date}</a></h5>
+${post.body}
+</section>
+</main>
+<nav><a href='index.html'>Issues list</a></nav>
+</body>
+</html>

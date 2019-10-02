@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml' xmlns:py='http://genshi.edgewall.org/' lang='en'>
+<head>
+<meta charset='utf-8'/>
+<title>Archive of voidlinux/ issues</title>
+</head>
+<body>
+<form method='GET' action='https://github.com/Chocimier/voidlinux-archive/search'>
+	<input type='text' name='q'/>
+	<input type='submit' value='Search with github'/>
+</form>
+<ul>
+<li py:for='key, posts in threads.items()'><a href='./${key}.html'>${posts[0].Subject} (${len(posts)} posts)</a>
+</li>
+</ul>
+</body>
+</html>
