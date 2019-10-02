@@ -8,7 +8,9 @@ from email.utils import parsedate_to_datetime
 
 from genshi.template import TemplateLoader
 
-posts = json.loads(open(sys.argv[1], 'rb').read())
+posts = []
+for i in sys.argv[1:]:
+    posts += json.loads(open(i, 'rb').read())
 loader = TemplateLoader(['.', 'tools'])
 template = loader.load('thread.genshi')
 MAIL_FOOTER = re.compile(r'\s+--\s+You are receiving this because.+\s+' +
@@ -16,7 +18,7 @@ MAIL_FOOTER = re.compile(r'\s+--\s+You are receiving this because.+\s+' +
     r'https://github\.com/voidlinux/[-a-z]+/\w+/\d+\S+\s*$|'
     r'Reply to this email directly or view it on GitHub:\s+' +
     r'https://github\.com/voidlinux/[-a-z]+/\w+/\d+\S+\s*$)')
-threads = collections.defaultdict(list)
+threads = collections.defaultdict(dict)
 
 def thread_id(post):
     return ((post.get('References') or post['Message-ID'])
@@ -36,7 +38,9 @@ def decode_header(header):
 for post in posts:
     post['From'] = decode_header(post['From']).partition('<')[0].strip()
     post['body'] = MAIL_FOOTER.sub('', post['body'])
-    threads[thread_id(post)].append(post)
+    threads[thread_id(post)][post['Message-ID']] = post
+
+threads = {no: list(posts.values()) for no, posts in threads.items()}
 
 for posts in threads.values():
     posts.sort(key=lambda x: parsedate_to_datetime(x['Date']))
