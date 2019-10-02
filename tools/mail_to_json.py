@@ -31,7 +31,10 @@ try:
             for header in HEADERS:
                 if header in message:
                     post[header] = message[header]
-            post['body'] = message.get_payload(0).get_payload()
+            body = message
+            while body.is_multipart():
+                body = body.get_payload(0)
+            post['body'] = body.get_payload()
             result.append(post)
     print(json.dumps(result, indent=0))
 finally:
