@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>[voidlinux/void-packages] New package: marble5-17.08.3 (#9419)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>[voidlinux/void-packages] New package: marble5-17.08.3 (#9419)</h1>
+<section id="post1">
+<h5>Piotr at <a href="#post1">Tue, 21 Nov 2017 15:06:07 +0000 (UTC)</a></h5>
+There is a warning `=&gt; WARNING: marble5-devel-17.08.3_1: libmarbledeclarative.so not found in common/shlibs!` although the file is given in shlibs.
+You can view, comment on, or merge this pull request online at:
+
+  https://github.com/voidlinux/void-packages/pull/9419
+
+-- Commit Summary --
+
+  * New package: marble5-17.08.3
+
+-- File Changes --
+
+    M common/shlibs (3)
+    A srcpkgs/marble5-devel (1)
+    A srcpkgs/marble5/template (28)
+
+-- Patch Links --
+
+https://github.com/voidlinux/void-packages/pull/9419.patch
+https://github.com/voidlinux/void-packages/pull/9419.diff
+</section><section id="post2">
+<h5>Enno Boland at <a href="#post2">Tue, 21 Nov 2017 15:26:24 +0000 (UTC)</a></h5>
+Gottox requested changes on this pull request.
+
+For now, make sure this file is part of marble5, not marble5-devel.
+
+I'd like to get some feedback from @chneukirchen and @pullmoll  here: Do you think this .so should be versioned?
+
+&gt; @@ -1928,6 +1928,9 @@ libphobos2-ldc.so.75 ldc-runtime-1.5.0_1
+ libphobos2-ldc-debug.so.75 ldc-runtime-1.5.0_1
+ libmarblewidget.so.19 marble-4.14.3_2
+ libastro.so.1 marble-4.14.3_2
++libmarblewidget-qt5.so.28 marble5-17.08.3_1
++libastro.so.1 marble5-17.08.3_1
++libmarbledeclarative.so marble5-17.08.3_1
+
+This tells xbps-src, that there's a ```libmarbledeclarative.so``` so in ```marble5-17.08.3_1``` ...
+
+&gt; +wrksrc="${pkgname%5}-${version}"
++hostmakedepends="extra-cmake-modules kdoctools qt5-host-tools qt5-qmake"
++makedepends="knewstuff-devel kparts-devel krunner-devel libressl-devel
++phonon-devel plasma-framework-devel qt5-devel qt5-location-devel
++qt5-plugin-mysql qt5-plugin-odbc qt5-plugin-pgsql qt5-plugin-sqlite
++qt5-plugin-tds qt5-serialport-devel qt5-webkit-devel"
++replaces="libmarble&gt;=0"
++distfiles="http://download.kde.org/stable/applications/${version}/src/${pkgname%5}-${version}.tar.xz"
++checksum=c27f8b33ad0f1cc36c5af4f23352f02ab8de4a18e8a448f8ef80b41756f2bf62
++
++marble5-devel_package() {
++	short_desc+=" - development files"
++	depends="${makedepends} ${sourcepkg}&gt;=${version}_${revision}"
++	pkg_install() {
++		vmove usr/include
++		vmove "usr/lib/*.so"
+
+... but here you're moving this file to the marble5-devel subpackage.
+</section><section id="post3">
+<h5>Jürgen Buchmüller at <a href="#post3">Tue, 21 Nov 2017 15:37:09 +0000 (UTC)</a></h5>
+&gt; I'd like to get some feedback from @chneukirchen and @pullmoll here: Do you think this .so should be versioned?
+
+We had a similar case some time ago. Without a versioned so you can't really split library and -devel. A patch could add some so version number to CMakeLists.txt. The syntax is
+`set_target_properties(mylib PROPERTIES SOVERSION 1.0.0)`
+</section><section id="post4">
+<h5>Michael Gehring at <a href="#post4">Tue, 21 Nov 2017 16:30:33 +0000 (UTC)</a></h5>
+Please check for file conflicts with marble.
+
+Having libastro.so.1 for marble and marble5 in common/shlibs is not going to work. Lucky enough nothing links against it and it could be dropped. Same for the unversioned .so. As long as no other package needs to link to it there is no need for a common/shlibs entry.
+</section><section id="post5">
+<h5>Jürgen Buchmüller at <a href="#post5">Tue, 21 Nov 2017 16:41:56 +0000 (UTC)</a></h5>
+We can choose an arbitrary solib version to not conflict with marble. If we don't need a -devel package at all, then by all means removed it from the template :)
+</section><section id="post6">
+<h5>Michael Gehring at <a href="#post6">Tue, 21 Nov 2017 20:38:54 +0000 (UTC)</a></h5>
+As long as nothing wants to link against marble5s version of libastro i think this is fine:
+
+```
+diff --git a/common/shlibs b/common/shlibs
+index dbd696ebc1..fc8b1c3a23 100644
+--- a/common/shlibs
++++ b/common/shlibs
+@@ -1929,8 +1929,6 @@ libphobos2-ldc-debug.so.75 ldc-runtime-1.5.0_1
+ libmarblewidget.so.19 marble-4.14.3_2
+ libastro.so.1 marble-4.14.3_2
+ libmarblewidget-qt5.so.28 marble5-17.08.3_1
+-libastro.so.1 marble5-17.08.3_1
+-libmarbledeclarative.so marble5-17.08.3_1
+ libparrot.so.6.9.0 parrot-6.9.0_1
+ libkipi.so.11 libkipi-4.14.3_1
+ libasr.so.0 libasr-1.0.0_1
+diff --git a/srcpkgs/marble5/template b/srcpkgs/marble5/template
+index a9d67b9e67..049870361d 100644
+--- a/srcpkgs/marble5/template
++++ b/srcpkgs/marble5/template
+@@ -13,16 +13,18 @@ makedepends="knewstuff-devel kparts-devel krunner-devel libressl-devel
+ phonon-devel plasma-framework-devel qt5-devel qt5-location-devel
+ qt5-plugin-mysql qt5-plugin-odbc qt5-plugin-pgsql qt5-plugin-sqlite
+ qt5-plugin-tds qt5-serialport-devel qt5-webkit-devel"
+-replaces="libmarble&gt;=0"
+ distfiles="http://download.kde.org/stable/applications/${version}/src/${pkgname%5}-${version}.tar.xz"
+ checksum=c27f8b33ad0f1cc36c5af4f23352f02ab8de4a18e8a448f8ef80b41756f2bf62
+ 
++conflicts="marble"
++
+ marble5-devel_package() {
+ 	short_desc+=" - development files"
+ 	depends="${makedepends} ${sourcepkg}&gt;=${version}_${revision}"
+ 	pkg_install() {
+ 		vmove usr/include
+-		vmove "usr/lib/*.so"
++		vmove usr/lib/libmarblewidget-qt5.so
++		vmove usr/lib/libastro.so
+ 		vmove usr/lib/cmake
+ 	}
+ }
+ ```
+</section><section id="post7">
+<h5>Piotr at <a href="#post7">Fri, 24 Nov 2017 19:08:04 +0000 (UTC)</a></h5>
+@Chocimier pushed 1 commit.
+
+d29aaff  marble5: versioned solibs
+</section><section id="post8">
+<h5>Toyam Cox at <a href="#post8">Wed, 29 Nov 2017 03:56:38 +0000 (UTC)</a></h5>
+@Gottox ?
+</section><section id="post9">
+<h5>Enno Boland at <a href="#post9">Wed, 29 Nov 2017 06:12:24 +0000 (UTC)</a></h5>
+https://travis-ci.org/voidlinux/void-packages/jobs/307088870#L7722-L7726
+</section><section id="post10">
+<h5>Michael Gehring at <a href="#post10">Fri, 30 Mar 2018 15:07:23 -0700</a></h5>
+ac8f116bd70a3de6f7df53dc336c659d135dc77e
+</section><section id="post11">
+<h5>Michael Gehring at <a href="#post11">Fri, 30 Mar 2018 22:07:24 +0000 (UTC)</a></h5>
+Closed #9419.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

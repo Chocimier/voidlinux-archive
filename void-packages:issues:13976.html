@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>[voidlinux/void-packages] Thunderbird cannot open libwayland-egl.so.1
+ (#13976)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>[voidlinux/void-packages] Thunderbird cannot open libwayland-egl.so.1
+ (#13976)</h1>
+<section id="post1">
+<h5>Piotr at <a href="#post1">Mon, 30 Apr 2018 05:35:45 -0700</a></h5>
+### System
+
+* xuname:  =
+
+  Void 4.16.4_1 x86_64 GenuineIntel uptodate
+* package:  =
+
+  thunderbird-52.7.0_1
+
+### Expected behavior
+It will start.
+### Actual behavior
+$ thunderbird=C2=A0
+XPCOMGlueLoad error for file /usr/lib/thunderbird/libmozgtk.so:
+libwayland-egl.so.1: cannot open shared object file: No such file or dire=
+ctory
+Couldn't load XPCOM.
+
+
+-- =
+
+You are receiving this because you are subscribed to this thread.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/13976=
+</section><section id="post2">
+<h5>Duncan Overbruck at <a href="#post2">Mon, 30 Apr 2018 12:38:47 +0000 (UTC)</a></h5>
+There was some file conflict between `wayland` and `libwayland-egl`, `xbps-install -f libwayland-egl` fixes it.
+</section><section id="post3">
+<h5>Piotr at <a href="#post3">Mon, 30 Apr 2018 08:26:51 -0700</a></h5>
+Shouldn't there be a revbump to pull correct dependency?
+</section><section id="post4">
+<h5>maxice8 at <a href="#post4">Mon, 30 Apr 2018 15:07:39 -0700</a></h5>
+&gt; Shouldn't there be a revbump to pull correct dependency?
+
+nothing about dependencies.
+</section><section id="post5">
+<h5>Anachron at <a href="#post5">Fri, 04 May 2018 00:37:15 -0700</a></h5>
+Btw, the same thing happens on `firefox`, also gets fixed by installing ` libwayland-egl`.
+</section><section id="post6">
+<h5>Duncan Overbruck at <a href="#post6">Fri, 04 May 2018 10:16:50 +0000 (UTC)</a></h5>
+Its exactly the same problem and happens to everything that links to wayland-egl.
+</section><section id="post7">
+<h5>Duncan Overbruck at <a href="#post7">Fri, 04 May 2018 03:16:50 -0700</a></h5>
+Closed #13976.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

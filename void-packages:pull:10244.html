@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>[voidlinux/void-packages] khelpcenter: update to 17.12.0. (#10244)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>[voidlinux/void-packages] khelpcenter: update to 17.12.0. (#10244)</h1>
+<section id="post1">
+<h5>Piotr at <a href="#post1">Thu, 28 Dec 2017 11:35:53 +0000 (UTC)</a></h5>
+
+You can view, comment on, or merge this pull request online at:
+
+  https://github.com/voidlinux/void-packages/pull/10244
+
+-- Commit Summary --
+
+  * khelpcenter: update to 17.12.0.
+
+-- File Changes --
+
+    M srcpkgs/khelpcenter/template (4)
+
+-- Patch Links --
+
+https://github.com/voidlinux/void-packages/pull/10244.patch
+https://github.com/voidlinux/void-packages/pull/10244.diff
+</section><section id="post2">
+<h5>Piotr at <a href="#post2">Thu, 28 Dec 2017 08:29:57 -0800</a></h5>
+Any hints how to make libxapian.so visible during cross build?
+</section><section id="post3">
+<h5>jambonmcyeah at <a href="#post3">Thu, 28 Dec 2017 20:25:00 +0000 (UTC)</a></h5>
+Add libxapian-devel to makedepends
+</section><section id="post4">
+<h5>newbluemoon at <a href="#post4">Thu, 28 Dec 2017 14:01:12 -0800</a></h5>
+CMake=E2=80=99s script to find xapian is unaware of `$XBPS_CROSS_BASE`. B=
+y adding the variables the script sets explicitly to `configure_args` it =
+works. :)
+
+And maybe it=E2=80=99s also a good idea to put the additions to `hostmake=
+depends` inside the =E2=80=98cross branch=E2=80=99, too.
+
+```
+if [ -n "$CROSS_BUILD" ]; then
+        hostmakedepends+=3D" qt5-qmake qt5-host-tools python kdoctools kc=
+onfig"
+        configure_args+=3D" -DXAPIAN_LIBRARIES=3D${XBPS_CROSS_BASE}/usr/l=
+ib/libxapian.so
+         -DXAPIAN_INCLUDE_DIR=3D${XBPS_CROSS_BASE}/usr/include -DXAPIAN_F=
+OUND=3DTRUE"
+fi
+```
+
+-- =
+
+You are receiving this because you authored the thread.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/10244#issuecomment-354364=
+728=
+</section><section id="post5">
+<h5>Piotr at <a href="#post5">Fri, 29 Dec 2017 00:26:42 -0800</a></h5>
+Thanks, @newbluemoon
+</section><section id="post6">
+<h5>Jürgen Buchmüller at <a href="#post6">Fri, 29 Dec 2017 18:56:18 +0000 (UTC)</a></h5>
+Closed #10244 via cad526e26712305bbfc956238b83381e1b863d9c.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

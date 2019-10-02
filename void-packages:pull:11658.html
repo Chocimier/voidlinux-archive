@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>[voidlinux/void-packages] alsa-tools: add missing dependency of
+ hwmixvolume (#11658)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>[voidlinux/void-packages] alsa-tools: add missing dependency of
+ hwmixvolume (#11658)</h1>
+<section id="post1">
+<h5>Piotr at <a href="#post1">Thu, 15 Feb 2018 11:23:05 -0800</a></h5>
+
+You can view, comment on, or merge this pull request online at:
+
+  https://github.com/voidlinux/void-packages/pull/11658
+
+-- Commit Summary --
+
+  * alsa-tools: add missing dependency of hwmixvolume
+
+-- File Changes --
+
+    M srcpkgs/alsa-tools/template (4)
+
+-- Patch Links --
+
+https://github.com/voidlinux/void-packages/pull/11658.patch
+https://github.com/voidlinux/void-packages/pull/11658.diff
+</section><section id="post2">
+<h5>Toyam Cox at <a href="#post2">Thu, 15 Feb 2018 12:06:11 -0800</a></h5>
+This is misleading naming, no provided evidence that this is necessary.
+</section><section id="post3">
+<h5>Toyam Cox at <a href="#post3">Thu, 15 Feb 2018 12:06:28 -0800</a></h5>
+This is misleading naming, no provided evidence that this is necessary.
+</section><section id="post4">
+<h5>Piotr at <a href="#post4">Thu, 15 Feb 2018 20:26:37 +0000 (UTC)</a></h5>
+How is it misleading?
+
+ From hwmixvolume/README:
+This tool requires Python, pygtk, and alsa-pyton 1.0.22 or later.
+
+also:
+% grep import /usr/bin/hwmixvolume
+import gobject, gtk
+from pyalsa import alsacard, alsahcontrol
+</section><section id="post5">
+<h5>Toyam Cox at <a href="#post5">Thu, 15 Feb 2018 21:27:28 +0000 (UTC)</a></h5>
+Merged. The phrasing of the commit message made it sound like I'd see a patch depending on `hwmixvolume`
+</section><section id="post6">
+<h5>Toyam Cox at <a href="#post6">Thu, 15 Feb 2018 13:28:07 -0800</a></h5>
+Closed #11658 via 9fb008f885792c4dc76af7937c6e3ac6df9b05f8.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

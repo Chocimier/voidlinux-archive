@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>[voidlinux/void-packages] wxMaxima: update to 18.02.0. (#13318)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>[voidlinux/void-packages] wxMaxima: update to 18.02.0. (#13318)</h1>
+<section id="post1">
+<h5>Piotr at <a href="#post1">Mon, 09 Apr 2018 03:44:23 -0700</a></h5>
+
+You can view, comment on, or merge this pull request online at:
+
+  https://github.com/voidlinux/void-packages/pull/13318
+
+-- Commit Summary --
+
+  * wxMaxima: update to 18.02.0.
+
+-- File Changes --
+
+    M srcpkgs/wxMaxima/template (13)
+    A srcpkgs/wxMaxima/update (1)
+
+-- Patch Links --
+
+https://github.com/voidlinux/void-packages/pull/13318.patch
+https://github.com/voidlinux/void-packages/pull/13318.diff
+</section><section id="post2">
+<h5>cr6git at <a href="#post2">Sat, 05 May 2018 19:26:30 +0000 (UTC)</a></h5>
+cr6git commented on this pull request.
+
+
+
+&gt; @@ -1,18 +1,17 @@
+ # Template file for 'wxMaxima'
+ pkgname=wxMaxima
+-version=16.12.2
+-revision=2
+-wrksrc="wxmaxima-${version}"
+-build_style=gnu-configure
+-configure_args="--with-wx-config=wx-config-3.0 --enable-printing"
++version=18.02.0
++revision=1
++wrksrc="wxmaxima-Version-${version}"
++build_style=cmake
+ makedepends="wxWidgets-devel"
+ depends="maxima desktop-file-utils"
+ short_desc="Cross-platform GUI for the computer algebra system Maxima"
+ maintainer="Martin Riese &lt;grauehaare@gmx.de&gt;"
+ homepage="https://andrejv.github.io/wxmaxima/"
+ license="GPL-2"
+
+license="GPL-2.0-or-later"
+</section><section id="post3">
+<h5>Piotr at <a href="#post3">Thu, 11 Oct 2018 15:16:35 -0700</a></h5>
+Done by https://github.com/void-linux/void-packages/commit/53fa8b510779e648c9b5a20a56692f3325d23ca6
+</section><section id="post4">
+<h5>Piotr at <a href="#post4">Thu, 11 Oct 2018 15:16:37 -0700</a></h5>
+Closed #13318.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

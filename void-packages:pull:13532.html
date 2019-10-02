@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>[voidlinux/void-packages] hexter: update to 1.1.0. (#13532)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>[voidlinux/void-packages] hexter: update to 1.1.0. (#13532)</h1>
+<section id="post1">
+<h5>Piotr at <a href="#post1">Mon, 16 Apr 2018 16:23:17 +0000 (UTC)</a></h5>
+
+You can view, comment on, or merge this pull request online at:
+
+  https://github.com/voidlinux/void-packages/pull/13532
+
+-- Commit Summary --
+
+  * hexter: update to 1.1.0.
+
+-- File Changes --
+
+    M srcpkgs/hexter/template (15)
+    A srcpkgs/hexter/update (2)
+
+-- Patch Links --
+
+https://github.com/voidlinux/void-packages/pull/13532.patch
+https://github.com/voidlinux/void-packages/pull/13532.diff
+</section><section id="post2">
+<h5>cr6git at <a href="#post2">Mon, 16 Apr 2018 16:54:03 +0000 (UTC)</a></h5>
+cr6git commented on this pull request.
+
+
+
+&gt;  build_style=gnu-configure
+-hostmakedepends="pkg-config"
++hostmakedepends="automake libtool m4 pkg-config"
+
+`m4` is redundant, you can remove it.
+
+&gt;  build_style=gnu-configure
+-hostmakedepends="pkg-config"
++hostmakedepends="automake libtool m4 pkg-config"
+ makedepends="gtk+-devel dssi-devel liblo-devel ladspa-sdk alsa-lib-devel"
+ maintainer="Olga Ustuzhanina &lt;me@laserbat.pw&gt;"
+ short_desc="Yamaha DX7 modeling DSSI plugin"
+ homepage="http://dssi.sourceforge.net/hexter.html"
+
+the homepage points to http://smbolton.com/hexter.html
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

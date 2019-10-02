@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>[voidlinux/void-packages] xbps-src: update-check: handle underscores
+ in upstream version string (#13443)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>[voidlinux/void-packages] xbps-src: update-check: handle underscores
+ in upstream version string (#13443)</h1>
+<section id="post1">
+<h5>Piotr at <a href="#post1">Fri, 13 Apr 2018 14:53:46 +0000 (UTC)</a></h5>
+Affects also few other packages, e.g. luafilesystem
+You can view, comment on, or merge this pull request online at:
+
+  https://github.com/voidlinux/void-packages/pull/13443
+
+-- Commit Summary --
+
+  * xbps-src: update-check: handle underscores in upstream version string
+
+-- File Changes --
+
+    M common/xbps-src/shutils/update_check.sh (1)
+    M srcpkgs/iverilog/update (1)
+    M srcpkgs/lowdown/update (3)
+    M srcpkgs/portaudio/update (1)
+
+-- Patch Links --
+
+https://github.com/voidlinux/void-packages/pull/13443.patch
+https://github.com/voidlinux/void-packages/pull/13443.diff
+</section><section id="post2">
+<h5>maxice8 at <a href="#post2">Fri, 13 Apr 2018 09:46:27 -0700</a></h5>
+maxice8 commented on this pull request.
+
+
+
+&gt; @@ -1,4 +1 @@
+-# This pattern is incomplete, it finds out the versions like '0_3_1' but
+-# comparison with 'xbps-uhelper cmpver' results in it being always treated
+-# as a lower version
+ pattern="VERSION_\K[\d_]+"
+
+i think it should be `\d\.` instead of `\d_`
+</section><section id="post3">
+<h5>maxice8 at <a href="#post3">Fri, 13 Apr 2018 16:46:36 +0000 (UTC)</a></h5>
+maxice8 commented on this pull request.
+
+
+
+&gt; @@ -1,4 +1 @@
+-# This pattern is incomplete, it finds out the versions like '0_3_1' but
+-# comparison with 'xbps-uhelper cmpver' results in it being always treated
+-# as a lower version
+ pattern="VERSION_\K[\d_]+"
+
+note: i didn't test.
+</section><section id="post4">
+<h5>Piotr at <a href="#post4">Fri, 13 Apr 2018 17:23:48 +0000 (UTC)</a></h5>
+Chocimier commented on this pull request.
+
+
+
+&gt; @@ -1,4 +1 @@
+-# This pattern is incomplete, it finds out the versions like '0_3_1' but
+-# comparison with 'xbps-uhelper cmpver' results in it being always treated
+-# as a lower version
+ pattern="VERSION_\K[\d_]+"
+
+That is the point of using `update` file: author uses underscores in tags. https://github.com/kristapsdz/lowdown/releases
+</section><section id="post5">
+<h5>Enno Boland at <a href="#post5">Wed, 18 Apr 2018 02:09:00 -0700</a></h5>
+Merged #13443.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

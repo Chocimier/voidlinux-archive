@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>[voidlinux/void-packages] yaml-cpp: update to 0.6.2. (#13314)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>[voidlinux/void-packages] yaml-cpp: update to 0.6.2. (#13314)</h1>
+<section id="post1">
+<h5>Piotr at <a href="#post1">Mon, 09 Apr 2018 09:17:09 +0000 (UTC)</a></h5>
+
+You can view, comment on, or merge this pull request online at:
+
+  https://github.com/voidlinux/void-packages/pull/13314
+
+-- Commit Summary --
+
+  * yaml-cpp: update to 0.6.2.
+  * OpenXcom: rebuild against libyaml-cpp.so.0.6
+  * facter: rebuild against libyaml-cpp.so.0.6
+  * librime: rebuild against libyaml-cpp.so.0.6
+  * mongodb: rebuild against libyaml-cpp.so.0.6
+  * supercollider: rebuild against libyaml-cpp.so.0.6
+
+-- File Changes --
+
+    M common/shlibs (2)
+    M srcpkgs/OpenXcom/template (2)
+    M srcpkgs/facter/template (2)
+    M srcpkgs/librime/template (2)
+    M srcpkgs/mongodb/template (2)
+    M srcpkgs/supercollider/template (2)
+    M srcpkgs/yaml-cpp/template (10)
+    D srcpkgs/yaml-cpp/update (1)
+
+-- Patch Links --
+
+https://github.com/voidlinux/void-packages/pull/13314.patch
+https://github.com/voidlinux/void-packages/pull/13314.diff
+</section><section id="post2">
+<h5>maxice8 at <a href="#post2">Wed, 02 May 2018 04:10:54 -0700</a></h5>
+maxice8 commented on this pull request.
+
+
+
+&gt; @@ -1,17 +1,17 @@
+ # Template file for 'yaml-cpp'
+ pkgname=yaml-cpp
+-version=0.5.3
+-revision=2
+-wrksrc=${pkgname}-release-${version}
++version=0.6.2
++revision=1
++wrksrc=${pkgname}-${pkgname}-${version}
+
+variable should be quoted.
+</section><section id="post3">
+<h5>Piotr at <a href="#post3">Thu, 11 Oct 2018 15:14:38 -0700</a></h5>
+Done by https://github.com/void-linux/void-packages/pull/3241
+</section><section id="post4">
+<h5>Piotr at <a href="#post4">Thu, 11 Oct 2018 15:14:39 -0700</a></h5>
+Closed #13314.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

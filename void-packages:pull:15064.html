@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>[voidlinux/void-packages] Update kde frameworks to 5.47.0 (#15064)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>[voidlinux/void-packages] Update kde frameworks to 5.47.0 (#15064)</h1>
+<section id="post1">
+<h5>Piotr at <a href="#post1">Mon, 11 Jun 2018 01:08:35 -0700</a></h5>
+Supersedes #13673.
+You can view, comment on, or merge this pull request online at:
+
+  https://github.com/voidlinux/void-packages/pull/15064
+
+-- Commit Summary --
+
+  * attica-qt5: update to 5.47.0.
+  * baloo5: update to 5.47.0.
+  * bluez-qt5: update to 5.47.0.
+  * breeze-icons: update to 5.47.0.
+  * extra-cmake-modules: update to 5.47.0.
+  * frameworkintegration: update to 5.47.0.
+  * kactivities5-stats: update to 5.47.0.
+  * kactivities5: update to 5.47.0.
+  * kapidox: update to 5.47.0.
+  * karchive: update to 5.47.0.
+  * kauth: update to 5.47.0.
+  * kbookmarks: update to 5.47.0.
+  * kcmutils: update to 5.47.0.
+  * kcodecs: update to 5.47.0.
+  * kcompletion: update to 5.47.0.
+  * kconfig: update to 5.47.0.
+  * kconfigwidgets: update to 5.47.0.
+  * kcoreaddons: update to 5.47.0.
+  * kcrash: update to 5.47.0.
+  * kdbusaddons: update to 5.47.0.
+  * kdeclarative: update to 5.47.0.
+  * kded: update to 5.47.0.
+  * kdelibs4support: update to 5.47.0.
+  * kdesignerplugin: update to 5.47.0.
+  * kdesu: update to 5.47.0.
+  * kdewebkit: update to 5.47.0.
+  * kdnssd: update to 5.47.0.
+  * kdoctools: update to 5.47.0.
+  * kemoticons: update to 5.47.0.
+  * kfilemetadata5: update to 5.47.0.
+  * kglobalaccel: update to 5.47.0.
+  * kguiaddons: update to 5.47.0.
+  * khtml: update to 5.47.0.
+  * ki18n: update to 5.47.0.
+  * kiconthemes: update to 5.47.0.
+  * kidletime: update to 5.47.0.
+  * kimageformats: update to 5.47.0.
+  * kinit: update to 5.47.0.
+  * kio: update to 5.47.0.
+  * kirigami2: update to 5.47.0.
+  * kitemmodels: update to 5.47.0.
+  * kitemviews: update to 5.47.0.
+  * kjobwidgets: update to 5.47.0.
+  * kjs: update to 5.47.0.
+  * kjsembed: update to 5.47.0.
+  * kmediaplayer: update to 5.47.0.
+  * knewstuff: update to 5.47.0.
+  * knotifications: update to 5.47.0.
+  * knotifyconfig: update to 5.47.0.
+  * kpackage: update to 5.47.0.
+  * kparts: update to 5.47.0.
+  * kpeople: update to 5.47.0.
+  * kplotting: update to 5.47.0.
+  * kpty: update to 5.47.0.
+  * kross: update to 5.47.0.
+  * krunner: update to 5.47.0.
+  * kservice: update to 5.47.0.
+  * ksolid: update to 5.47.0.
+  * ktexteditor: update to 5.47.0.
+  * ktextwidgets: update to 5.47.0.
+  * kunitconversion: update to 5.47.0.
+  * kwallet: update to 5.47.0.
+  * kwayland: update to 5.47.0.
+  * kwidgetsaddons: update to 5.47.0.
+  * kwindowsystem: update to 5.47.0.
+  * kxmlgui: update to 5.47.0.
+  * kxmlrpcclient: update to 5.47.0.
+  * modemmanager-qt5: update to 5.47.0.
+  * networkmanager-qt5: update to 5.47.0.
+  * oxygen-icons5: update to 5.47.0.
+  * plasma-framework: update to 5.47.0.
+  * prison: update to 5.47.0.
+  * sonnet: update to 5.47.0.
+  * syntax-highlighting: update to 5.47.0.
+  * threadweaver: update to 5.47.0.
+
+-- File Changes --
+
+    M srcpkgs/attica-qt5/template (6)
+    M srcpkgs/baloo5/template (6)
+    M srcpkgs/bluez-qt5/template (6)
+    M srcpkgs/breeze-icons/template (6)
+    M srcpkgs/extra-cmake-modules/template (6)
+    M srcpkgs/frameworkintegration/template (6)
+    M srcpkgs/kactivities5-stats/template (6)
+    M srcpkgs/kactivities5/template (6)
+    M srcpkgs/kapidox/template (6)
+    M srcpkgs/karchive/template (6)
+    M srcpkgs/kauth/template (6)
+    M srcpkgs/kbookmarks/template (6)
+    M srcpkgs/kcmutils/template (6)
+    M srcpkgs/kcodecs/template (6)
+    M srcpkgs/kcompletion/template (6)
+    M srcpkgs/kconfig/template (6)
+    M srcpkgs/kconfigwidgets/template (6)
+    M srcpkgs/kcoreaddons/template (6)
+    M srcpkgs/kcrash/template (6)
+    M srcpkgs/kdbusaddons/template (6)
+    M srcpkgs/kdeclarative/template (6)
+    M srcpkgs/kded/template (6)
+    M srcpkgs/kdelibs4support/template (8)
+    M srcpkgs/kdesignerplugin/template (8)
+    M srcpkgs/kdesu/template (6)
+    M srcpkgs/kdewebkit/template (6)
+    M srcpkgs/kdnssd/template (6)
+    M srcpkgs/kdoctools/template (6)
+    M srcpkgs/kemoticons/template (6)
+    M srcpkgs/kfilemetadata5/template (6)
+    M srcpkgs/kglobalaccel/template (6)
+    M srcpkgs/kguiaddons/template (6)
+    M srcpkgs/khtml/template (6)
+    M srcpkgs/ki18n/template (6)
+    M srcpkgs/kiconthemes/template (6)
+    M srcpkgs/kidletime/template (6)
+    M srcpkgs/kimageformats/template (6)
+    M srcpkgs/kinit/template (6)
+    M srcpkgs/kio/patches/musl.patch (11)
+    M srcpkgs/kio/template (6)
+    M srcpkgs/kirigami2/template (6)
+    M srcpkgs/kitemmodels/template (6)
+    M srcpkgs/kitemviews/template (6)
+    M srcpkgs/kjobwidgets/template (6)
+    M srcpkgs/kjs/template (6)
+    M srcpkgs/kjsembed/template (6)
+    M srcpkgs/kmediaplayer/template (6)
+    M srcpkgs/knewstuff/template (6)
+    M srcpkgs/knotifications/template (6)
+    M srcpkgs/knotifyconfig/template (6)
+    M srcpkgs/kpackage/template (6)
+    M srcpkgs/kparts/template (6)
+    M srcpkgs/kpeople/template (6)
+    M srcpkgs/kplotting/template (6)
+    M srcpkgs/kpty/template (6)
+    M srcpkgs/kross/template (6)
+    M srcpkgs/krunner/template (8)
+    M srcpkgs/kservice/template (6)
+    M srcpkgs/ksolid/template (6)
+    M srcpkgs/ktexteditor/template (6)
+    M srcpkgs/ktextwidgets/template (6)
+    M srcpkgs/kunitconversion/template (6)
+    M srcpkgs/kwallet/template (6)
+    M srcpkgs/kwayland/template (6)
+    M srcpkgs/kwidgetsaddons/template (6)
+    M srcpkgs/kwindowsystem/template (6)
+    M srcpkgs/kxmlgui/template (6)
+    M srcpkgs/kxmlrpcclient/template (6)
+    M srcpkgs/modemmanager-qt5/template (6)
+    M srcpkgs/networkmanager-qt5/template (6)
+    M srcpkgs/oxygen-icons5/template (6)
+    A srcpkgs/plasma-framework/patches/GLESv2.patch (13)
+    M srcpkgs/plasma-framework/template (10)
+    M srcpkgs/prison/template (6)
+    M srcpkgs/sonnet/template (6)
+    M srcpkgs/syntax-highlighting/template (17)
+    M srcpkgs/threadweaver/template (6)
+
+-- Patch Links --
+
+https://github.com/voidlinux/void-packages/pull/15064.patch
+https://github.com/voidlinux/void-packages/pull/15064.diff
+</section><section id="post2">
+<h5>Helmut Pozimski at <a href="#post2">Fri, 22 Jun 2018 00:23:07 -0700</a></h5>
+please re-open this PR in the new repository at https://github.com/void-linux/void-packages .
+</section><section id="post3">
+<h5>Piotr at <a href="#post3">Fri, 22 Jun 2018 07:50:26 +0000 (UTC)</a></h5>
+Closed #15064.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

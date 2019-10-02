@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>[voidlinux/void-packages] med incompatible with hdf5&gt;1.8 (#13621)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>[voidlinux/void-packages] med incompatible with hdf5&gt;1.8 (#13621)</h1>
+<section id="post1">
+<h5>Piraty at <a href="#post1">Thu, 19 Apr 2018 12:42:04 +0000 (UTC)</a></h5>
+unfortunately, `med-3.3.1` is not compatible with the new version of `hdf5`that was merged today in #13561 
+```checking H5public.h presence... yes
+checking for H5public.h... yes
+///usr/include/H5public.h
+configure: error: 
+This HDF5 version 1.10.1 must not be used with med-fichier3.3.1.
+The HDF5 library version used by med-fichier3.y.z MUST NOT be &gt; 1.8 and have to be at least 5-1.8.11.
+DO NOT TRY TO COMPILE med-fichier3.3.1 version with an HDF5 library which would generate an hdf5 file not compliant with HDF5-1.8.z library.
+This would BREAK med-fichier compatibility between files with the same revision number !
+```
+This breaks the freecad update that was also merged today in #13404 (which included `med` as a new package, so @Chocimier couldn't have known)
+</section><section id="post2">
+<h5>Enno Boland at <a href="#post2">Thu, 19 Apr 2018 16:15:46 +0000 (UTC)</a></h5>
+so we need a hdf5-1.8 package, I guess.
+</section><section id="post3">
+<h5>Jürgen Buchmüller at <a href="#post3">Sat, 21 Apr 2018 18:37:56 +0000 (UTC)</a></h5>
+Done. hdf5-18 now exists and med uses it.
+</section><section id="post4">
+<h5>Piraty at <a href="#post4">Sun, 22 Apr 2018 03:25:50 -0700</a></h5>
+thanks.
+
+but... @faulesocke and me were working on it already, coordinated over irc.
+
+We came to the conclusion that all of freecad's dependencies that need hdf5 would have to use the same hdf5 version (and therefore the `1.8`), but that was not tested yet to full extend.
+For reference: https://github.com/piraty/void-packages/tree/freecad-med-hdf5-1.8
+Also we thought about making sure `hdf5-18`'s bin-files don't conflict with `hdf5`'s. your approach to move them to lib/hdf5-18 seems ok to me for that purpose.
+</section><section id="post5">
+<h5>Piraty at <a href="#post5">Sun, 22 Apr 2018 15:03:53 -0700</a></h5>
+Closed #13621.
+</section><section id="post6">
+<h5>Piraty at <a href="#post6">Sun, 06 May 2018 11:27:06 +0000 (UTC)</a></h5>
+i did some research:
+
+hdf5's configure script has an option `--with-default-api-version=(v16|v18|v110)` (which [debian uses](https://sources.debian.org/src/hdf5/1.10.0-patch1+docs-4/debian/rules/#L101)), which would work for the med incompatibility with hdf5&gt;1.8.
+Any thought on setting this to `=v18` in the main template and drop hdf5-18?
+</section><section id="post7">
+<h5>Jürgen Buchmüller at <a href="#post7">Sun, 06 May 2018 11:39:10 +0000 (UTC)</a></h5>
+I'll leave that to you as I only tried to solve problems without having a deeper insight.
+Of course we can drop hdf5-18 as soon as there's a better solution.
+</section><section id="post8">
+<h5>Piraty at <a href="#post8">Sun, 06 May 2018 12:09:48 +0000 (UTC)</a></h5>
+update: med doesn't work that way, so everything stays as is.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

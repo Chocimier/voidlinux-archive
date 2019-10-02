@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>[voidlinux/void-packages] New package: calc-2.12.6.0 (#9106)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>[voidlinux/void-packages] New package: calc-2.12.6.0 (#9106)</h1>
+<section id="post1">
+<h5>Piotr at <a href="#post1">Sat, 11 Nov 2017 21:36:06 +0000 (UTC)</a></h5>
+
+You can view, comment on, or merge this pull request online at:
+
+  https://github.com/voidlinux/void-packages/pull/9106
+
+-- Commit Summary --
+
+  * New package: calc-2.12.6.0
+
+-- File Changes --
+
+    M common/shlibs (2)
+    A srcpkgs/calc/template (38)
+    A srcpkgs/libcalc (1)
+    A srcpkgs/libcalc-devel (1)
+
+-- Patch Links --
+
+https://github.com/voidlinux/void-packages/pull/9106.patch
+https://github.com/voidlinux/void-packages/pull/9106.diff
+</section><section id="post2">
+<h5>Jürgen Buchmüller at <a href="#post2">Mon, 18 Dec 2017 06:26:05 +0000 (UTC)</a></h5>
+This template doesn't work at all. I think the Makefile needs heavy configuration or even patching, as it happens many times with the gnu-makefile style.
+</section><section id="post3">
+<h5>Piotr at <a href="#post3">Mon, 18 Dec 2017 12:32:44 -0800</a></h5>
+This compiles well on my machine, but only with one concurrent job (-j 1). Is it possible and acceptable to force it?
+</section><section id="post4">
+<h5>John at <a href="#post4">Mon, 18 Dec 2017 12:56:46 -0800</a></h5>
+You can set disable_parallel_build=1 for forcing single threaded building
+</section><section id="post5">
+<h5>Jürgen Buchmüller at <a href="#post5">Thu, 04 Jan 2018 08:27:43 +0000 (UTC)</a></h5>
+Closed #9106 via 233a03fa19c753610e3ef211cacb1f6d4a8fa6cc.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

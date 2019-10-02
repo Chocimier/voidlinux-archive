@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>[voidlinux/void-packages] Konsole5-17.04.3 does not upgrade to
+ konsole-17.12.0 (#10696)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>[voidlinux/void-packages] Konsole5-17.04.3 does not upgrade to
+ konsole-17.12.0 (#10696)</h1>
+<section id="post1">
+<h5>Piotr at <a href="#post1">Thu, 11 Jan 2018 09:15:26 -0800</a></h5>
+### System
+
+* xuname:  
+  Void 4.14.12_4 x86_64 GenuineIntel uptodate
+* package:  
+  konsole, konsole5
+
+### Expected behavior
+Konsole5 is superseded in repository by konsole since #8456, so it should also update on user system.
+
+### Steps to reproduce the behavior
+- Have konsole5 installed on your system (because you did so some time ago, or from old git revision for testing)
+- xbps-install -Su
+</section><section id="post2">
+<h5>Jürgen Buchmüller at <a href="#post2">Thu, 11 Jan 2018 10:12:52 -0800</a></h5>
+Closed #10696 via e0e43d22a56d2230b02c04131bc293da67cb6ed7.
+</section><section id="post3">
+<h5>Piotr at <a href="#post3">Thu, 11 Jan 2018 10:18:51 -0800</a></h5>
+That is not what i mean, sorry for confusing.
+`xbps-install konsole` in fact removed konsole5.
+Is it possible to `xbps-install -Su` also removes konsole5 and install konsole?
+</section><section id="post4">
+<h5>Jürgen Buchmüller at <a href="#post4">Thu, 11 Jan 2018 10:39:26 -0800</a></h5>
+Oh, my bad. I thought it was a letter case issue because your subject is =
+**K**onsole5=E2=80=A6 ;-)
+
+To automagically update konsole5 to konsole we would need to create a dum=
+my package, perhaps `build_style=3Dmeta` with `depends=3Dkonsole`. I am n=
+ot sure, if that actually works because then `konsole` replaces the packa=
+ge it depends on.
+
+Perhaps we can instead create a hint in the [wiki](https://wiki.voidlinux=
+.eu) for people who don't know how to proceed?
+
+-- =
+
+You are receiving this because you authored the thread.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/10696#issuecomment-3570=
+21257=
+</section><section id="post5">
+<h5>Jürgen Buchmüller at <a href="#post5">Thu, 11 Jan 2018 18:42:46 +0000 (UTC)</a></h5>
+Hmm.. the revbump of kde-baseapps with the changed of konsole5 to konsole should have triggered this update. This of course only, if you actually installed kde-baseapps and not the separate packages only.
+</section><section id="post6">
+<h5>Piotr at <a href="#post6">Thu, 11 Jan 2018 10:58:20 -0800</a></h5>
+I'll check if such [construct](https://github.com/voidlinux/void-packages/blob/721c85988f/srcpkgs/python-ipython_genutils/template) works.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

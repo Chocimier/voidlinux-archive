@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>[voidlinux/void-packages] poco: update to 1.9.0. (#14556)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>[voidlinux/void-packages] poco: update to 1.9.0. (#14556)</h1>
+<section id="post1">
+<h5>Piotr at <a href="#post1">Sat, 19 May 2018 14:50:14 -0700</a></h5>
+
+You can view, comment on, or merge this pull request online at:
+
+  https://github.com/voidlinux/void-packages/pull/14556
+
+-- Commit Summary --
+
+  * poco: update to 1.9.0.
+
+-- File Changes --
+
+    M common/shlibs (21)
+    M srcpkgs/poco/template (6)
+    A srcpkgs/poco/update (1)
+
+-- Patch Links --
+
+https://github.com/voidlinux/void-packages/pull/14556.patch
+https://github.com/voidlinux/void-packages/pull/14556.diff
+</section><section id="post2">
+<h5>cr6git at <a href="#post2">Sun, 20 May 2018 00:56:34 -0700</a></h5>
+cr6git commented on this pull request.
+
+
+
+&gt;  revision=1
+ build_style=cmake
+ short_desc="C++ class libraries for building network-based applications"
+ maintainer="Julien Dehos &lt;dehos@univ-littoral.fr&gt;"
+-license="Boost Software License 1.0"
++license="BSL-1.0"
+ homepage="https://pocoproject.org"
+ distfiles="https://pocoproject.org/releases/${pkgname}-${version}/${pkgname}-${version}-all.tar.gz"
+
+Use `poco` instead of `${pkgname}` it's shorter.
+</section><section id="post3">
+<h5>cr6git at <a href="#post3">Sun, 20 May 2018 00:58:32 -0700</a></h5>
+cr6git commented on this pull request.
+
+
+
+&gt;  homepage="https://pocoproject.org"
+ distfiles="https://pocoproject.org/releases/${pkgname}-${version}/${pkgname}-${version}-all.tar.gz"
+-checksum=cb891540b44b74e844fd0787c796f2699a894dba690329660e29b57efb8f80dd
++checksum=0387bf0f9d313e2311742e1ad0b64e07f2f3e76039eed20e3b9aa9951b88e187
+ wrksrc="${pkgname}-${version}-all"
+
+Move `wrksrc=` under `revision=` and replace `${pkgname}` with `poco` it's shorter.
+</section><section id="post4">
+<h5>cr6git at <a href="#post4">Sun, 20 May 2018 01:58:14 -0700</a></h5>
+cr6git commented on this pull request.
+
+
+
+&gt; @@ -1,14 +1,14 @@
+ # Template build file for 'poco'.
+
+`sed -i "s|Template build file for 'poco'.|Template file for 'poco'|" srcpkgs/poco/template`
+</section><section id="post5">
+<h5>Piotr at <a href="#post5">Mon, 21 May 2018 05:28:24 -0700</a></h5>
+Chocimier commented on this pull request.
+
+
+
+&gt;  homepage="https://pocoproject.org"
+ distfiles="https://pocoproject.org/releases/${pkgname}-${version}/${pkgname}-${version}-all.tar.gz"
+-checksum=cb891540b44b74e844fd0787c796f2699a894dba690329660e29b57efb8f80dd
++checksum=0387bf0f9d313e2311742e1ad0b64e07f2f3e76039eed20e3b9aa9951b88e187
+ wrksrc="${pkgname}-${version}-all"
+
+&gt; Move wrksrc= under revision=
+
+I won't until there is tool to assert correct order.
+</section><section id="post6">
+<h5>Piotr at <a href="#post6">Mon, 21 May 2018 05:28:31 -0700</a></h5>
+Chocimier commented on this pull request.
+
+
+
+&gt; @@ -1,14 +1,14 @@
+ # Template build file for 'poco'.
+
+Same here, tool should warn on that, especially as there are ~700 templates with wrong header.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

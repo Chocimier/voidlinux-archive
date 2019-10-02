@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>[voidlinux/void-packages] okular: update to 18.04.1. (#14317)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>[voidlinux/void-packages] okular: update to 18.04.1. (#14317)</h1>
+<section id="post1">
+<h5>Piotr at <a href="#post1">Fri, 11 May 2018 07:46:24 -0700</a></h5>
+
+You can view, comment on, or merge this pull request online at:
+
+  https://github.com/voidlinux/void-packages/pull/14317
+
+-- Commit Summary --
+
+  * okular: update to 18.04.1.
+  * calligra: rebuild with libokular-18.04.1
+
+-- File Changes --
+
+    M common/shlibs (2)
+    M srcpkgs/calligra/template (2)
+    M srcpkgs/okular/template (10)
+
+-- Patch Links --
+
+https://github.com/voidlinux/void-packages/pull/14317.patch
+https://github.com/voidlinux/void-packages/pull/14317.diff
+</section><section id="post2">
+<h5>maxice8 at <a href="#post2">Fri, 11 May 2018 15:49:15 +0000 (UTC)</a></h5>
+maxice8 commented on this pull request.
+
+
+
+&gt; @@ -11,10 +11,10 @@ makedepends="discount-devel djvulibre-devel ebook-tools-devel khtml-devel
+ depends="hicolor-icon-theme"
+ short_desc="KDE Document Viewer"
+ maintainer="Juan RP &lt;xtraeme@voidlinux.eu&gt;"
+-license="GPL-2"
++license="GPL-2.0-only"
+ homepage="http://kde.org/applications/graphics/okular/"
+
+homepage is now https://
+</section><section id="post3">
+<h5>Piotr at <a href="#post3">Fri, 11 May 2018 16:13:57 +0000 (UTC)</a></h5>
+Chocimier commented on this pull request.
+
+
+
+&gt; @@ -11,10 +11,10 @@ makedepends="discount-devel djvulibre-devel ebook-tools-devel khtml-devel
+ depends="hicolor-icon-theme"
+ short_desc="KDE Document Viewer"
+ maintainer="Juan RP &lt;xtraeme@voidlinux.eu&gt;"
+-license="GPL-2"
++license="GPL-2.0-only"
+ homepage="http://kde.org/applications/graphics/okular/"
+
+Is it forbidden to have redirections in templates? If it is, why don't xlint check it yet?
+</section><section id="post4">
+<h5>maxice8 at <a href="#post4">Fri, 11 May 2018 19:35:18 +0000 (UTC)</a></h5>
+maxice8 commented on this pull request.
+
+
+
+&gt; @@ -11,10 +11,10 @@ makedepends="discount-devel djvulibre-devel ebook-tools-devel khtml-devel
+ depends="hicolor-icon-theme"
+ short_desc="KDE Document Viewer"
+ maintainer="Juan RP &lt;xtraeme@voidlinux.eu&gt;"
+-license="GPL-2"
++license="GPL-2.0-only"
+ homepage="http://kde.org/applications/graphics/okular/"
+
+no, but it is better to use the actual URL used. xlint can't check for redirections because it would make it incredibly slow and require another dependency (problably curl)
+</section><section id="post5">
+<h5>Enno Boland at <a href="#post5">Tue, 15 May 2018 14:56:03 +0000 (UTC)</a></h5>
+Closed #14317 via 3404b001349c7773f0e906905c1b9b8063586d06.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

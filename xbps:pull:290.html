@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>[voidlinux/xbps] libxbps: detection of orphaned packages is now 86%
+ faster. (#290)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>[voidlinux/xbps] libxbps: detection of orphaned packages is now 86%
+ faster. (#290)</h1>
+<section id="post1">
+<h5>Piotr at <a href="#post1">Thu, 17 May 2018 03:12:34 -0700</a></h5>
+## Profit
+On my hardware, time of processing [meta-type package with dependecies of marble5](https://github.com/Chocimier/void-packages/blob/autoremove-benchmark/srcpkgs/autoremove-benchmark/template) reduce by 7 times, and most of that reduced time is installing dependencies.
+
+## How does it work?
+
+Instead of building deptree, then checking its all components, list of packages to remove (`array`) is used as queue for BFS graph traversing. Speedup comes from the fact, that if some package is still needed, all its sub-deptree can't be removed too, and processing that sub-tree is futile.
+The other change is early exit from revdeps loop. When one revdep of X package is not orphan, it is clear that X is not orpan too.
+Changes in test does only update order in which packages are selected for removal.
+
+## The catch
+
+Above example shows some strange thing: `libcolord` run_depends do not contain `eudev-libudev`, but `eudev-libudev`'s revdeps contain `libcolord`. In effect `eudev-libudev` happens to not be removed. Is it a typical case I should care for?
+
+---
+
+Related to #270
+You can view, comment on, or merge this pull request online at:
+
+  https://github.com/voidlinux/xbps/pull/290
+
+-- Commit Summary --
+
+  * libxbps: detection of orphaned packages is now 86% faster.
+
+-- File Changes --
+
+    M lib/package_orphans.c (18)
+    M tests/xbps/libxbps/find_pkg_orphans/main.c (14)
+
+-- Patch Links --
+
+https://github.com/voidlinux/xbps/pull/290.patch
+https://github.com/voidlinux/xbps/pull/290.diff
+</section><section id="post2">
+<h5>Yardanico at <a href="#post2">Thu, 30 Aug 2018 01:33:22 -0700</a></h5>
+Any news on this?
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

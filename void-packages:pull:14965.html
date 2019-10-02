@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] font-symbola: remove package (#14965)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] font-symbola: remove package (#14965)</h1>
+<section id="post1">
+<h5>Piotr at <a href="#post1">Wed, 06 Jun 2018 14:03:35 -0700</a></h5>
+What about turning to nonfree instead?
+</section><section id="post2">
+<h5>John Zimmermann at <a href="#post2">Wed, 06 Jun 2018 14:06:31 -0700</a></h5>
+@Chocimier you mean `restricted=yes` ? Because `nonfree` is for packages that are nonfree but still allow redistribution. That should also work, but would probably require that someone removes the package manually from the binary repo (?). (idk how the cleaning script works).
+</section><section id="post3">
+<h5>Enno Boland at <a href="#post3">Thu, 14 Jun 2018 03:18:01 -0700</a></h5>
+moving packages between repositories is basicly the same problem as deleting it from the repository completely. So restricted is fine with me too.
+</section><section id="post4">
+<h5>John Zimmermann at <a href="#post4">Fri, 15 Jun 2018 01:28:23 -0700</a></h5>
+The PR sets font-symbola to restricted now.
+If for any reason the nonfree method with INSTALL and REMOVE is preferred, it still is in my repo https://github.com/Johnnynator/void-packages/tree/font-symbola-nonfree
+</section><section id="post5">
+<h5>John Zimmermann at <a href="#post5">Fri, 22 Jun 2018 16:42:50 -0700</a></h5>
+Closed #14965.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

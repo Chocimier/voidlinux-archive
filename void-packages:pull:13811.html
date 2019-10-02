@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>[voidlinux/void-packages] kde5-baseapps: update to 18.04.0. (#13811)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>[voidlinux/void-packages] kde5-baseapps: update to 18.04.0. (#13811)</h1>
+<section id="post1">
+<h5>Piotr at <a href="#post1">Tue, 24 Apr 2018 19:46:48 +0000 (UTC)</a></h5>
+
+You can view, comment on, or merge this pull request online at:
+
+  https://github.com/voidlinux/void-packages/pull/13811
+
+-- Commit Summary --
+
+  * kio-extras: update to 18.04.0.
+  * baloo-widgets5: update to 18.04.0.
+  * dolphin: update to 18.04.0.
+  * kate5: update to 18.04.0.
+  * khelpcenter: update to 18.04.0.
+  * konsole: update to 18.04.0.
+  * kde5-baseapps: update to 18.04.0.
+
+-- File Changes --
+
+    M srcpkgs/baloo-widgets5/template (15)
+    M srcpkgs/dolphin/template (12)
+    M srcpkgs/kate5/template (4)
+    M srcpkgs/kde5-baseapps/template (2)
+    M srcpkgs/khelpcenter/template (4)
+    M srcpkgs/kio-extras/template (16)
+    M srcpkgs/konsole/template (11)
+
+-- Patch Links --
+
+https://github.com/voidlinux/void-packages/pull/13811.patch
+https://github.com/voidlinux/void-packages/pull/13811.diff
+</section><section id="post2">
+<h5>maxice8 at <a href="#post2">Tue, 24 Apr 2018 19:48:03 +0000 (UTC)</a></h5>
+Please use ${KDE_SITE} on distfiles.
+</section><section id="post3">
+<h5>maxice8 at <a href="#post3">Tue, 24 Apr 2018 12:50:35 -0700</a></h5>
+and SPDX short-identifiers too
+</section><section id="post4">
+<h5>Piotr at <a href="#post4">Tue, 24 Apr 2018 13:12:22 -0700</a></h5>
+Licensing here is extra fun. GPL and LGPL is mixed in same tarballs. Few files include licensing header comment that allow exact version, few allow any later, and few has following header, having no spdx identifier:
+```   
+   This library is free software; you can redistribute it and/or
+   modify it under the terms of the GNU Lesser General Public
+   License as published by the Free Software Foundation; either
+   version 2.1 of the License, or (at your option) version 3, or any
+   later version accepted by the membership of KDE e.V. (or its
+   successor approved by the membership of KDE e.V.), which shall
+   act as a proxy defined in Section 6 of version 3 of the license.
+```
+</section><section id="post5">
+<h5>maxice8 at <a href="#post5">Tue, 24 Apr 2018 13:36:40 -0700</a></h5>
+LGPL-3.0-or-later-as-approved-by-kde-e-V-or-its-successor :^)
+</section><section id="post6">
+<h5>Piotr at <a href="#post6">Mon, 16 Jul 2018 08:28:28 -0700</a></h5>
+Closed #13811.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

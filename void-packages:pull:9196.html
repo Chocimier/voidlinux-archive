@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>[voidlinux/void-packages] xbps-src: update-check looks into version
+ directories (#9196)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>[voidlinux/void-packages] xbps-src: update-check looks into version
+ directories (#9196)</h1>
+<section id="post1">
+<h5>Piotr at <a href="#post1">Tue, 14 Nov 2017 20:44:10 +0000 (UTC)</a></h5>
+Usual path for sources is like https://example.org/pub/${pkgname}-${version}.tar. But some projects, especially KDE, uses per-version directories like https://example.org/pub/${version}/${pkgname}-${version}.tar. This change makes possible to find updates on servers with such path layout.
+It looks into all higher version directory rather than the highest to not miss anything (ex. kea, phonon-backend-gstreamer).
+Here is a [list](https://gist.github.com/Chocimier/6d9dc3be795a24f10f3b28e3aa11a796) of updates of packages having `/${version}/` string in distfiles found with updated script.
+You can view, comment on, or merge this pull request online at:
+
+  https://github.com/voidlinux/void-packages/pull/9196
+
+-- Commit Summary --
+
+  * xbps-src: update-check looks into version directories
+
+-- File Changes --
+
+    M common/xbps-src/shutils/update_check.sh (21)
+
+-- Patch Links --
+
+https://github.com/voidlinux/void-packages/pull/9196.patch
+https://github.com/voidlinux/void-packages/pull/9196.diff
+</section><section id="post2">
+<h5>yopito at <a href="#post2">Wed, 15 Nov 2017 07:13:02 +0000 (UTC)</a></h5>
+nice idea. I was thinking about that too ;)
+
+Regarding KDE stuff: could you extend your code to deal with directories that contains only a subpart of `${version}` but which name is still with digits ?
+    Example: package `extra-cmake-modules` (and all KDE framework packages) uses "`distfiles=http://download.kde.org/stable/frameworks/${version%.*}/${pkgname}-${version}.tar.xz`"  
+But it costs much more curl checks (and code) since have to check several versioned-directories ?
+</section><section id="post3">
+<h5>Michael Gehring at <a href="#post3">Wed, 15 Nov 2017 07:21:34 +0000 (UTC)</a></h5>
+The problem with this is that it makes a slow process even slower. So maybe this could be made optional by setting some flag in the update file.
+</section><section id="post4">
+<h5>Piotr at <a href="#post4">Wed, 15 Nov 2017 09:50:03 +0000 (UTC)</a></h5>
+@yopito: Well, it already looks for numeric-named directories, as update-check work on processed distfiles value, so it can't easily check whether unprocessed value has `${version%.*}`, `${version}`, `5` or anything else.
+
+@ebfe: More requests are done only if there is numeric directory, so it is likely that newest packages are in another directory. For non-numeric path, slowdown comes only from additional shell code.
+Should this option be enabled by default? If not, should we have script that checkes whether flag is enabled for packages having `${version` in distfiles?
+</section><section id="post5">
+<h5>Michael Gehring at <a href="#post5">Wed, 15 Nov 2017 10:01:52 +0000 (UTC)</a></h5>
+&gt; @ebfe: More requests are done only if there is numeric directory, so
+&gt; it is likely that newest packages are in another directory.
+Ok, i missed that part.
+
+&gt; Should this option be enabled by default? If not, should we have
+&gt; script that checkes whether flag is enabled for packages having
+&gt; `${version` in distfiles?
+
+I'd just add an option the update file
+(https://github.com/voidlinux/void-packages/blob/master/Manual.md#checking-for-new-upstream-releases)
+that enable this.
+
+Not sure how many false positives you'd actually get with this enabled
+by default.
+</section><section id="post6">
+<h5>Michael Gehring at <a href="#post6">Wed, 15 Nov 2017 10:09:56 +0000 (UTC)</a></h5>
+Regarding slowdown/false positives. Did you try running [void-updates](https://github.com/voidlinux/void-updates) on master vs. this change?
+</section><section id="post7">
+<h5>Piotr at <a href="#post7">Wed, 15 Nov 2017 11:23:56 +0000 (UTC)</a></h5>
+Oh, I didn't know that script. I can run for timing, but do you have any idea to automatically spot false positives? ;)
+</section><section id="post8">
+<h5>Michael Gehring at <a href="#post8">Wed, 15 Nov 2017 11:36:52 +0000 (UTC)</a></h5>
+&gt; I can run for timing, but do you have any idea to automatically spot false positives? ;)
+
+Automatically no. But you get a rough idea by comparing void-updates output with/without .this.
+</section><section id="post9">
+<h5>Piotr at <a href="#post9">Wed, 15 Nov 2017 14:45:18 +0000 (UTC)</a></h5>
+@Chocimier pushed 2 commits.
+
+b678fc5  xbps-src: update-check version directories speedup
+a112af9  xbps-src: update-check version directories disabled by default
+</section><section id="post10">
+<h5>Piotr at <a href="#post10">Wed, 15 Nov 2017 14:50:57 +0000 (UTC)</a></h5>
+I can't get reliable time comparision for all packages now, sorry. Checking packages selected as described in first post takes about 1.5 more time after modification.
+</section><section id="post11">
+<h5>Piotr at <a href="#post11">Thu, 16 Nov 2017 09:34:20 +0000 (UTC)</a></h5>
+Here is a [comparision](https://gist.github.com/Chocimier/cf2ab56e71bb1200a9ba223a94d1d024#file-updates-diff) of scanning with master and updated script. Lower time may be caused by declining traffic in all network during scanning.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

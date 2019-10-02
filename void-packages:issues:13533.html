@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] Thunderbird UI and dialog have no text
+ (#13533)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] Thunderbird UI and dialog have no text
+ (#13533)</h1>
+<section id="post1">
+<h5>Piotr at <a href="#post1">Mon, 16 Apr 2018 19:56:02 +0000 (UTC)</a></h5>
+Can't reproduce. What is your _any_  i18n pack?
+</section><section id="post2">
+<h5>Adelmo Junior at <a href="#post2">Mon, 16 Apr 2018 21:02:15 +0000 (UTC)</a></h5>
+I tried four different packs:
+
+* *thunderbird-i18n-en-US*
+* *thunderbird-i18n-en-GB*
+* *thunderbird-i18n-pt-BR*
+* *thunderbird-i18n-ru*
+
+It did not work. I tried launching thunderbird with --UILocale set to a different locale (matching the i18n packs installed) and still nothing shows up.
+
+The only line that shows up in console when launching in it is this:
+
+`[calBackendLoader] Using Thunderbird's builtin libical backend`
+
+I understand something is wrong with my system, but I can't pinpoint what it is. For more info, here is my fontconfig config file:
+
+```
+&lt;?xml version='1.0'?&gt;
+&lt;!DOCTYPE fontconfig SYSTEM 'fonts.dtd'&gt;
+&lt;fontconfig&gt;
+	&lt;alias&gt;
+		&lt;family&gt;serif&lt;/family&gt;
+		&lt;prefer&gt;&lt;family&gt;Liberation Serif&lt;/family&gt;&lt;/prefer&gt;
+	&lt;/alias&gt;
+	&lt;alias&gt;
+		&lt;family&gt;sans-serif&lt;/family&gt;
+		&lt;prefer&gt;&lt;family&gt;Liberation Sans&lt;/family&gt;&lt;/prefer&gt;
+	&lt;/alias&gt;
+	&lt;alias&gt;
+		&lt;family&gt;monospace&lt;/family&gt;
+		&lt;prefer&gt;&lt;family&gt;Fantasque Sans Mono&lt;/family&gt;&lt;/prefer&gt;
+	&lt;/alias&gt;
+&lt;/fontconfig&gt;
+
+
+```
+</section><section id="post3">
+<h5>newbluemoon at <a href="#post3">Mon, 16 Apr 2018 22:21:42 -0700</a></h5>
+Did you try to backup your thunderbird profile and start with a fresh one?
+</section><section id="post4">
+<h5>Adelmo Junior at <a href="#post4">Tue, 17 Apr 2018 13:47:43 +0000 (UTC)</a></h5>
+Yes, I tried removing the profile many times and it didn't work. I tried even launching thunderbird with a fresh profile with the --UIProfile flag. It also did not work.
+
+I also tried altering, and even removing, my fontconfig file and it seems to have no effect on it.
+</section><section id="post5">
+<h5>Adelmo Junior at <a href="#post5">Tue, 17 Apr 2018 13:47:43 +0000 (UTC)</a></h5>
+Yes, I tried removing the profile many times and it didn't work. I tried even launching thunderbird with a fresh profile with the --UIProfile flag. It also did not work.
+
+I also tried altering, and even removing, my fontconfig file and it seems to have no effect on it.
+</section><section id="post6">
+<h5>newbluemoon at <a href="#post6">Mon, 23 Apr 2018 14:19:30 +0000 (UTC)</a></h5>
+Please try to start thunderbird via
+
+`LANG=C thunderbird`
+
+Does that work?
+</section><section id="post7">
+<h5>Adelmo Junior at <a href="#post7">Fri, 27 Apr 2018 08:07:11 -0700</a></h5>
+Yes, I tried using `LANG=C` and it did not work.
+
+I did run thunderbird using `strace` and I copied over all search matches to "font" (and a little bit around it to provide context): [here](https://ghostbin.com/paste/524gk).
+</section><section id="post8">
+<h5>Adelmo Junior at <a href="#post8">Mon, 30 Apr 2018 16:53:27 -0700</a></h5>
+Unfortunately, I couldn't figure out what was the problem behind this, so I backed up my data and did a full reinstall of the system. It works as intended now. Not sure why it was that way before.
+With that said, I apologize for this. I'm closing this issue. Thanks in advance for the help.
+</section><section id="post9">
+<h5>Adelmo Junior at <a href="#post9">Mon, 30 Apr 2018 16:53:27 -0700</a></h5>
+Closed #13533.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>
