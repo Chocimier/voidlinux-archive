@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] A lot of old Pull Requests (#7442)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] A lot of old Pull Requests (#7442)</h1>
+<section id="post1">
+<h5>Michael Aldridge at <a href="#post1">Mon, 18 Sep 2017 03:43:17 +0000 (UTC)</a></h5>
+@KenjiTakahashi many of the PRs have been obsoleted by other work and never got cleaned up.  It wastes maintainer time to try and figure out if a PR is still relevant or not.
+@voidlinux/pkg-committers I again float the idea of an automated commenting run to notify on old PRs.
+</section><section id="post2">
+<h5>Enno Boland at <a href="#post2">Mon, 18 Sep 2017 08:52:09 +0000 (UTC)</a></h5>
+@the-maldridge you mean, informing the contributors before closing?
+</section><section id="post3">
+<h5>Michael Aldridge at <a href="#post3">Mon, 18 Sep 2017 08:55:08 +0000 (UTC)</a></h5>
+@Gottox The script I have would run in two passes.  The first pass would comment on everything over a set age and state that if no further activity occurs it will be closed on the next pass.  The next pass would then occur perhaps a week or two later and all issues and PRs that had not seen activity in the interim would be closed.
+I think a good age to close on would be perhaps 90 to 120 days.  Anything older than that will need a rebase before merging at minimum, and probably needs some additional work at this point to be useful.
+</section><section id="post4">
+<h5>Enno Boland at <a href="#post4">Mon, 18 Sep 2017 02:00:33 -0700</a></h5>
+I'm setting up something. =F0=9F=91=8D =
+-- =
+You are receiving this because you are on a team that was mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/7442#issuecomment-33016=
+3358=
+</section><section id="post5">
+<h5>Karol Woźniak at <a href="#post5">Mon, 18 Sep 2017 04:03:51 -0700</a></h5>
+As described, this is kinda weird. No offence, but it sounds like saying "we had no time to review this, so if you don't do some [more or less] artificial activity now, we're gonna close it, go away".
+Sure, it will probably pick some legitimate cases as well, but in the current state I see, ricochets would possibly be more than actual hits.
+The first thing to reduce the backlog is prioritizing on the *old* stuff, instead of the incoming one (within reason of importance, of course). Which does not seem to be happening right now, new PRs seem to be closed fast and ones that have had few revisions over time mostly just sit there forever.
+Just my usual "2 cents".
+</section><section id="post6">
+<h5>Michael Aldridge at <a href="#post6">Mon, 18 Sep 2017 16:19:26 +0000 (UTC)</a></h5>
+@KenjiTakahashi So there are two primary cases that require a PR to have attention from its author, lets look at them each individually:
+  * If something substantial has changed an the PR is not built against the current view of the universe, it needs to be rebuilt.  This is an action that requires the author to rebase the PR against the current master branch (this is not "something weird" that we do, this is what most projects do).  Yesterday the travis builds were switched to a new mirror, libGL was updated, and a few other low level packages were bumped.  Needless to say the green check from travis doesn't mean much when it was built against libraries that no longer exist in the repos.
+  * The second case is time based.  If a package has been sitting more than a month and I come to review it, it doesn't necessarily mean it will build on the current state of Void.  In fact there have been a handful of times people have been burned by this and merged something that built a month ago and doesn't build now.  No, it is not a reasonable thing to ask a maintainer to build every piece of software they review and test it locally.
+If you look across GitHub there are many organizations that make use of bots to mind the PRs.  This is no different.  Down the road we may add in some other comments such as "please rebase this down to one commit" or "please use the source artifacts rather than the binary distribution".  The timing is the feature we will use now, but it is not the only feature of a PR bot that is desirable.
+As a final note, the function of the deadline is really two fold.  In the first case it pokes the original author to say "are you still here and do you still want this".  There are many people who hear about Void, try it out and make a package, then they move on to another distro.  There is an expectation that if a package is merged with your name in the maintainer field you will maintain it.  Before attacking the pile of old PRs, we need to find out if the original authors want to still have them merged since there is an expectation that they will support and update them.  I for one will not be manually commenting this on all of the old PRs.  The issues are even less useful, many of them are requests for software that has been packaged for years now and many of them are bug reports that haven't been valid for years either due to upgrades, obsolete versions, or just the specific problem went away.
+The second thing the deadline does is it provides the appropriate push to a maintainer as well.  There are several packages that I've been going back and forth with the authors to get them up to speed and ready to merge and for whatever reason I've had to step away.  A poke from either the author or a bot would remind me I need to merge that.  Since no author in 3 years has yet poked me, it looks like that is a job for a bot.
+</section><section id="post7">
+<h5>Michael Gehring at <a href="#post7">Mon, 18 Sep 2017 19:06:06 +0000 (UTC)</a></h5>
+Looks like most/many PRs are actually waiting on input/action from maintainers. I doubt automated comments will improve anything here.
+</section><section id="post8">
+<h5>silvernode at <a href="#post8">Tue, 19 Sep 2017 00:06:19 +0000 (UTC)</a></h5>
+I like to think outside the box a lot and think of crazy stuff. In this case I can see some type of voting platform to be helpful on top of the already proposed automated commenting. If there was a place to go and vote on packages via a {need, want} basic, I think a more simplified perspective can take shape over time.
+*Package A has more "wants" than package B* - so let's encourage people to focus on package A
+*Oh, package A is a "want" and package B is a "need"* - Let's focus on reviewing package B
+In the long run I think this will help  *clear the fog* so-to-speak and allow for more clarity of what should be prioritized at any given time. Obviously the core system level packages are always going to have a greater need, but it's not always clear how various other packages should be filtered.
+</section><section id="post9">
+<h5>Michael Aldridge at <a href="#post9">Mon, 18 Sep 2017 17:48:38 -0700</a></h5>
+That is indeed an off the wall and out of the box solution.  Here are my problems with it:
+  * It is yet more infrastructure.
+  * It needs accounts that can auth from somewhere, which we don't currently have
+  * I don't care how many votes it has, I am not qualified to review some packages.
+Sure, the maintainers are encouraged to work on all the packages, but if you look closely you'll see we have our specializations.  I personally think the best approach right now is patience.  We're 2 maintainers down at the moment while @Vaelatern and I work on infrastructure changes that are way overdue.  In a little while some exciting features will land and the package review queue will pick up at full tilt again.
+</section><section id="post10">
+<h5>silvernode at <a href="#post10">Tue, 19 Sep 2017 01:05:48 +0000 (UTC)</a></h5>
+Yes indeed, there are some great things to look forward too. Glad to be a part of the community and while there are many technical things many of us need to learn., it's still exciting to contribute what we can. I am hoping more people discover Void Linux so we can all make it that much better.
+I think many of us are looking forward to the coming months, keep up the good work.
+</section><section id="post11">
+<h5>Karol Woźniak at <a href="#post11">Thu, 21 Sep 2017 06:51:41 -0700</a></h5>
+So,
+I understand the needs to rebase on master and the general usage of bots, etc. is all sane. Nobody argued *this* as "weird", I think?
+As I see it, the two dots boil down to "rebuild on top of the current world state, check and fix problems". I think the first part could be realistically (though not necessarily "easily") automated and *then* poking people, if something doesn't work.
+Generally, I don't mind bots commenting on issues/PRs over time (although I kinda doubt this will improve the situation much). What I was originally opposed to, and still am, is automatically *closing* things over time. I still think this will do more harm than good. See the previously shown scenario: Nobody ever commented on a passing PR, then bot comes complaining, then closes it. Do you think this person will ever contribute again?
+As for people "poking" maintainers. Well, most people just don't like/want to do this. I don't either, unless there is something sitting for really long and I really *need* it in upstream. Here, I can just install new/updated package from my local copy and be done.
+@silvernode I *think* what you propose could be done within github, with some kind of "addon", similar to +1, -1 buttons (but I'd rather not reuse the existing reaction buttons, as they have a bit different meaning given already). This would need to be researched more, though, just a suggestion.
+I like the idea of everything being near the repo, don't think we want another AUR ;-].
+</section><section id="post12">
+<h5>Michael Aldridge at <a href="#post12">Thu, 21 Sep 2017 09:26:09 -0700</a></h5>
+Closed #7442.
+</section><section id="post13">
+<h5>Michael Aldridge at <a href="#post13">Thu, 21 Sep 2017 16:26:11 +0000 (UTC)</a></h5>
+No, the rebase cannot be automated since it must be done with the authority of whoever made the PR (you must be able to push to the branch....)
+Ranking the PRs cannot be done with github directly since the PR interface does not have a stack ranking function, an external interface would be needed.
+This ticket's original function has been resolved which was to explain why there are so many PRs right now.  As this is done, I am closing this ticket.  For new/different issues, open a new ticket.
+</section><section id="post14">
+<h5>Karol Woźniak at <a href="#post14">Thu, 21 Sep 2017 20:39:15 +0000 (UTC)</a></h5>
+The rebase is a tool, it's not a problem to be solved here (I even avoided using the word there). The problem is to tell whether the PR is fine in current context. This can be done "kinda Gerrit style", e.g. checkout on commit in question locally, rebase, run tests and what not. Something fails, bail out to human intervention. Just something to think about.
+Second thing, fair enough. I'm not knowledgable enough in that field to tell, so I assume you are.
+The OP did not ask for explanation, though, he wanted something to be done about it. All the same now, I guess, as he seems to be gone already... I see this discussion is meant to be ceased, so be it. I just wish the project all the best, 'cause if Void gets bonkers, there seems to be nowhere to go in the today's desktop Linux field.
+</section><section id="post15">
+<h5>cr6git at <a href="#post15">Wed, 11 Oct 2017 11:06:24 +0000 (UTC)</a></h5>
+@KenjiTakahashi "Why close them, though? Just leave them be."
+I know, I should have let them open, sorry.
+I was in a.. **very bad** mood when I did that.
+"The OP [...] seems to be gone already..."
+I'm back, it's ok :)
+</section><section id="post16">
+<h5>cr6git at <a href="#post16">Wed, 11 Oct 2017 17:05:43 -0700</a></h5>
+@the-maldridge Sorry for my ignorance but.. what does it mean "WIP" ?? Thank you.
+</section><section id="post17">
+<h5>Michael Aldridge at <a href="#post17">Thu, 12 Oct 2017 00:42:04 +0000 (UTC)</a></h5>
+@cr6git: Work In Progress.  Its usually used for large projects that may need incremental review or are known to take a long time in advance.
+As far as old PRs, I realized that I just don't review things older than 2 months.  By that point I'm not willing to trust the travis results anymore.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

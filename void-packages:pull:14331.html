@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] sshguard: use sv start instead of sv
+ check (#14331)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] sshguard: use sv start instead of sv
+ check (#14331)</h1>
+<section id="post1">
+<h5>Nicolas Porcel at <a href="#post1">Fri, 11 May 2018 19:33:11 -0700</a></h5>
+This is true, `iptables` is not a service. Same goes for `alsa` (and certainly many other packages using this trick). But at the same time this is very handy to be able to temporary stop `iptables` with `sv stop iptables` and restart it with `sv start iptables`. Of course, in that case you will lose all the rules created by other services. Most distros I've used solve this new problem by automatically saving the iptables rules on exit, which I usually disable as it gets in the way of sshguard whose purpose it to temporary block some hosts. But it could make sense for some people.
+</section><section id="post2">
+<h5>Enno Boland at <a href="#post2">Sat, 12 May 2018 05:55:15 -0700</a></h5>
+`sv check` does more than just looking for the presence of a service in `/var/service`. See `man sv`:
+```
+...
+       check  Check for the service to be in the state that's been requested.
+              Wait up to 7 seconds for the service to reach the requested
+              state, then report the status or timeout.  If the requested
+              state of the service is up, and the script ./check exists in the
+              service directory, sv runs this script to check whether the
+              service is up and running; it's considered to be up if ./check
+              exits with 0.
+...
+```
+</section><section id="post3">
+<h5>Enno Boland at <a href="#post3">Sat, 12 May 2018 06:03:00 -0700</a></h5>
+Real fix: add a `check` script to iptables that checks if rules are applied and exit 0 if they are.
+</section><section id="post4">
+<h5>Enno Boland at <a href="#post4">Sat, 12 May 2018 06:05:02 -0700</a></h5>
+Closed #14331.
+</section><section id="post5">
+<h5>cr6git at <a href="#post5">Sat, 12 May 2018 07:31:03 -0700</a></h5>
+@Duncaen another example: `ufw` makes use of `iptables` without having to start the `iptables` service.
+</section><section id="post6">
+<h5>Nicolas Porcel at <a href="#post6">Sun, 13 May 2018 05:40:41 -0700</a></h5>
+@Gottox
+You are right, using `sv start` does nothing more. I thought it would wait for the program to start but without the `./check` script it does nothing more. Now, the difficulty is to add the `./check` script as this is not trivial.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

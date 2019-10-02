@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] gettext: update to 0.19.8.1. (#4326)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] gettext: update to 0.19.8.1. (#4326)</h1>
+<section id="post1">
+<h5>Enno Boland at <a href="#post1">Mon, 13 Jun 2016 14:17:42 -0700</a></h5>
+```
+$ xbps-query -Rp shlib-requires -s libgettextlib-0.19.7.so
+gettext-0.19.7_1: libgettextlib-0.19.7.so (https://repo.voidlinux.eu/current)
+$ xbps-query -Rp shlib-requires -s libgettextsrc-0.19.7.so
+gettext-0.19.7_1: libgettextsrc-0.19.7.so (https://repo.voidlinux.eu/current)
+```
+looks fine to me. @voidlinux/pkg-committers please verify and feel free to commit.
+---
+You are receiving this because you are on a team that was mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4326#issuecomment-225711528
+</section><section id="post2">
+<h5>Toyam Cox at <a href="#post2">Tue, 14 Jun 2016 00:08:14 -0700</a></h5>
+`xrevshlib gettext` returns `fcitx` but it turns out `libfcitx` depends on `libgettextpo.so.0` so I am not concerned.
+---
+You are receiving this because you are on a team that was mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4326#issuecomment-225797287
+</section><section id="post3">
+<h5>Enno Boland at <a href="#post3">Tue, 14 Jun 2016 00:56:31 -0700</a></h5>
+#yolo
+---
+You are receiving this because you are on a team that was mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4326#issuecomment-225806491
+</section><section id="post4">
+<h5>Enno Boland at <a href="#post4">Tue, 14 Jun 2016 00:56:37 -0700</a></h5>
+Merged #4326.
+---
+You are receiving this because you are on a team that was mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4326#event-691460967
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

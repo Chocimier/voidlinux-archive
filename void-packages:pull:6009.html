@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] RFC: Apparmor implementation (#6009)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] RFC: Apparmor implementation (#6009)</h1>
+<section id="post1">
+<h5>Olivier Mauras at <a href="#post1">Mon, 20 Mar 2017 23:09:54 -0700</a></h5>
+coredumb commented on this pull request.
+&gt; +# Load config
++[ -r /etc/rc.apparmor ] &amp;&amp; . /etc/rc.apparmor
++
++# Proceed to load profiles depending on user settings
++msg "Loading AppArmor profiles..."
++
++if [ "$APPARMOR" != "disable" -a -n "$APPARMOR" ]; then
++    if [ "$APPARMOR" != "complain" -a "$APPARMOR" != "enforce" ]; then
++        printf '! AppArmor incorrect option %s - ignoring profiles\n' "$APPARMOR"
++        exit 0
++    fi
++
++    [ "$APPARMOR" = "complain" ] &amp;&amp; AACOMPLAIN="-C"
++
++    if [ -d /etc/apparmor.d -a -x /usr/bin/apparmor_parser ]; then
++        for profile in $(find /etc/apparmor.d -maxdepth 1 -type f); do
+apparmor_parser will then try to load everythin recursively as well as files supposed to be included and not loaded directly which ends with a lot of error.
+Indeed you end up with your profiles loaded but I think it's nicer to only load profiles
+</section><section id="post2">
+<h5>Olivier Mauras at <a href="#post2">Mon, 20 Mar 2017 23:12:21 -0700</a></h5>
+coredumb commented on this pull request.
+&gt; @@ -0,0 +1,30 @@
++# vim: set ts=4 sw=4 et:
++
++# AppArmor is not enabled in kernel, silently exit
++[ ! -d /sys/kernel/security/apparmor ] &amp;&amp; exit
+You're right I overlooked that, I should use return instead of exit
+Will fix
+</section><section id="post3">
+<h5>Olivier Mauras at <a href="#post3">Mon, 20 Mar 2017 23:13:21 -0700</a></h5>
+coredumb commented on this pull request.
+&gt; @@ -0,0 +1,30 @@
++# vim: set ts=4 sw=4 et:
++
++# AppArmor is not enabled in kernel, silently exit
++[ ! -d /sys/kernel/security/apparmor ] &amp;&amp; exit
++
++# Load config
++[ -r /etc/rc.apparmor ] &amp;&amp; . /etc/rc.apparmor
++
++# Proceed to load profiles depending on user settings
++msg "Loading AppArmor profiles..."
++
++if [ "$APPARMOR" != "disable" -a -n "$APPARMOR" ]; then
+I wanted to match explicit "disable" as well but you're right check on unset would be sufficient
+will fix
+</section><section id="post4">
+<h5>Olivier Mauras at <a href="#post4">Wed, 22 Mar 2017 06:25:37 -0700</a></h5>
+So I made some unixbenchmark runs on linux4.10-4.10.4_1.
+The result is an average on 5 runs on 2CPUs VM:
+  - No LSM enabled (Void repo)
+    - Index score: **1650**
+  - AppArmor enabled Kernel with securityfs not mounted
+    - Index score: **1412**
+  - AppArmor enabled and the 3 profiles loaded
+    - Index score: **1661**
+I'm pretty sure the result of the run with AppArmor disabled is not relevant. I'll see if I have 2.5h ahead of me to rerun it :)
+</section><section id="post5">
+<h5>Andrea Brancaleoni at <a href="#post5">Wed, 22 Mar 2017 11:31:49 -0700</a></h5>
+The results are totally unexpected. I would expect a slightly slower performance on Apparmor kernel enabled (it needed profiling enabled) and worsen with Apparmom userspace enabled.
+I think i have to run the tests myself :S
+</section><section id="post6">
+<h5>Olivier Mauras at <a href="#post6">Wed, 22 Mar 2017 12:25:06 -0700</a></h5>
+When you have ~3% drop with a full grsec kernel I wouldn't expect anything noticeable
+with just a LSM module enabled.
+Now benchmarking a userland app confined would certainly give some more relevant numbers.
+</section><section id="post7">
+<h5>Andrea Brancaleoni at <a href="#post7">Sun, 23 Apr 2017 00:21:51 -0700</a></h5>
+Are the Linux patches needed?
+</section><section id="post8">
+<h5>Olivier Mauras at <a href="#post8">Sun, 23 Apr 2017 07:36:16 -0700</a></h5>
+Yes the patches are very much needed ... Mainline AppArmor is running very old code and is full of bugs.
+</section><section id="post9">
+<h5>Olivier Mauras at <a href="#post9">Thu, 05 Apr 2018 10:20:43 -0700</a></h5>
+Closed #6009.
+</section><section id="post10">
+<h5>Olivier Mauras at <a href="#post10">Thu, 05 Apr 2018 10:20:43 -0700</a></h5>
+I'm updating everything from https://github.com/voidlinux/void-packages/issues/6879
+</section><section id="post11">
+<h5>Enno Boland at <a href="#post11">Tue, 15 May 2018 20:38:35 +0000 (UTC)</a></h5>
+Gottox commented on this pull request.
+Neat! :)
+&gt; @@ -32,9 +32,20 @@ post_install() {
+ 	vconf ${FILESDIR}/hostname
+ 	vconf ${FILESDIR}/os-release
+ 	vconf ${FILESDIR}/locale.conf
++	vconf ${FILESDIR}/rc.apparmor
+This should go to `/etc/defaults/apparmor`
+&gt; @@ -0,0 +1,8 @@
++#!/bin/sh
++[ -r conf ] &amp;&amp; . ./conf
++
++# Find all profiles in $APPARMORD and load them
++for profile in $(find ${APPARMORD} -maxdepth 1 -type f); do
++	apparmor_parser -a $profile
++done
++exec chpst -b apparmor pause
+Why do we need a sv-service if there's already a core-service? Can you explain?
+&gt; @@ -0,0 +1,8 @@
++#!/bin/sh
++[ -r conf ] &amp;&amp; . ./conf
++
++# Find all profiles in $APPARMORD and load them
++for profile in $(find ${APPARMORD} -maxdepth 1 -type f); do
+`APPARMORD` should default to `/etc/apparmor.d`:
+```bash
+${APPARMORD:-/etc/apparmor.d}
+```
+conf file can be removed then.
+</section><section id="post12">
+<h5>Olivier Mauras at <a href="#post12">Tue, 15 May 2018 15:02:58 -0700</a></h5>
+olivier-mauras commented on this pull request.
+&gt; @@ -0,0 +1,8 @@
++#!/bin/sh
++[ -r conf ] &amp;&amp; . ./conf
++
++# Find all profiles in $APPARMORD and load them
++for profile in $(find ${APPARMORD} -maxdepth 1 -type f); do
+https://github.com/voidlinux/void-packages/pull/13309 let's get the details there ^^
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

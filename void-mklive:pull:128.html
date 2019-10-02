@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-mklive] Cleanup Phase I (#128)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-mklive] Cleanup Phase I (#128)</h1>
+<section id="post1">
+<h5>Michael Aldridge at <a href="#post1">Mon, 21 Aug 2017 02:52:27 +0000 (UTC)</a></h5>
+@the-maldridge requested your review on: voidlinux/void-mklive#128 Cleanup Phase I.
+</section><section id="post2">
+<h5>Michael Aldridge at <a href="#post2">Sun, 20 Aug 2017 21:10:20 -0700</a></h5>
+@the-maldridge pushed 1 commit.
+5791d18  Makefile: add option to set mirror across build
+</section><section id="post3">
+<h5>Enno Boland at <a href="#post3">Sun, 20 Aug 2017 22:46:25 -0700</a></h5>
+Gottox approved this pull request.
+Looks good so far =F0=9F=91=8D Added a few further ideas though.
+&gt; +    # prepared.  This function takes 2 arguments, the location to
++    # chroot to and the command to run.
++
++    # This is an idempotent function, it is safe to call every time
++    # before entering the chroot.  This has the advantage of making
++    # execution in the chroot appear as though it "Just Works(tm)".
++    register_binfmt
++
++    # Before we step into the chroot we need to make sure the
++    # pseudo-filesystems are ready to go.  Not all commands will need
++    # this, but its still a good idea to call it here anyway.
++    mount_pseudofs
++
++    # With assurance that things will run now we can jump into the
++    # chroot and run stuff!
++    chroot "$1" sh -c "$2"
+I had the idea to use xbps-uchroot instead of chroot, this unshares the m=
+ountspace and bindmounts /dev /prov /sys. Unfortunately iirc there were s=
+ome issues with it that needed to be fixed in uchroot.
+&gt; @@ -86,9 +81,10 @@ _EOF
+     exit 0
+ }
+ =
+-#
+-# main()
+-#
++# ########################################
++#      SCRIPT EXECUTION STARTS HERE
++# ########################################
++
+ while getopts "b:B:o:r:s:hV" opt; do
+Maybe we can use the getopt/getopts combination we use in xbps-src here t=
+oo.
+-- =
+You are receiving this because your review was requested.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-mklive/pull/128#pullrequestreview-57406=
+026=
+</section><section id="post4">
+<h5>Michael Aldridge at <a href="#post4">Mon, 21 Aug 2017 05:47:40 +0000 (UTC)</a></h5>
+the-maldridge commented on this pull request.
+&gt; +    # prepared.  This function takes 2 arguments, the location to
++    # chroot to and the command to run.
++
++    # This is an idempotent function, it is safe to call every time
++    # before entering the chroot.  This has the advantage of making
++    # execution in the chroot appear as though it "Just Works(tm)".
++    register_binfmt
++
++    # Before we step into the chroot we need to make sure the
++    # pseudo-filesystems are ready to go.  Not all commands will need
++    # this, but its still a good idea to call it here anyway.
++    mount_pseudofs
++
++    # With assurance that things will run now we can jump into the
++    # chroot and run stuff!
++    chroot "$1" sh -c "$2"
+Does xbps-uchroot play nice with qemu-user-static?
+</section><section id="post5">
+<h5>Enno Boland at <a href="#post5">Mon, 21 Aug 2017 06:15:22 +0000 (UTC)</a></h5>
+Gottox commented on this pull request.
+&gt; +    # prepared.  This function takes 2 arguments, the location to
++    # chroot to and the command to run.
++
++    # This is an idempotent function, it is safe to call every time
++    # before entering the chroot.  This has the advantage of making
++    # execution in the chroot appear as though it "Just Works(tm)".
++    register_binfmt
++
++    # Before we step into the chroot we need to make sure the
++    # pseudo-filesystems are ready to go.  Not all commands will need
++    # this, but its still a good idea to call it here anyway.
++    mount_pseudofs
++
++    # With assurance that things will run now we can jump into the
++    # chroot and run stuff!
++    chroot "$1" sh -c "$2"
+xbps-uchroot is actually chroot + unshare. I don't know if there are implications to qemu
+</section><section id="post6">
+<h5>Michael Aldridge at <a href="#post6">Sun, 20 Aug 2017 23:40:49 -0700</a></h5>
+the-maldridge commented on this pull request.
+&gt; @@ -86,9 +81,10 @@ _EOF
+     exit 0
+ }
+-#
+-# main()
+-#
++# ########################################
++#      SCRIPT EXECUTION STARTS HERE
++# ########################################
++
+ while getopts "b:B:o:r:s:hV" opt; do
+I looked into this and it seems that the important options are being mirrored across.  I don't think copying over more options that are already copied over buys us anything.  I certainly don't think the dance that xbps-src does with preprocessing is worth it here.
+</section><section id="post7">
+<h5>Michael Aldridge at <a href="#post7">Mon, 21 Aug 2017 07:04:25 +0000 (UTC)</a></h5>
+@the-maldridge pushed 1 commit.
+4f514f5  Explicitly set number of xz compressor threads
+</section><section id="post8">
+<h5>Enno Boland at <a href="#post8">Mon, 21 Aug 2017 08:59:50 +0000 (UTC)</a></h5>
+Gottox commented on this pull request.
+&gt; @@ -23,6 +23,7 @@ ALL_CLOUD_IMAGES=$(foreach cloud,$(CLOUD_IMGS),void-$(cloud)-$(DATE).tar.gz)
+ SUDO := sudo
+ XBPS_REPOSITORY := -r https://lug.utdallas.edu/mirror/void/current -r https://lug.utdallas.edu/mirror/void/current/musl -r https://lug.utdallas.edu/mirror/void/current/aarch64
++COMPRESSOR_THREADS=2
+Can we dynamicly use the number of CPUs in the system? Does this make sense?
+And I'm curious: Does running multithreaded xz result always result in an identical file with the same checksum?
+</section><section id="post9">
+<h5>Michael Aldridge at <a href="#post9">Mon, 21 Aug 2017 20:01:12 -0700</a></h5>
+the-maldridge commented on this pull request.
+&gt; @@ -23,6 +23,7 @@ ALL_CLOUD_IMAGES=$(foreach cloud,$(CLOUD_IMGS),void-$(cloud)-$(DATE).tar.gz)
+ SUDO := sudo
+ XBPS_REPOSITORY := -r https://lug.utdallas.edu/mirror/void/current -r https://lug.utdallas.edu/mirror/void/current/musl -r https://lug.utdallas.edu/mirror/void/current/aarch64
++COMPRESSOR_THREADS=2
+setting this to 0 will dynamically use the maximum number of threads.  The problem with this is that it also takes a lot of memory to do this.
+</section><section id="post10">
+<h5>Enno Boland at <a href="#post10">Tue, 22 Aug 2017 06:14:40 +0000 (UTC)</a></h5>
+Gottox commented on this pull request.
+&gt; @@ -23,6 +23,7 @@ ALL_CLOUD_IMAGES=$(foreach cloud,$(CLOUD_IMGS),void-$(cloud)-$(DATE).tar.gz)
+ SUDO := sudo
+ XBPS_REPOSITORY := -r https://lug.utdallas.edu/mirror/void/current -r https://lug.utdallas.edu/mirror/void/current/musl -r https://lug.utdallas.edu/mirror/void/current/aarch64
++COMPRESSOR_THREADS=2
+Ok.
+</section><section id="post11">
+<h5>Enno Boland at <a href="#post11">Mon, 21 Aug 2017 23:15:23 -0700</a></h5>
+Gottox commented on this pull request.
+&gt; +    # prepared.  This function takes 2 arguments, the location to
++    # chroot to and the command to run.
++
++    # This is an idempotent function, it is safe to call every time
++    # before entering the chroot.  This has the advantage of making
++    # execution in the chroot appear as though it "Just Works(tm)".
++    register_binfmt
++
++    # Before we step into the chroot we need to make sure the
++    # pseudo-filesystems are ready to go.  Not all commands will need
++    # this, but its still a good idea to call it here anyway.
++    mount_pseudofs
++
++    # With assurance that things will run now we can jump into the
++    # chroot and run stuff!
++    chroot "$1" sh -c "$2"
+I think we should keep that change in our mind, But it shouldn't be part of this PR.
+</section><section id="post12">
+<h5>Enno Boland at <a href="#post12">Mon, 21 Aug 2017 23:18:05 -0700</a></h5>
+Ok to merge for me.
+</section><section id="post13">
+<h5>Michael Aldridge at <a href="#post13">Tue, 22 Aug 2017 22:11:46 -0700</a></h5>
+@the-maldridge pushed 1 commit.
+6335173  README.md: update minimally
+</section><section id="post14">
+<h5>Michael Aldridge at <a href="#post14">Wed, 23 Aug 2017 05:11:58 +0000 (UTC)</a></h5>
+Merged #128.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

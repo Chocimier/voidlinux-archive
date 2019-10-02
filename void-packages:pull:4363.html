@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] New package: trojita-0.7 (#4363)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] New package: trojita-0.7 (#4363)</h1>
+<section id="post1">
+<h5>Jannis Christ at <a href="#post1">Sat, 25 Jun 2016 06:24:07 -0700</a></h5>
+Do you mean sqlite for example? Trojita has got `qt5-webkit` as a dependency and this package already depends on `sqlite`.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4363#issuecomment-228540975
+</section><section id="post2">
+<h5>Jannis Christ at <a href="#post2">Sat, 25 Jun 2016 07:28:25 -0700</a></h5>
+Oh sorry, I see. Do you wish that I add `qt5-plugin-sqlite` as a dependency in order to provide a default? I think experienced people could still force the installation of a different plugin but I don't want to break a philosophy or something similar.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4363#issuecomment-228545935
+</section><section id="post3">
+<h5>Jannis Christ at <a href="#post3">Sat, 25 Jun 2016 08:03:20 -0700</a></h5>
+I just added `qt5-svg` in the meantime which is also required (for icons) but not automatically added as dependency.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4363#issuecomment-228548742
+</section><section id="post4">
+<h5>Jürgen Buchmüller at <a href="#post4">Sat, 25 Jun 2016 08:50:58 -0700</a></h5>
+IMO installing `qt5-plugin-sqlite` as a default or fallback doesn't hurt. It is small and `sqlite` itself will already be installed on many systems.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4363#issuecomment-228551662
+</section><section id="post5">
+<h5>Jannis Christ at <a href="#post5">Sat, 25 Jun 2016 09:31:11 -0700</a></h5>
+Yes, it requires just 17KB and as I mentioned earlier, `sqlite` is already an indirect dependency.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4363#issuecomment-228554647
+</section><section id="post6">
+<h5>Jürgen Buchmüller at <a href="#post6">Sat, 25 Jun 2016 15:55:07 -0700</a></h5>
+Merged #4363.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4363#event-704129180
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

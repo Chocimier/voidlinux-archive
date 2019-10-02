@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>[voidlinux/void-packages] Automatic Issue Comments and Closure
+ (#6834)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>[voidlinux/void-packages] Automatic Issue Comments and Closure
+ (#6834)</h1>
+<section id="post1">
+<h5>Michael Aldridge at <a href="#post1">Sat, 24 Jun 2017 01:23:06 -0700</a></h5>
+As I mentioned earlier today on IRC, I am interested in operating a bot to perform garbage collection of stale issues and pull requests.  After some searching I have found a suitable bot that can scrape the list of issues and pull requests and will post notices to the relevant issues.  I currently have it configured to auto-close after 30 days of inactivity and to warn after 20 days of inactivity, with a second warning being issued on the 27th day.
+To get some test numbers, I ran it against the mklive repo with `--test` mode on so that it would not make changes until we'd agreed on its operation.
+The log, if anyone actually cares about such things, looks like this:
+````
+(venv) maldridge@deepblue:~/Documents/void-issuebot$ github-close-inactive-issues --test --repo voidlinux/void-mklive --config config.yml
+2017-06-23 23:39:26,340 - root - INFO - Checking rate limit for user the-maldridge
+2017-06-23 23:39:26,654 - root - INFO - Limit: 5000, Remaining: 3592, Reset: 2017-06-24 00:02:20
+2017-06-23 23:39:26,655 - root - INFO - Starting close_inactive_issues
+2017-06-23 23:39:26,655 - root - INFO - Repo: voidlinux/void-mklive, User: the-maldridge
+2017-06-23 23:39:26,656 - root - INFO - warning_start: 20, warning_frequency: 7, closing: 30
+2017-06-23 23:39:30,122 - root - INFO - Issue 103: warning posted, inactive for 45 days, will be closed after 2017-07-01 12:00:00
+2017-06-23 23:39:31,676 - root - INFO - Issue 102: warning posted, inactive for 121 days, will be closed after 2017-07-01 12:00:00
+2017-06-23 23:39:34,843 - root - INFO - Issue 98: warning posted, inactive for 139 days, will be closed after 2017-07-01 12:00:00
+2017-06-23 23:39:36,272 - root - INFO - Issue 96: inactive for 142 days, will be closed after 2017-07-01 12:00:00
+2017-06-23 23:39:37,691 - root - INFO - Issue 91: warning posted, inactive for 204 days, will be closed after 2017-07-01 12:00:00
+2017-06-23 23:39:39,036 - root - INFO - Issue 88: inactive for 214 days, will be closed after 2017-07-01 12:00:00
+2017-06-23 23:39:43,571 - root - INFO - Issue 85: warning posted, inactive for 294 days, will be closed after 2017-07-01 12:00:00
+2017-06-23 23:39:44,986 - root - INFO - Issue 75: warning posted, inactive for 377 days, will be closed after 2017-07-01 12:00:00
+2017-06-23 23:39:48,570 - root - INFO - Issue 56: warning posted, inactive for 516 days, will be closed after 2017-07-01 12:00:00
+2017-06-23 23:39:50,107 - root - INFO - Issue 55: warning posted, inactive for 516 days, will be closed after 2017-07-01 12:00:00
+2017-06-23 23:39:51,893 - root - INFO - Issue 54: inactive for 519 days, will be closed after 2017-07-01 12:00:00
+2017-06-23 23:39:53,208 - root - INFO - Issue 53: warning posted, inactive for 521 days, will be closed after 2017-07-01 12:00:00
+2017-06-23 23:39:54,622 - root - INFO - Issue 49: inactive for 536 days, will be closed after 2017-07-01 12:00:00
+2017-06-23 23:39:56,050 - root - INFO - Issue 35: inactive for 615 days, will be closed after 2017-07-01 12:00:00
+2017-06-23 23:39:59,135 - root - INFO - Issue 8: warning posted, inactive for 1034 days, will be closed after 2017-07-01 12:00:00
+2017-06-23 23:39:59,135 - root - INFO - Processed 21 open issues. 0 issues closed. 10 warnings posted.
+````
+If an issue (issue here being both issues and the subclass that is pull requests) is inactive for a period of 20 days, the following warning will be posted to it:
+````
+Thank you for your interest in Void Linux!  This issue has now
+been inactive for {days_inactive} and will be automatically closed
+on {deadline:%Y-%m-%d}.  If you wish to keep working on this issue
+or have further information to report, simply reply in this thread
+and the deadline will be automatically extended.  If you do not
+wish to continue this issue, you may either close it now or wait
+for the deadline to expire.  If you know that this will be a long
+term issue, please request the long-term label to be applied which
+will cause the bot to ignore this issue.
+````
+If no further action is taken, the issue/PR is closed with the following message:
+````
+This issue has been closed due to inactivity.  If you believe that
+this issue has been closed in error, feel free to reopen the
+issue.  Please keep in mind that we try to resolve all issues
+within 30 days.  If you know in advance that your issue will take
+longer than 30 days to complete, feel free to request the
+long-term label be applied and the bot will ignore your issue.
+````
+As implied by both messages, issues and PRs that we know will take longer than 30 days to close can have the `long-term` label applied to them and the script will ignore them.  If desired, the script can also tag things as it closes them (perhaps closed-inactivity) so that we could later filter and determine if PRs are dying due to inactivity.
+As the initial scrape would cause some havoc, it is setup to not try and close anything until July 1 at noon GMT.
+I think this is a good idea and would help with the growing number of PRs that accumulate and then are never touched.  It would also help to poke maintainers when perhaps we needed something else from them and they don't have time to get back right away.  Most of all though, it would help us close issues that have become obsolete, such as the 1000+ day old issue in mklive that was resolved a few years ago but not closed.
+What say you @voidlinux/pkg-committers ?
+</section><section id="post2">
+<h5>Andrea Brancaleoni at <a href="#post2">Sun, 25 Jun 2017 12:53:18 -0700</a></h5>
+I personally prefer something longer. Like two or three months before closing the issue or the pull request.
+</section><section id="post3">
+<h5>Michael Aldridge at <a href="#post3">Sun, 25 Jun 2017 12:54:38 -0700</a></h5>
+I could be convinced pretty easily to go to 60 days, but the point here is really to put some kind of time limit on how long things sit open since most issues and PRs sit open for way too long.
+</section><section id="post4">
+<h5>Martijn van Buul at <a href="#post4">Fri, 30 Jun 2017 12:05:59 -0700</a></h5>
+Sorry for butting in, but as the submitter of a few merge requests and issues that would  be considered stale by these guidelines, I have to ask how I (as a submitter) can break the stalemate.
+Resetting the timeout by adding a "la la la, I'm still alive" comment seems wrong :)
+</section><section id="post5">
+<h5>Michael Aldridge at <a href="#post5">Fri, 30 Jun 2017 13:00:15 -0700</a></h5>
+@pienjo if you have a PR currently in review, the easiest way to un-stick it is to ping the maintainer that's been working with you.  Good practice that will draw a maintainer to your package is to make sure it has the green Travis check-mark on it and that it builds on all architectures.  If you have to disable an architecture for it to build, be prepared to justify this, preferably put a comment just above the line that turned off a particular architecture with either a build log, note from upstream, or the statement that it probably can be made to work, but not without substantial effort.
+If your PR does not already have a Void Linux Member working with you, there isn't as clear a path to un-stick from there.  Part of the reason for the automatic comments are to bring PRs to our attention that have sat without review for too long.
+Some of this is also just related to the growing pains where our user base has now outstripped some of the processes we previously used to manage incoming PRs and Issues.  While these processes are being adjusted to cope, we greatly appreciate everyone's patience!
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

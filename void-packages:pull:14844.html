@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] gst-plugins-good1: remove unused
+ gtk+-devel from makedepends; add gtk3 build option (#14844)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] gst-plugins-good1: remove unused
+ gtk+-devel from makedepends; add gtk3 build option (#14844)</h1>
+<section id="post1">
+<h5>Daniel Santana at <a href="#post1">Fri, 01 Jun 2018 12:17:11 -0700</a></h5>
+I'm not sure, I just did it as a thumb of rule: if the output of `xbps-query -R &lt;package&gt;` is different, I bump the revision. Actually @Vaelatern asked me to bump the revision on [another PR](https://github.com/voidlinux/void-packages/pull/14743) when changing only the maintainer field too, so I don't know how to proceed in this case.
+</section><section id="post2">
+<h5>Toyam Cox at <a href="#post2">Sun, 03 Jun 2018 09:15:38 -0700</a></h5>
+The maintianer field ends up in the final package.
+`xbps-query -RS gst-plugins-good1`
+</section><section id="post3">
+<h5>Daniel Santana at <a href="#post3">Sun, 03 Jun 2018 12:14:29 -0700</a></h5>
+Yes, and it seems that the build options do too (as `build-options`), so should the revision be bumped in this case too?
+</section><section id="post4">
+<h5>Daniel Santana at <a href="#post4">Mon, 04 Jun 2018 08:36:27 -0700</a></h5>
+Got it! In this case, I reverted the revision number.
+</section><section id="post5">
+<h5>Toyam Cox at <a href="#post5">Tue, 05 Jun 2018 17:33:58 +0000 (UTC)</a></h5>
+:shipit:
+</section><section id="post6">
+<h5>Toyam Cox at <a href="#post6">Tue, 05 Jun 2018 10:33:58 -0700</a></h5>
+Closed #14844.
+</section><section id="post7">
+<h5>Toyam Cox at <a href="#post7">Tue, 05 Jun 2018 10:34:02 -0700</a></h5>
+Reopened #14844.
+</section><section id="post8">
+<h5>Daniel Santana at <a href="#post8">Fri, 21 Sep 2018 21:01:02 +0000 (UTC)</a></h5>
+Moved to https://github.com/void-linux/void-packages/pull/2952 (already merged).
+</section><section id="post9">
+<h5>Daniel Santana at <a href="#post9">Fri, 21 Sep 2018 14:01:02 -0700</a></h5>
+Closed #14844.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

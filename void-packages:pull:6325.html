@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] New package: brother-brscan4-0.4.4
+ (#6325)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] New package: brother-brscan4-0.4.4
+ (#6325)</h1>
+<section id="post1">
+<h5>Michael Aldridge at <a href="#post1">Fri, 30 Jun 2017 20:05:39 +0000 (UTC)</a></h5>
+I'm not happy that this creates an /etc/opt directory.  Apart from that I'm happy with the way you're doing most things.  If another maintainer will 'shipit' for this PR then I'm good to merge.
+</section><section id="post2">
+<h5>Martijn van Buul at <a href="#post2">Mon, 03 Jul 2017 17:50:12 +0000 (UTC)</a></h5>
+There's little I can do about /etc/opt; there's hard-coded paths in the binary. The only workaround I can imagine is patching the binary and truncate those strings, but I'm not sure that's a viable solution.
+</section><section id="post3">
+<h5>Michael Aldridge at <a href="#post3">Mon, 03 Jul 2017 18:30:29 +0000 (UTC)</a></h5>
+Yeah I know, but I can still be unhappy about it.
+</section><section id="post4">
+<h5>Toyam Cox at <a href="#post4">Tue, 04 Jul 2017 22:47:26 -0700</a></h5>
+Vaelatern requested changes on this pull request.
+These are small items but should be changed.
+The package makes me unhappy, but I am happier that it is `repository=nonfree`, so I will give this the go ahead.
+@the-maldridge ping.
+&gt; @@ -0,0 +1,75 @@
++# Template file for 'brother-brscan4'
++pkgname=brother-brscan4
++version=0.4.4
++revision=2
+`revision=1`
+&gt; +maintainer="Martijn van Buul &lt;martijn.van.buul@gmail.com&gt;"
++license="custom"
++homepage="http://support.brother.com/"
++repository="nonfree"
++nopie=yes
++_mylibrary="libsane-brother4.so.1.0.7"
++conf_files="/etc/opt/brother/scanner/brscan4/Brsane4.ini /etc/opt/brother/scanner/brscan4/brsanenetdevice4.cfg /etc/opt/brother/scanner/brscan4/models4/*.ini"
++
++if [ "$XBPS_TARGET_MACHINE" = "x86_64" ]; then
++	_debpkgid="3.amd64"
++	distfiles="http://download.brother.com/welcome/dlf006645/brscan4-${version}-${_debpkgid}.deb"
++	checksum=5dd9edcc670a19b66882932290bf867de1669855f05b0d340c5817b69f104659
++	_deblibdir="usr/lib64"
++elif [ "$XBPS_TARGET_MACHINE" = "i686" ]; then
++	_debpkgid="3.i386"
++	distfiles="http://download.brother.com/welcome/dlf006646/brscan4-${version}-${_debpkgid}.deb"
+This line is the same in both. Please deduplicate.
+&gt; @@ -0,0 +1,6 @@
++In order to access networked scanners and multifunctionals, the SANE backend
++must be configured using
++
+Spurious newline. Remove.
+&gt; @@ -0,0 +1,6 @@
++In order to access networked scanners and multifunctionals, the SANE backend
++must be configured using
++
++brsaneconfig4
++
+And here.
+</section><section id="post5">
+<h5>Martijn van Buul at <a href="#post5">Wed, 05 Jul 2017 10:13:59 +0000 (UTC)</a></h5>
+pienjo commented on this pull request.
+&gt; +maintainer="Martijn van Buul &lt;martijn.van.buul@gmail.com&gt;"
++license="custom"
++homepage="http://support.brother.com/"
++repository="nonfree"
++nopie=yes
++_mylibrary="libsane-brother4.so.1.0.7"
++conf_files="/etc/opt/brother/scanner/brscan4/Brsane4.ini /etc/opt/brother/scanner/brscan4/brsanenetdevice4.cfg /etc/opt/brother/scanner/brscan4/models4/*.ini"
++
++if [ "$XBPS_TARGET_MACHINE" = "x86_64" ]; then
++	_debpkgid="3.amd64"
++	distfiles="http://download.brother.com/welcome/dlf006645/brscan4-${version}-${_debpkgid}.deb"
++	checksum=5dd9edcc670a19b66882932290bf867de1669855f05b0d340c5817b69f104659
++	_deblibdir="usr/lib64"
++elif [ "$XBPS_TARGET_MACHINE" = "i686" ]; then
++	_debpkgid="3.i386"
++	distfiles="http://download.brother.com/welcome/dlf006646/brscan4-${version}-${_debpkgid}.deb"
+I assume you mean the "distfiles" line? They are not the same; the URL is different ( ".../dlf00664**5**/.."  versus ".../dlf00664**6**/..").
+</section><section id="post6">
+<h5>Martijn van Buul at <a href="#post6">Wed, 05 Jul 2017 03:30:01 -0700</a></h5>
+@Vaelatern
+Thank you for your review - I'll address them. I fully understand the problem with this package - this package doesn't make me happy either. In fact, having bought this printer doesn't make me happy in retrospect.
+I won't hold any grudges if this PR gets rejected because the package is just too dirty and doesn't meet the expected quality level. I wasn't even sure whether I should PR it or not because of this, but on the other hand I was hoping to save someone else some time.
+Maybe packages like these shouldn't be in the official repository. I've encountered other packages currently in the void-packages repo that are just as bad, if not worse (including brother-brscan3).
+</section><section id="post7">
+<h5>Martijn van Buul at <a href="#post7">Thu, 05 Apr 2018 23:28:22 -0700</a></h5>
+Brother updated their package, so I updated the template..
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

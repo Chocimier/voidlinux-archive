@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] mysql: update to 5.7.14 (#4641)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] mysql: update to 5.7.14 (#4641)</h1>
+<section id="post1">
+<h5>Christian Fischbach at <a href="#post1">Fri, 19 Aug 2016 04:08:16 -0700</a></h5>
+I have tried to update boost as well. It has worked quite fine for Boost 1.61.0, which is the current version.
+Unfortunately does MySQL need precisely Boost 1.59. I have tried to patch MySQL to use Boost 1.61. But MySQL has modified and copied some of the Boost headers and their cloned headers do not work with with Boost 1.61.
+To upgrade Boost to 1.59 just to make MySQL compile, is silly. That's why I have decided to pass the flags to cmake to let it download the preferred version just for compilation.
+I like your idea to make an own packet for MySQL 5.7!
+Shall I do that?
+Just that I do not understand why the download (-DDOWNLOAD_BOOST=1 -DWITH_BOOST=...) did not work for arm and musl.
+btw: Many thanks for that great Linux distro! :)
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] New Package: xmonad and xmonad-contrib
+ (#11741)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] New Package: xmonad and xmonad-contrib
+ (#11741)</h1>
+<section id="post1">
+<h5>fallenwizard at <a href="#post1">Mon, 19 Feb 2018 14:05:25 +0000 (UTC)</a></h5>
+fallenwizard commented on this pull request.
+&gt; +# Template file for 'xmonad'
++pkgname=xmonad
++version=0.13
++revision=1
++build_style=haskell-stack
++stackage="lts-10.5"
++makedepends="libX11-devel libXinerama-devel libXext-devel libXrandr-devel"
++short_desc="A dynamic tiling X11 window manager that is written and configured in Haskell"
++maintainer="Philip K. &lt;philippija@gmail.com&gt;"
++license="BSD-3"
++homepage="http://xmonad.org/"
++distfiles="http://hackage.haskell.org/package/${pkgname}-${version}/${pkgname}-${version}.tar.gz"
++checksum="f9f81b63569f18c777a939741024ec3ae34e4ec84015e5cc50f6622034a303ca"
++
++do_install() {
++	vman man/$pkgname.1
+add: **vlicense LICENSE** to do_install() for both of your packages
+</section><section id="post2">
+<h5>"Philip K." at <a href="#post2">Mon, 19 Feb 2018 07:08:54 -0800</a></h5>
+@phikal pushed 1 commit.
+5b15f49  xmonad(-contrib): fixed minor template issues
+</section><section id="post3">
+<h5>fallenwizard at <a href="#post3">Tue, 20 Feb 2018 19:25:03 +0000 (UTC)</a></h5>
+xmonad-contrib/template:
+**libXrandr-devel** and **libXft-devel** are missing from makedepends=""
+pkg-config is missing from hostmakedepends=""
+use xlint (xtools package) to get rid of template issues.
+Also you may want to squash your commits so the people with push privileges have an easier time.
+</section><section id="post4">
+<h5>"Philip K." at <a href="#post4">Fri, 23 Feb 2018 15:55:30 +0000 (UTC)</a></h5>
+&gt;Also you may want to squash your commits so the people with push privileges have an easier time.
+I will do that, no problem there, and I've implemented most of the fixes - but my problem is that for some reason the `.xbps` file is generated without any binary (there's just a LICENSE, xmonad.1 and the standard xbps files).
+</section><section id="post5">
+<h5>Giuseppe Fierro at <a href="#post5">Wed, 09 May 2018 10:20:57 -0700</a></h5>
+The funcion
+ ```
+do_install()
+```
+is wrong!
+As is now it only install license and manpage, you would do this in function
+```
+post_install()
+```
+</section><section id="post6">
+<h5>"Philip K." at <a href="#post6">Wed, 16 May 2018 16:12:33 -0700</a></h5>
+@gspe While that was quite a stupid mistake, I'm afraid it didn't quite fix it... xbps-src tells me that it fails to install `ghc-8.2.2_1` as a dep., and that `less-530_1` is broken (because?) of an unresolvable shlib `libpcre.so.1`. The whole transaction fails because of the last message.
+</section><section id="post7">
+<h5>Giuseppe Fierro at <a href="#post7">Thu, 17 May 2018 06:10:09 -0700</a></h5>
+Hi, I did some research and I've found that you can't use haskell-stack style to build apps like xmonad.
+Stack tool lack of `--prefix=` option so it doesn't copy libraries and other things when you use `stack install` command.
+See this bug report [Add stack build --prefix option](https://github.com/commercialhaskell/stack/issues/848)
+I'm trying to make a template using `runhaskell` command maybe we can try to do this together if you want
+</section><section id="post8">
+<h5>"Philip K." at <a href="#post8">Thu, 17 May 2018 06:17:31 -0700</a></h5>
+While I would like to help, I only have minimal experiances with building haskall packages, and I was just hoping that  `stack-install` would take care of it...
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

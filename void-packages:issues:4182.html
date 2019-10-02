@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] libreoffice website version, newer than
+ package version (#4182)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] libreoffice website version, newer than
+ package version (#4182)</h1>
+<section id="post1">
+<h5>chriscamacho at <a href="#post1">Fri, 13 May 2016 09:32:30 -0700</a></h5>
+okay, this is probably just a bit simplistic but can you make a "upgrade" for libreoffice-bin, that contains/runs a simple script to install libreoffice and then uninstalls libreoffice-bin - or am I missing something ?
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/4182#issuecomment-219093810
+</section><section id="post2">
+<h5>Toyam Cox at <a href="#post2">Fri, 13 May 2016 11:53:18 -0700</a></h5>
+You mean a one-file `libreoffice-bin` that runs `xbps-install libreoffice &amp;&amp; xbps-remove libreoffice-bin` in the INSTALL for the package?
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/4182#issuecomment-219129677
+</section><section id="post3">
+<h5>chriscamacho at <a href="#post3">Fri, 13 May 2016 12:27:48 -0700</a></h5>
+Essentially I guess so, but I have no idea of the impact or advisability, just seemed a simple solution
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/4182#issuecomment-219137650
+</section><section id="post4">
+<h5>Jürgen Buchmüller at <a href="#post4">Fri, 13 May 2016 15:09:57 -0700</a></h5>
+It depends on if the INSTALL runs inside the xbps transaction or afterwards.
+In case it's during the transaction, it would probably fail or even deadlock, because the update tries to remove the currently updated package...
+I fear there is no easy way around this essential problem - yet.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/4182#issuecomment-219171549
+</section><section id="post5">
+<h5>chriscamacho at <a href="#post5">Fri, 13 May 2016 15:39:49 -0700</a></h5>
+okay this is going to sound even lamer and suckier.....!
+Fork and sleep ?
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/4182#issuecomment-219176138
+</section><section id="post6">
+<h5>Toyam Cox at <a href="#post6">Sat, 14 May 2016 18:13:57 -0700</a></h5>
+You are right. It is lamer and suckier. As well as racier (imagine installing texlive-bin after this) and still does not avoid the essential issues.
+Adding a one-time runit script that then removes itself on successful run might work, but seems extremely hacky.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/4182#issuecomment-219260403
+</section><section id="post7">
+<h5>Toyam Cox at <a href="#post7">Sat, 14 May 2016 22:20:52 -0700</a></h5>
+Perhaps an `replace_with` variable in xbps to direct xbps to replace a given package with another.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/4182#issuecomment-219267060
+</section><section id="post8">
+<h5>Juan RP at <a href="#post8">Sat, 14 May 2016 22:42:51 -0700</a></h5>
+What's so hard about using `xbps-install -Sf libreoffice` ?
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/4182#issuecomment-219267719
+</section><section id="post9">
+<h5>Toyam Cox at <a href="#post9">Sat, 14 May 2016 23:03:38 -0700</a></h5>
+It doesn't get caught in a `-u`
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/4182#issuecomment-219268334
+</section><section id="post10">
+<h5>Stefan Mühlinghaus at <a href="#post10">Tue, 24 May 2016 09:31:03 -0700</a></h5>
+Is there a way to identify obsolete packages or would I have to script that myself?
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/4182#issuecomment-221328352
+</section><section id="post11">
+<h5>yopito at <a href="#post11">Tue, 24 May 2016 09:38:02 -0700</a></h5>
+you mean for installed package on a running system ? `xbps-install -Sun`  for instance. See `xbps-install(1)` man page.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/4182#issuecomment-221330389
+</section><section id="post12">
+<h5>chriscamacho at <a href="#post12">Tue, 24 May 2016 09:40:05 -0700</a></h5>
+that didn't pick up libreoffice for me - I run this sans -n practically every day...
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/4182#issuecomment-221330927
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

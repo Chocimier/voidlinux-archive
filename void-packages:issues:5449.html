@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] Tracking bug: Server infrastructure
+ move TODO (#5449)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] Tracking bug: Server infrastructure
+ move TODO (#5449)</h1>
+<section id="post1">
+<h5>Michael Aldridge at <a href="#post1">Mon, 02 Jan 2017 13:24:40 -0800</a></h5>
+kc is updating now.  I changed the name on the rsyncd stanza without thinking about the other mirrors.
+</section><section id="post2">
+<h5>Michael Aldridge at <a href="#post2">Mon, 02 Jan 2017 13:30:20 -0800</a></h5>
+@chneukirchen The buildbot configuration is committed at https://github.com/the-maldridge/void-infrastructure/blob/root-mirror/roles/buildmaster/templates/master.cfg.j2  PR is welcome to change the IRC message format.
+</section><section id="post3">
+<h5>Enno Boland at <a href="#post3">Tue, 03 Jan 2017 02:04:52 -0800</a></h5>
+* [ ] signing is broken:
+```
+[root@build bin]# cat /etc/cron.d/buildmaster_repomgmt
+* * * * * void-repomaster ${HOME}/bin/xbps-sign-repos.sh &gt;/dev/null 2&gt;&amp;1
+0 2 * * * void-repomaster ${HOME}/bin/xbps-clean-repos.sh
+```
+The scripts can't be found, because they don't have the `.sh` suffix. Corrected version:
+```
+[root@build bin]# cat /etc/cron.d/buildmaster_repomgmt
+* * * * * void-repomaster ${HOME}/bin/xbps-sign-repos &gt;/dev/null 2&gt;&amp;1
+0 2 * * * void-repomaster ${HOME}/bin/xbps-clean-repos
+```
+</section><section id="post4">
+<h5>Enno Boland at <a href="#post4">Tue, 03 Jan 2017 06:14:37 -0800</a></h5>
+* [ ] wrong permissions of /usr/lib/python2.7/site-packages/zope.event-4.2.0.dist-info: no perms for ```o```
+</section><section id="post5">
+<h5>Michael Aldridge at <a href="#post5">Tue, 03 Jan 2017 16:54:51 -0800</a></h5>
+@Gottox I'm inclined to say that's a package error, I had similar issues with the buildmaster which is why its a virtualenv install (I assume this is on the buildslave)
+</section><section id="post6">
+<h5>Enno Boland at <a href="#post6">Tue, 03 Jan 2017 22:51:38 -0800</a></h5>
+I've never experienced it before. maybe a umask issue?
+</section><section id="post7">
+<h5>Michael Aldridge at <a href="#post7">Tue, 03 Jan 2017 23:02:01 -0800</a></h5>
+Plausible, @dinoocch, can you weigh in on this?
+</section><section id="post8">
+<h5>Michael Gehring at <a href="#post8">Sat, 07 Jan 2017 00:08:20 -0800</a></h5>
+- [ ] .xz, .xbps, .sig are served with content-type text/html
+</section><section id="post9">
+<h5>Michael Aldridge at <a href="#post9">Sat, 07 Jan 2017 00:09:01 -0800</a></h5>
+@ebfe, changing that as we speak.
+</section><section id="post10">
+<h5>Michael Aldridge at <a href="#post10">Sat, 07 Jan 2017 00:09:40 -0800</a></h5>
+@Gottox Signing filename now fixed.
+</section><section id="post11">
+<h5>Michael Aldridge at <a href="#post11">Sat, 07 Jan 2017 00:50:11 -0800</a></h5>
+@ebfe the default_type is now application/octet-stream
+</section><section id="post12">
+<h5>Christian Neukirchen at <a href="#post12">Wed, 11 Jan 2017 04:16:22 -0800</a></h5>
+[ ] aarch64 packages have not been signed back to Jan 3.
+</section><section id="post13">
+<h5>Michael Aldridge at <a href="#post13">Fri, 13 Jan 2017 11:51:22 -0800</a></h5>
+@chneukirchen tor has been up and running for a few days now, can we go ahead and check that off?
+</section><section id="post14">
+<h5>Enno Boland at <a href="#post14">Fri, 13 Jan 2017 11:53:17 -0800</a></h5>
+* [ ] sources.voidlinux.eu is missing ssl.
+</section><section id="post15">
+<h5>Michael Aldridge at <a href="#post15">Fri, 13 Jan 2017 20:30:12 -0800</a></h5>
+@Gottox sources.voidlinux.eu now has SSL
+</section><section id="post16">
+<h5>Enno Boland at <a href="#post16">Sat, 11 Feb 2017 01:12:43 -0800</a></h5>
+Closed #5449.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] KF5 additional packages (#4957)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] KF5 additional packages (#4957)</h1>
+<section id="post1">
+<h5>"A. Wilcox" at <a href="#post1">Sun, 27 Nov 2016 15:57:42 -0800</a></h5>
+Hi, I'm awilfox from IRC; it appears the ki18n patch (third link) and ksolid patch (first link) are already applied.
+The second link is for KIO's Proxy Autoconfiguration service.  It doesn't compile on musl because either ```_BSD_SOURCE``` or ```_GNU_SOURCE``` needs to be defined first.  I suggested in the [KDE bug](https://bugs.kde.org/show_bug.cgi?id=365925) to modify ```src/kpac/ConfigureChecks.cmake```, but they haven't responded yet.  In the meantime, an easy fix is [this patch](https://code.foxkit.us/adelie/patches/raw/master/kde-frameworks/kio/kio-5.21.0-bsd_source-definition.patch) I wrote that simply adds ```#define _BSD_SOURCE``` to the top of ```src/kpac/kpac_dhcp_helper.c```.
+Otherwise, these packages should work on x86_64-musl as far as I can see.
+</section><section id="post2">
+<h5>Denis Revin at <a href="#post2">Mon, 28 Nov 2016 05:09:22 -0800</a></h5>
+Thank you @Duncaen and @awilfox!
+I can confirm, that I've already applied @awilfox's patch to ki18n, and ksolid patch already applied by someone.
+Unfortunately i can't test kio patch at this moment, because something broken in qt5 crossbuilding with gcc 6.2, or it's just for me, but I'll try again later
+</section><section id="post3">
+<h5>Toyam Cox at <a href="#post3">Sun, 04 Dec 2016 11:09:55 -0800</a></h5>
+Merged #4957.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

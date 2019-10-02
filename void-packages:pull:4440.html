@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] New package: plymouth-0.8.8 (#4440)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] New package: plymouth-0.8.8 (#4440)</h1>
+<section id="post1">
+<h5>"Will. :p" at <a href="#post1">Wed, 06 Jul 2016 07:49:29 -0700</a></h5>
+@WilliamO7 pushed 1 commit.
+f743a9b  plymouth: update to 0.8.8.
+---
+You are receiving this because you are subscribed to this thread.
+View it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4440/files/ffdc918c89e1f1cc5c8ffd0bdc3a17e4f3ef0117..f743a9b699b89a4a36429d04547463e8c5a81a80
+</section><section id="post2">
+<h5>"Will. :p" at <a href="#post2">Wed, 06 Jul 2016 08:02:48 -0700</a></h5>
+Just found out I messed up with the commits on my end...
+Trying to squash the two into one now...
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4440#issuecomment-230800257
+</section><section id="post3">
+<h5>"Will. :p" at <a href="#post3">Wed, 06 Jul 2016 08:14:08 -0700</a></h5>
+All previous edits should be done now.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4440#issuecomment-230803687
+</section><section id="post4">
+<h5>"Will. :p" at <a href="#post4">Wed, 06 Jul 2016 11:30:23 -0700</a></h5>
+Hmm, only i686 and x86_64 glib packages build correctly... Looking into it...
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4440#issuecomment-230862739
+</section><section id="post5">
+<h5>Jürgen Buchmüller at <a href="#post5">Wed, 06 Jul 2016 11:45:43 -0700</a></h5>
+The culprit seems to be [`rpmatch(3)`](http://linux.die.net/man/3/rpmatch) which musl libc does not have.
+A simple, non locale aware replacement could be written to accept e.g. "yes", "y", "no", "n" as valid strings returning 0 for negative and 1 for affirmative strings, or -1 otherwise.
+This could be patched into `main.c` itself enclosed in `#if !defined(__GLIBC__)` like this:
+```C
+#if !defined(__GLIBC__)
+int rpmatch(const char* response)
+{
+    if (!strcasecmp(response, "n") ||
+        !strcasecmp(response, "no"))
+        return 0;
+    if (!strcasecmp(response, "y") ||
+        !strcasecmp(response, "yes"))
+        return 1;
+   return -1;
+}
+#endif /* !defined(__GLIBC__) */
+```
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4440#issuecomment-230867117
+</section><section id="post6">
+<h5>"Will. :p" at <a href="#post6">Wed, 06 Jul 2016 12:09:42 -0700</a></h5>
+So should we not build this for musl then?
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4440#issuecomment-230873830
+</section><section id="post7">
+<h5>Toyam Cox at <a href="#post7">Wed, 06 Jul 2016 13:06:38 -0700</a></h5>
+@WilliamO7 I think @Duncaen and @pullmoll are discussing the ideal workaround so we can build it for musl.
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4440#issuecomment-230890518
+</section><section id="post8">
+<h5>Jürgen Buchmüller at <a href="#post8">Wed, 06 Jul 2016 13:12:59 -0700</a></h5>
+@Duncaen I tend to agree, while musl has `setlocale()` and we could use `gettext-devel`...
+Then `gettext()` could used to query the localized strings for e.g. `"yes", "no", "^[yY]" and "^[nN]"` compare their translation to the response.
+Just a thought. For now the hack should suffice.
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4440#issuecomment-230892079
+</section><section id="post9">
+<h5>Toyam Cox at <a href="#post9">Thu, 07 Jul 2016 06:53:32 -0700</a></h5>
+@pullmoll Would it be correct to now `makedepends` on `musl-rpmatch-devel` for this package?
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4440#issuecomment-231084037
+</section><section id="post10">
+<h5>Jürgen Buchmüller at <a href="#post10">Thu, 07 Jul 2016 07:04:52 -0700</a></h5>
+Yes, I think `musl-rpmatch-devel` could now be used.
+Instead of trying to patch `configure`, or even `configure.ac` and/or `Makefile.am` in case you wanted to add `automake` and `libtool` to hostdepends, it should be sufficient to have a global scope `LIBS=-lrpmatch` or perhaps `LDFLAGS=-lrpmatch`.
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4440#issuecomment-231087347
+</section><section id="post11">
+<h5>"Will. :p" at <a href="#post11">Thu, 07 Jul 2016 10:41:07 -0700</a></h5>
+Sigh, still doesn't build on musl (and yes, I did move the include up and build again)...
+I would look for another file that includes rpmatch, but I really do not have the time right now.
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4440#issuecomment-231152846
+</section><section id="post12">
+<h5>Jürgen Buchmüller at <a href="#post12">Thu, 07 Jul 2016 11:18:23 -0700</a></h5>
+I'll probably take a look later this afternoon.
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4440#issuecomment-231163318
+</section><section id="post13">
+<h5>Jürgen Buchmüller at <a href="#post13">Thu, 07 Jul 2016 16:40:55 -0700</a></h5>
+Closed #4440 via 96cd364ee1f3165774a7278557438fbf778cda0a.
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4440#event-716437007
+</section><section id="post14">
+<h5>Jürgen Buchmüller at <a href="#post14">Fri, 08 Jul 2016 08:16:33 -0700</a></h5>
+@WilliamO7 LMK if the package works for you. I didn't take the time to test the results.
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4440#issuecomment-231387320
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

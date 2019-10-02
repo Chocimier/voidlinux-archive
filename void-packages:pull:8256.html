@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] wine: add x86_64 target (#8256)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] wine: add x86_64 target (#8256)</h1>
+<section id="post1">
+<h5>Robert Walker at <a href="#post1">Sat, 12 May 2018 11:54:20 -0700</a></h5>
+@Duncaen
+I've maintained an Overlay fork of the main **Gentoo** packages for 2-3 years. So I can state categorically that unless one steps back to 2015 - building **SysWOW 64-bit / 32-bit Multi-lib** Wine has been fully supported by **Gentoo**!
+**NP-hardass** depreciated the older **app-emulation/wine** package, because this package does not support the new-mutlislotting feature **Gentoo** has introduced (i.e. multiple Wine versions installed in parallel). This has nothing to do with support for true **SysWOW64** support - which has been available since 2015(ish) (when the **Gentoo** **emul-linux** multilib packages were finally officially depreciated).
+See: [Gentoo Wiki: Wine: New Packaging](https://wiki.gentoo.org/wiki/Wine:_New_Packaging).
+Frankly IHMO **Gentoo** has the best support, for flexible and customisable packaging of Wine, of any Linux distribution.
+</section><section id="post2">
+<h5>Robert Walker at <a href="#post2">Sat, 12 May 2018 12:40:13 -0700</a></h5>
+@Duncaen
+I see my comments as being relevant - because you guys are clearly looking around at how build chains on alternative source-based distributions build Wine.
+I'll poke around - but I'm not familiar with **Void** Linux...
+There's a guy on the WineHQ forums trying to build SysWOW Wine on **Void**.
+So I'm on the end of a Google search about this...
+I can state straight off... That building **Syswow Multi-lib Wine** isn't possible without being to refer to the 64-bit build files from the 32-bit build step.
+**Gentoo** uses a 2 pass approach. The 32-bit and 64-bit build directories are able to reference the other architecture's build directory, during the build process.
+Do I gather correctly that on **Void** - you end up with 2 separate packages?
+I.e. a pure 32-bit Wine package and a pure 64-bit Wine package - that don't "talk to each other"?
+Which is mainly an issue with your packaging tool-chain... Right?
+I'd warn you that it's probably taken the **Gentoo** project around a decade to stabilise good quality multilib package building support.
+</section><section id="post3">
+<h5>Nicolas Porcel at <a href="#post3">Sun, 13 May 2018 04:55:52 -0700</a></h5>
+@bobwya
+Indeed, I was confused by this comment in the ebuild file:
+&gt; Note: using --with-wine64 results in problems with multilib.eclass
+&gt; CC/LD hackery. We're using separate tools
+Also, it turns out that when I switched to Void in 2017 I was still using app-emulation/wine. I do not know the current state of the wine package but I don't recall any elog / ebuild warning for the switch to virtual/wine.
+Back to Void, it seems there is some kind of multilib support but I am unsure how it works. Surprisingly, using this patch does enable me to run either a 32 bits wineprefix or a 64 bits wineprefix with support for 32 bits applications (I guess this is what is called Wow64).
+I just need to install both the 64 bits wine built locally using this patch and the 32 bits one from the multilib remote repository. I never had to build both wine versions together. The only problem I have is that both wine share some files such as `/usr/bin/wine` or `/usr/share/wine/*`.
+So moving the common files to a new shared package would solve the issue and allow user to run 32 bits applications in 64 bits wineprefix, or still using a 32 bits wineprefix. Unless someone has a better idea I will try to do that.
+</section><section id="post4">
+<h5>Nicolas Porcel at <a href="#post4">Sat, 16 Jun 2018 08:53:44 -0700</a></h5>
+The repo moved. This PR needs some work anyway so I will submit a new one once it's ready.
+</section><section id="post5">
+<h5>Nicolas Porcel at <a href="#post5">Sat, 16 Jun 2018 08:53:45 -0700</a></h5>
+Closed #8256.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

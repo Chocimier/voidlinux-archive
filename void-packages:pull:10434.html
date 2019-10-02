@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] ii: add runit service (#10434)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] ii: add runit service (#10434)</h1>
+<section id="post1">
+<h5>José Miguel Sánchez García at <a href="#post1">Thu, 04 Jan 2018 05:56:57 -0800</a></h5>
+I've suffixed it with _generic_ as in `agetty-generic` It's not intended for direct activation, but to make a derived service (`agetty-tty1`, `agetty-ttyS0`, etc.).
+Furthermore, I said it's very useful as a user service because that's the most common use case, but I can imagine it being used for IRC bots or something alike. The behavior of `ii` (opening channels as FIFO files) makes it great for that purpose. It would make sense running it system-wide.
+</section><section id="post2">
+<h5>José Miguel Sánchez García at <a href="#post2">Thu, 04 Jan 2018 06:19:10 -0800</a></h5>
+@jmi2k pushed 1 commit.
+59e02dd  ii: get server from service path suffix
+</section><section id="post3">
+<h5>José Miguel Sánchez García at <a href="#post3">Thu, 04 Jan 2018 14:30:33 +0000 (UTC)</a></h5>
+Closed #10434.
+</section><section id="post4">
+<h5>José Miguel Sánchez García at <a href="#post4">Thu, 04 Jan 2018 14:30:34 +0000 (UTC)</a></h5>
+Ok I understand your point. Is sad, providing user services using the package manager itself is very convenient (I come from GuixSD where this is being done). In fact, I was preparing another PR for bundling a `runsvdir-generic` system service for enabling user services (`runsvdir-jmi2k` for example).
+I'll close the PR (again!) because it seems like it needs more thinking and discussing beforehand. Maybe it can be reconsidered in the future if packaged user services become a thing.
+What do you think? Should I open a follow-up issue to discuss it?
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

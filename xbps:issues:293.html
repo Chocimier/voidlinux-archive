@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/xbps] uunshare and uchroot: some nspawn-like proposal
+ (#293)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/xbps] uunshare and uchroot: some nspawn-like proposal
+ (#293)</h1>
+<section id="post1">
+<h5>Enno Boland at <a href="#post1">Thu, 31 May 2018 05:06:19 -0700</a></h5>
+At least 1. is something that can be really useful for xbps-src.
+</section><section id="post2">
+<h5>Alexander at <a href="#post2">Thu, 31 May 2018 05:07:03 -0700</a></h5>
+@Duncaen, the first two opts would be added to both utils anyway. And the third is all about making chown work inside uunshared jails (there are no such problems in case of uchroot). So if there's any other ways to fix it, I'd rather use them than touch user namespaces mechanics.
+</section><section id="post3">
+<h5>Michael Gehring at <a href="#post3">Thu, 31 May 2018 05:37:52 -0700</a></h5>
+There are a lot of more things to consider to make chown work in (unpriviledged) xbps-uunshare. If you are ok with a priviledged tool just use xbps-chroot. IMO if you want general purpose container tool use one of the already existing ones.
+</section><section id="post4">
+<h5>Alexander at <a href="#post4">Thu, 31 May 2018 13:03:28 +0000 (UTC)</a></h5>
+&gt; How would you change the hostname in a `chroot(2)`?
+Will `sethostname()` not work after clone syscall (as I see from uchroot source code, UTS NS is also cloned)?
+Generally no, I don't want to overbloat our xbps helpers, of course. Since fakeroot is very special case (which hovewer is made for working without root privileges), yep, let my third question be not quite correct.
+</section><section id="post5">
+<h5>Alexander at <a href="#post5">Thu, 31 May 2018 06:32:04 -0700</a></h5>
+Great, will do both 1 &amp; 2 in nearest week.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

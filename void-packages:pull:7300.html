@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] New package: miredo-1.2.6 (#7300)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] New package: miredo-1.2.6 (#7300)</h1>
+<section id="post1">
+<h5>Michael Aldridge at <a href="#post1">Thu, 26 Oct 2017 03:24:40 +0000 (UTC)</a></h5>
+I don't really like this package, but perhaps someone else from @voidlinux/pkg-committers will have a different opinion.
+</section><section id="post2">
+<h5>Lon Willett at <a href="#post2">Sat, 28 Oct 2017 00:31:42 -0700</a></h5>
+@the-maldridge
+I'm curious as to what "don't really like this package" means in a more specific, technical sense. Is it my job packaging it, the implementation, or just the kludgey teredo protocol?
+</section><section id="post3">
+<h5>Michael Aldridge at <a href="#post3">Sat, 28 Oct 2017 00:34:35 -0700</a></h5>
+It's primarily the large patch included, the &lt;imho&gt; complex run script, and the general complexity of the template.  If the patch weren't there I'd be happier, but that is still a complex run script.
+The readme should also go, its not within our policy to have such readmes.
+</section><section id="post4">
+<h5>Lon Willett at <a href="#post4">Sat, 28 Oct 2017 03:16:17 -0700</a></h5>
+@the-maldridge
+I got rid of the README.Void file, although I must say that a policy of *not* documenting things rubs me the wrong way. Seems like there aren't really any downsides to including a file describing the choices made and how to integrate the service into a Void system.
+I simplified the run script. I had made it complex as a feature: it tried to do things the "right" way, without requiring user configuration beyond editing the miredo.conf file. Since using tunnels of any sort is intrinsically messy, this was complex. Perhaps this approach was misguided.
+The complexity of the template involves several things. The need to adapt to the void layout and to use runit instead of systemd is pretty much unavoidable.
+The use of libjudy, and its inability to cross-compile is rather messy. And libjudy appears to be just an optimisation, not a requirement. I stuck with it because everyone else seems to use it, and I have no idea at what point it the optimisation becomes a good idea, or even if the non-libjudy implementation works. I can say that I have seen a surprisingly large number of teredo connections hitting IPv6 enabled services, which is why I like to run a teredo relay on my gateways. So optimisation is not necessarily useless here. I could look into the behaviour without libjudy, but would prefer to avoid the work.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

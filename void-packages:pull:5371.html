@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] New package: ncdns-0.0.2 (#5371)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] New package: ncdns-0.0.2 (#5371)</h1>
+<section id="post1">
+<h5>ananteris at <a href="#post1">Sat, 17 Dec 2016 08:41:51 -0800</a></h5>
+ananteris commented on this pull request.
+&gt; +version=0.0.2
++revision=1
++only_for_archs="x86_64-musl x86_64 i686"
++build_style=go
++hostmakedepends="git libcap-devel"
++go_get=yes
++go_import_path="github.com/hlandau/ncdns"
++short_desc="Nameserver for Namecoin .bit domains"
++maintainer="ananteris &lt;ananteris@mailinator.com&gt;"
++license="GPL-3"
++homepage="https://github.com/hlandau/ncdns"
++distfiles="https://github.com/hlandau/${pkgname}/archive/v${version}.tar.gz"
++checksum="a9457216f5bbc3c3b41e0538b78f8f67ad9a04304743a352a7325eef6af4a439"
++
++do_install() {
++	vbin ${GOPATH}/bin/ncdns
+All of these have been resolved.
+</section><section id="post2">
+<h5>Christian Neukirchen at <a href="#post2">Mon, 02 Jan 2017 09:56:11 -0800</a></h5>
+Merged #5371.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

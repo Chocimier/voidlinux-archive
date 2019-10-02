@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] rpi-kernel-headers: wrong arch for
+ scripts (#5723)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] rpi-kernel-headers: wrong arch for
+ scripts (#5723)</h1>
+<section id="post1">
+<h5>"Jason A. Donenfeld" at <a href="#post1">Sun, 12 Feb 2017 12:31:23 -0800</a></h5>
+If you remove the binaries, then people can't build modules, which is a big bummer. So if there's some workaround, I suppose that'd be ideal.
+Alternatively, you can remove the binaries, but then make another package all together that ships the entire kernel source alongside Modules.symvers and .config, like the headers package, so that people can use that for building modules.
+Either way is fine. The current work around is something nasty involving untarring the source into the headers folder, to add the missing sources, and then running `make scripts` on the target, to rebuild those binaries. That works, but it's very burdensome and a fairly ugly hack.
+</section><section id="post2">
+<h5>girst at <a href="#post2">Wed, 31 Jan 2018 23:03:51 +0000 (UTC)</a></h5>
+Can confirm this problem still exists in `rpi-kernel-headers-4.9.78_1` -- very annoying, as I'm using an out-of-tree kernel module.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

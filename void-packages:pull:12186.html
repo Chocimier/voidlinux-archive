@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] fcitx (and depending pkgs): fix cross
+ compilation (#12186)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] fcitx (and depending pkgs): fix cross
+ compilation (#12186)</h1>
+<section id="post1">
+<h5>Toyam Cox at <a href="#post1">Wed, 07 Mar 2018 01:03:17 -0800</a></h5>
+Vaelatern commented on this pull request.
+&gt; @@ -22,6 +22,7 @@ SET(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+ SET(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+ SET(wxWidgets_CONFIG_EXECUTABLE ${XBPS_WRAPPERDIR}/wx-config)
++SET(FCITX4_FCITXCONFIG_EXECUTABLE ${XBPS_CROSS_BASE}/usr/bin/fcitx4-config)
+@voidlinux/pkg-committers ?
+</section><section id="post2">
+<h5>newbluemoon at <a href="#post2">Wed, 07 Mar 2018 09:29:14 +0000 (UTC)</a></h5>
+newbluemoon commented on this pull request.
+&gt; @@ -22,6 +22,7 @@ SET(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+ SET(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+=20
+ SET(wxWidgets_CONFIG_EXECUTABLE ${XBPS_WRAPPERDIR}/wx-config)
++SET(FCITX4_FCITXCONFIG_EXECUTABLE ${XBPS_CROSS_BASE}/usr/bin/fcitx4-config)
+Just to add: packages using `fcitx4-config` are
+* fcitx-configtool
+* fcitx-rime
+* libfcitx-qt5
+I don=E2=80=99t know if three is a large number enough to put it in `cmake.=
+sh`, but in my opinion it=E2=80=99s cleaner that way.
+And to elaborate some more:
+When cmake tries to locate fcitx the found cmake script calls `fcitx4-confi=
+g --prefix` to include `FcitxMacro.cmake` (which resides in the same direct=
+ory!). That=E2=80=99s what the sed in line 32 in fcitx=E2=80=99s template i=
+s for: to look for the file in the same directory. Else `fcitx4-config --pr=
+efix` has to be prefixed with $XBPS_CROSS_BASE. But this would cause e.g. f=
+citx-rime to install some files under $XBPS_CROSS_BASE which would then hav=
+e to be removed again in the template ...
+So I tried to find a way with the smallest amount of changes necessary.
+--=20
+You are receiving this because you are on a team that was mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/12186#discussion_r172782879=
+</section><section id="post3">
+<h5>Jürgen Buchmüller at <a href="#post3">Thu, 08 Mar 2018 09:20:34 -0800</a></h5>
+pullmoll commented on this pull request.
+&gt; @@ -22,6 +22,7 @@ SET(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+ SET(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+ SET(wxWidgets_CONFIG_EXECUTABLE ${XBPS_WRAPPERDIR}/wx-config)
++SET(FCITX4_FCITXCONFIG_EXECUTABLE ${XBPS_CROSS_BASE}/usr/bin/fcitx4-config)
+The arguments seem reasonable to me while I also don't know if a package count of 3 for which this is useful is sufficient to justify a cmake build style change.
+</section><section id="post4">
+<h5>newbluemoon at <a href="#post4">Tue, 13 Mar 2018 07:23:43 +0000 (UTC)</a></h5>
+newbluemoon commented on this pull request.
+&gt; @@ -22,6 +22,7 @@ SET(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+ SET(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+=20
+ SET(wxWidgets_CONFIG_EXECUTABLE ${XBPS_WRAPPERDIR}/wx-config)
++SET(FCITX4_FCITXCONFIG_EXECUTABLE ${XBPS_CROSS_BASE}/usr/bin/fcitx4-config)
+&gt; I guess it's not possible to modify the FcitxMacro.cmake file itself to b=
+ecome cross building aware
+@pullmoll Sorry, just saw your edit: I did some digging and think it is pos=
+sible by just changing one line in FcitxConfig.cmake and modifying the cmak=
+e build style won=E2=80=99t be necessary :) Need to test that everything el=
+se still works. Will report back later today.
+Thanks for the nudge in the right direction :)
+--=20
+You are receiving this because you are on a team that was mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/12186#discussion_r174034279=
+</section><section id="post5">
+<h5>newbluemoon at <a href="#post5">Tue, 13 Mar 2018 15:02:00 +0000 (UTC)</a></h5>
+I think I found a better way to find `fcitx4-config` when cross compiling without modifying the cmake build style:
+The problem is that the cmake cross toolchain file is setup to not look for programs under `$XBPS_CROSS_BASE`. This is the right thing to do in general, but in this case `fcitx4-config` (which is a shell script) cannot be found. So the simple solution is to add `$CMAKE_FIND_ROOT_PATH` to the list of paths with which `FcitxConfig.cmake` calls `FIND_PROGRAM` for `fcitx4-config`.
+There already is a list of paths defined. One of them is `/opt/fcitx` which is used on MacOSX and to make the sed command less complex I just used this line and replaced it with `$CMAKE_FIND_ROOT_PATH`. Now everything works just fine for native and cross builds.
+</section><section id="post6">
+<h5>newbluemoon at <a href="#post6">Tue, 13 Mar 2018 16:56:29 +0000 (UTC)</a></h5>
+Did some further testing and found that `fcitx4-config` &lt;i&gt;is&lt;/i&gt; found &lt;i&gt;=
+without&lt;/i&gt; the above adding `$CMAKE_FIND_ROOT_PATH` to `FIND_PROGRAM`; I g=
+uess the option `ONLY_CMAKE_FIND_ROOT_PATH` overrides `SET(CMAKE_FIND_ROOT_=
+PATH_MODE_PROGRAM NEVER)` from the cmake cross toolchain file. So I removed=
+ the above change. I just have no idea why it didn=E2=80=99t work in the fi=
+rst place!
+@pullmoll If you can spare a little time, could you please test if this wor=
+ks for you? (In case I messed something up.) :)
+--=20
+You are receiving this because you are on a team that was mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/12186#issuecomment-372738702=
+</section><section id="post7">
+<h5>newbluemoon at <a href="#post7">Wed, 14 Mar 2018 07:30:55 +0000 (UTC)</a></h5>
+To clean this up: Apparently, I confused some things while trying out different approaches. `fcitx4-config` is found without any modification necessary. What really does the trick is just to fix how `FcitxMacro.cmake` is included in `FcitxConfig.cmake` (i.e. without invoking `fcitx4-config`). I triple checked and now everything should be ok. Sorry for the inconveniencies.
+</section><section id="post8">
+<h5>Jürgen Buchmüller at <a href="#post8">Wed, 14 Mar 2018 13:57:34 -0700</a></h5>
+Hmm.. libexecinfo now fails to build for cross `*-musl` targets for some reason and so trying to build fcitx for e.g. `aarch64-musl` fails here. I have idea what's going on and why `xbps-src` thinks it is not building for a `*-musl` arch when I use `-a aarch64-musl`.
+</section><section id="post9">
+<h5>newbluemoon at <a href="#post9">Wed, 14 Mar 2018 14:03:42 -0700</a></h5>
+Just tried for aarch64-musl and armv7l-musl and everything is just fine here.
+</section><section id="post10">
+<h5>Jürgen Buchmüller at <a href="#post10">Wed, 14 Mar 2018 14:10:39 -0700</a></h5>
+I'm using a glibc x86_64 environment to cross build for aarch64-musl, perhaps that makes a difference. But whatever it is, I think in case of libexecinfo we can resort to specifying the `only_for_archs` list and I would push the PR with that change if all looks ok here.
+</section><section id="post11">
+<h5>newbluemoon at <a href="#post11">Wed, 14 Mar 2018 14:12:44 -0700</a></h5>
+&gt; I'm using a glibc x86_64 environment to cross build for aarch64-musl
+Same here. Except that it works for me as is. Strange...
+</section><section id="post12">
+<h5>Jürgen Buchmüller at <a href="#post12">Wed, 14 Mar 2018 14:15:12 -0700</a></h5>
+Maybe it's related to #12324 but I would not know how. I don't feel like investigating this further, though :)
+</section><section id="post13">
+<h5>Jürgen Buchmüller at <a href="#post13">Wed, 14 Mar 2018 14:21:50 -0700</a></h5>
+Closed #12186 via 95b278abf7e4a784735a6eebe6ee6729e2225e37.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] New package: spt-0.4 (#5883)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] New package: spt-0.4 (#5883)</h1>
+<section id="post1">
+<h5>ibabushkin at <a href="#post1">Sun, 05 Mar 2017 01:42:49 -0800</a></h5>
+ibabushkin commented on this pull request.
+&gt; @@ -0,0 +1,24 @@
++# Template file for 'spt'
++pkgname=spt
++version=0.4
++revision=1
++short_desc="Simple pomodoro timer"
++maintainer="Inokentiy Babushkin &lt;inokentiy.babushkin@googlemail.com&gt;"
++license="Custom"
+Thanks!
+</section><section id="post2">
+<h5>ibabushkin at <a href="#post2">Sun, 05 Mar 2017 01:44:52 -0800</a></h5>
+ibabushkin commented on this pull request.
+&gt; @@ -0,0 +1,24 @@
++# Template file for 'spt'
++pkgname=spt
++version=0.4
++revision=1
++short_desc="Simple pomodoro timer"
++maintainer="Inokentiy Babushkin &lt;inokentiy.babushkin@googlemail.com&gt;"
++license="Custom"
++hostmakedepends="pkg-config"
++makedepends="libnotify-devel glib-devel"
++depends="libnotify"
+Yes, you're right. Fixed now.
+</section><section id="post3">
+<h5>ibabushkin at <a href="#post3">Tue, 07 Mar 2017 09:39:55 -0800</a></h5>
+Is there any further change needed on this one? Or should we wait on #5917 to land?
+</section><section id="post4">
+<h5>Toyam Cox at <a href="#post4">Tue, 07 Mar 2017 09:43:01 -0800</a></h5>
+The install ought to be taking care of the vman itself, can you confirm?
+</section><section id="post5">
+<h5>ibabushkin at <a href="#post5">Tue, 07 Mar 2017 09:53:48 -0800</a></h5>
+Yes, it seems to. I'll remove it and update the commit.
+</section><section id="post6">
+<h5>Toyam Cox at <a href="#post6">Thu, 30 Mar 2017 10:02:33 -0700</a></h5>
+Merged #5883.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

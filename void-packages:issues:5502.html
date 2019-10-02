@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] Package request: open-vm-tools (#5502)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] Package request: open-vm-tools (#5502)</h1>
+<section id="post1">
+<h5>James Sumners at <a href="#post1">Fri, 13 Jan 2017 11:56:26 -0800</a></h5>
+I started investigating how I would contribute this, but only got as far as=
+ the following steps:
+1. autoreconf -i
+2. ./configure =E2=80=94without-x =E2=80=94without-ssl =E2=80=94disable-dep=
+loypkg
+3. make
+Step 2 doesn't finish because the configure script can't find "glib2". And =
+I can't find a "glib2" anything in the repository.
+--=20
+You are receiving this because you were assigned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/5502#issuecomment-2725324=
+73=
+</section><section id="post2">
+<h5>James Sumners at <a href="#post2">Tue, 17 Jan 2017 06:01:12 -0800</a></h5>
+Source for libdnet is https://github.com/dugsong/libdnet . Debian has it as "libdumbnet" because they already had a "libdnet" ([ref](https://sources.debian.net/src/libdumbnet/1.12-7/debian/patches/01rename_library.sh.dpatch/)).
+</section><section id="post3">
+<h5>James Sumners at <a href="#post3">Wed, 18 Jan 2017 06:32:17 -0800</a></h5>
+@Duncaen when you ran `configure` did you get "configure: error: glib2 &gt;= 2.14.0 is required."? I have `glib-devel` installed.
+</section><section id="post4">
+<h5>James Sumners at <a href="#post4">Wed, 18 Jan 2017 07:10:05 -0800</a></h5>
+I did not have `pkg-config` installed. That has helped `configure` find `glib`. Thanks.
+I don't know if I'll be able to get this done myself, but I'm at least trying.
+</section><section id="post5">
+<h5>James Sumners at <a href="#post5">Wed, 18 Jan 2017 13:04:04 -0800</a></h5>
+Here's what I have as a template for `libdnet`:
+```
+# Template file for 'libdnet'
+pkgname=libdnet
+version=20170118
+commit="1570b70ccbd6f62cb8a0f745ff7a4a8c48817fec"
+revision=1
+build_style=gnu-configure
+#configure_args=""
+#hostmakedepends=""
+#makedepends=""
+wrksrc="${pkgname}-${commit}"
+short_desc="libdnet provides a simplified interface to networking routines"
+maintainer="James Sumners &lt;james.sumners@gmail.com&gt;"
+license="MIT"
+homepage="https://github.com/dugsong/${pkgname}"
+distfiles="${homepage}/archive/${commit}.tar.gz"
+checksum="01197806f5e1769995350835d51e2e3eaf65faffad7e68770c6e9ecd4be4e690"
+pre_configure() {
+  sed -i -e 's/^\(.*tun.h udp.h\)/\1 sctp.h/' include/dnet/Makefile.in
+}
+```
+I have successfully built the `open-vm-tools` code with: `./configure --without-x --without-ssl --disable-deploypkg --without-xmlsecurity --without-kernel-modules --without-pam --without-icu`
+</section><section id="post6">
+<h5>maxice8 at <a href="#post6">Tue, 06 Mar 2018 14:58:40 -0800</a></h5>
+package is in the repo, this can be closed.
+</section><section id="post7">
+<h5>Toyam Cox at <a href="#post7">Tue, 06 Mar 2018 15:09:04 -0800</a></h5>
+Closed #5502.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

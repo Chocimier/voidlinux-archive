@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-runit] Add vlogger(8) (#65)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-runit] Add vlogger(8) (#65)</h1>
+<section id="post1">
+<h5>Chris Brannon at <a href="#post1">Tue, 04 Apr 2017 13:18:53 -0700</a></h5>
+Looks good!
+I'd love to see this merged.
+</section><section id="post2">
+<h5>Juan RP at <a href="#post2">Tue, 04 Apr 2017 21:30:45 -0700</a></h5>
+I agree too. This is a great idea. Thanks.
+El 4/4/2017 22:18, "Chris Brannon" &lt;notifications@github.com&gt; escribi=C3=B3=
+:
+&gt; Looks good!
+&gt; I'd love to see this merged.
+&gt;
+&gt; =E2=80=94
+&gt; You are receiving this because you are subscribed to this thread.
+&gt; Reply to this email directly, view it on GitHub
+&gt; &lt;https://github.com/voidlinux/void-runit/pull/65#issuecomment-291619616=
+&gt;,
+&gt; or mute the thread
+&gt; &lt;https://github.com/notifications/unsubscribe-auth/AA0fqeRcHlwAkot9k7Rr=
+f7eq4UzFDEWOks5rsqWtgaJpZM4MQGst&gt;
+&gt; .
+&gt;
+-- =
+You are receiving this because you authored the thread.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-runit/pull/65#issuecomment-291751257=
+</section><section id="post3">
+<h5>Christian Neukirchen at <a href="#post3">Wed, 05 Apr 2017 06:06:22 -0700</a></h5>
+chneukirchen commented on this pull request.
+&gt; @@ -0,0 +1,111 @@
++#include &lt;stdio.h&gt;
++#include &lt;stdlib.h&gt;
++#include &lt;string.h&gt;
++#include &lt;syslog.h&gt;
++#include &lt;unistd.h&gt;
++
++typedef struct _code {
+Don't use identifiers starting with _ in code.
+&gt; +			if (strcmp(cp-&gt;c_name, s) == 0)
++				*facility = cp-&gt;c_val;
++		}
++}
++
++int
++main(int argc, char *argv[])
++{
++	char c, *p;
++	int facility = LOG_DAEMON;
++	int level = LOG_INFO;
++
++	if (((p = strrchr(*argv, '/')) &amp;&amp; !strncmp(p+1, "run", 3)) &amp;&amp;
++	    (*p = 0, (p = strrchr(*argv, '/')) &amp;&amp; !strncmp(p+1, "log", 3)) &amp;&amp;
++	    (*p = 0, (p = strrchr(*argv, '/'))) != 0) {
++		tag = strdup(p+1);
+unchecked strdup
+&gt; +	    (*p = 0, (p = strrchr(*argv, '/')) &amp;&amp; !strncmp(p+1, "log", 3)) &amp;&amp;
++	    (*p = 0, (p = strrchr(*argv, '/'))) != 0) {
++		tag = strdup(p+1);
++	}
++
++	while ((c = getopt(argc, argv, "p:t:")) != -1)
++		switch (c) {
++		case 'p': strpriority(optarg, &amp;facility, &amp;level); break;
++		case 't': tag = optarg; break;
++		default:
++			fprintf(stderr, "usage: vlogger [-p priority] [-t tag]\n");
++			exit(1);
++		}
++
++	if (access("/etc/vlogger", X_OK) != -1)
++		execl("/etc/vlogger", "/etc/vlogger", tag, (char *)0);
+Do we want to fall back to the default if this execl fails?
+</section><section id="post4">
+<h5>bougyman at <a href="#post4">Wed, 05 Apr 2017 06:11:04 -0700</a></h5>
+I really think this is overkill, as proper logging services are already
+supported by runit. as part of sv-helper I include rsvlog which is meant to
+be symlinked as &lt;service&gt;/log/run, and it allows some handy configuration
+of svlogd. Take a look and let me know what you think. It's what i've been
+using for logging with runit services for &gt; 8 years.
+Tj
+On Wed, Mar 1, 2017 at 11:36 AM, Duncan Overbruck &lt;notifications@github.com&gt;
+wrote:
+&gt; vlogger(8) is a alternative to logger(1), by default it sends messages
+&gt; from stdin to syslog.
+&gt;
+&gt; The main reason to replace logger(1) is, that logger only connects once to
+&gt; the syslog socket in default mode and puts all messages into the void if
+&gt; syslog is not running at the time.
+&gt; logger(1) has a new --socket-errors=3Don mode which would work, but some
+&gt; void uses don't use syslog at all and in this case the log service would
+&gt; constantly restart.
+&gt;
+&gt; As a bonus vlogger(8) looks for /etc/vlogger and if its executable it
+&gt; just executes it and is replaced by it.
+&gt; This can be used to avoid syslog and just write all logs to files with
+&gt; svlogd(8) as example without having to edit all log files for each
+&gt; service.
+&gt;
+&gt; VLOGGER(8)                  System Manager's Manual                 VLOGG=
+ER(8)
+&gt;
+&gt; NAME
+&gt;      vlogger =E2=80=93 log messages to syslog or an arbitrary executable
+&gt;
+&gt; SYNOPSIS
+&gt;      vlogger [-p priority] [-t tag]
+&gt;
+&gt; DESCRIPTION
+&gt;      By default, vlogger reads lines from stdin and sends them to syslog.=
+  If
+&gt;      the file /etc/vlogger exists and is executable it is executed with t=
+ag as
+&gt;      only argument and replaces vlogger.
+&gt;
+&gt;      If vlogger is executed as a log service for runit or another daemont=
+ools
+&gt;      like supervision suit it uses the service name as default tag.  As
+&gt;      example if vlogger is linked to /var/service/foo/log/run it uses foo=
+ as
+&gt;      default tag.
+&gt;
+&gt;      -p priority
+&gt;              The.  priority can be facility.level or just facility.  See
+&gt;              FACILITIES, LEVELS or syslog(3).  The default is daemon.info.
+&gt;
+&gt;      -t tag  Defines the openlog(3) ident which is used as prefix for eac=
+h log
+&gt;              message or passed as first argument to /etc/vlogger.
+&gt;
+&gt; FACILITIES
+&gt;      auth
+&gt;      authpriv
+&gt;      cron
+&gt;      daemon
+&gt;      ftp
+&gt;      kern         can not be used from userspace replaced with daemon.
+&gt;      lpr
+&gt;      mail
+&gt;      news
+&gt;      syslog
+&gt;      user
+&gt;      uucp
+&gt;      local[0-7]
+&gt;      security     deprecated synonym for auth.
+&gt;
+&gt; LEVELS
+&gt;      emerg
+&gt;      alert
+&gt;      crit
+&gt;      err
+&gt;      warning
+&gt;      notice
+&gt;      info
+&gt;      debug
+&gt;      panic        deprecated synonym for emerg.
+&gt;      error        deprecated synonym for err.
+&gt;      warn         deprecated synonym for warning.
+&gt;
+&gt; FILES
+&gt;      /etc/vlogger
+&gt;              An optional executable file that is used to to handle the
+&gt;              messages.  It is executed with tag as first argument and rep=
+laces
+&gt;              the vlogger process.
+&gt;
+&gt; EXIT STATUS
+&gt;      The vlogger utility exits 0 on success, and &gt;0 if an error occurs.
+&gt;
+&gt; EXAMPLES
+&gt;      /etc/vlogger:
+&gt;
+&gt;            #!/bin/sh
+&gt;            exec svlogd /var/log/$1
+&gt;
+&gt; SEE ALSO
+&gt;      logger(1), syslog(3), svlogd(8)
+&gt;
+&gt; HISTORY
+&gt;      This program is a replacement for the logger utility provided by
+&gt;      util-linux.
+&gt;
+&gt; AUTHOR
+&gt;      Duncan Overbruck &lt;mail@duncano.de&gt;
+&gt;
+&gt; LICENSE
+&gt;      vlogger is in the public domain.
+&gt;
+&gt;      To the extent possible under law, the creator of this work has waive=
+d all
+&gt;      copyright and related or neighboring rights to this work.
+&gt;
+&gt;      http://creativecommons.org/publicdomain/zero/1.0/
+&gt;
+&gt; Linux                            March 1, 2017                           =
+Linux
+&gt;
+&gt; ------------------------------
+&gt; You can view, comment on, or merge this pull request online at:
+&gt;
+&gt;   https://github.com/voidlinux/void-runit/pull/65
+&gt; Commit Summary
+&gt;
+&gt;    - Add vlogger(8)
+&gt;
+&gt; File Changes
+&gt;
+&gt;    - *M* .gitignore
+&gt;    &lt;https://github.com/voidlinux/void-runit/pull/65/files#diff-0&gt; (1)
+&gt;    - *M* Makefile
+&gt;    &lt;https://github.com/voidlinux/void-runit/pull/65/files#diff-1&gt; (2)
+&gt;    - *A* vlogger.8
+&gt;    &lt;https://github.com/voidlinux/void-runit/pull/65/files#diff-2&gt; (138)
+&gt;    - *A* vlogger.c
+&gt;    &lt;https://github.com/voidlinux/void-runit/pull/65/files#diff-3&gt; (111)
+&gt;
+&gt; Patch Links:
+&gt;
+&gt;    - https://github.com/voidlinux/void-runit/pull/65.patch
+&gt;    - https://github.com/voidlinux/void-runit/pull/65.diff
+&gt;
+&gt; =E2=80=94
+&gt; You are receiving this because you are subscribed to this thread.
+&gt; Reply to this email directly, view it on GitHub
+&gt; &lt;https://github.com/voidlinux/void-runit/pull/65&gt;, or mute the thread
+&gt; &lt;https://github.com/notifications/unsubscribe-auth/AAAawFEBvrbVoJqAKSs99z=
+yoZ8ciZmVuks5rhcjagaJpZM4MQGst&gt;
+&gt; .
+&gt;
+--=20
+You are receiving this because you authored the thread.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-runit/pull/65#issuecomment-291856311=
+</section><section id="post5">
+<h5>Christian Neukirchen at <a href="#post5">Wed, 05 Apr 2017 06:16:38 -0700</a></h5>
+`rsvlog` does not support syslog, which we currently use on void.
+I don't see how 100 loc .c can be overkill for something like this. ;)
+</section><section id="post6">
+<h5>Christian Neukirchen at <a href="#post6">Wed, 05 Apr 2017 12:42:28 -0700</a></h5>
+chneukirchen approved this pull request.
+</section><section id="post7">
+<h5>Chris Brannon at <a href="#post7">Sun, 16 Apr 2017 10:35:11 -0700</a></h5>
+I found a couple more issues with vlogger in its current state.
+It was possible for tag to be uninitialized.
+Symlinking vlogger to foo/log/run didn't work as expected, because
+runsv doesn't use an absolute pathname when running the service.
+Instead, it changes to the service directory and executes ./run.
+I fixed them both, on the vlogger branch of CMB/void-runit.
+</section><section id="post8">
+<h5>Michael Aldridge at <a href="#post8">Thu, 29 Jun 2017 07:50:15 +0000 (UTC)</a></h5>
+@Duncaen can we go ahead and merge this?  Sounds like you may need to pull back in some changes from @CMB first though...
+</section><section id="post9">
+<h5>Michael Aldridge at <a href="#post9">Wed, 26 Jul 2017 02:35:02 +0000 (UTC)</a></h5>
+I'd like to open the can of worms here and ask if this can be an OSI recognized license instead of cc0.  As I've learned recently cc0 is incredibly hard to deal with for US based contributors in certain states.
+</section><section id="post10">
+<h5>Chris Brannon at <a href="#post10">Sat, 02 Jun 2018 14:52:09 -0700</a></h5>
+Looks like this issue fell off the radar.
+</section><section id="post11">
+<h5>Michael Aldridge at <a href="#post11">Sun, 03 Jun 2018 12:29:42 -0700</a></h5>
+@Duncaen good point, I'd somehow missed that entirely.  As that's a separate issue, we can handle it in another thread.  At this point I've got no remaining requests for this before merge.
+:shipit:
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

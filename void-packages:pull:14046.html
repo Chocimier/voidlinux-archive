@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] cmus: add sndio output plugin (#14046)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] cmus: add sndio output plugin (#14046)</h1>
+<section id="post1">
+<h5>maxice8 at <a href="#post1">Wed, 02 May 2018 13:05:33 +0000 (UTC)</a></h5>
+Paging the sndio man @Duncaen
+</section><section id="post2">
+<h5>David Flatz at <a href="#post2">Wed, 02 May 2018 13:09:32 +0000 (UTC)</a></h5>
+@freshprince pushed 1 commit.
+d3cf84c  cmus: fix license
+</section><section id="post3">
+<h5>David Flatz at <a href="#post3">Wed, 02 May 2018 06:14:46 -0700</a></h5>
+freshprince commented on this pull request.
+&gt; @@ -12,7 +12,8 @@ checksum=8179a7a843d257ddb585f4c65599844bc0e516fe85e97f6f87a7ceade4eb5165
+ hostmakedepends="pkg-config"
+ makedepends="ncurses-devel faad2-devel libflac-devel libao-devel libmad-devel
+  libmodplug-devel libmp4v2-devel libmpcdec-devel pulseaudio-devel
+- opusfile-devel wavpack-devel alsa-lib-devel libvorbis-devel ffmpeg-devel"
+Thanks for your feedback but I think I don't understand.  `revision` is in line 4 and `depends` are in line 12 and 13 and clearly below it?
+</section><section id="post4">
+<h5>maxice8 at <a href="#post4">Wed, 02 May 2018 06:44:54 -0700</a></h5>
+I mean put the directly below
+On Wed, May 2, 2018, 10:14 David Flatz &lt;notifications@github.com&gt; wrote:
+&gt; *@freshprince* commented on this pull request.
+&gt; ------------------------------
+&gt;
+&gt; In srcpkgs/cmus/template
+&gt; &lt;https://github.com/voidlinux/void-packages/pull/14046#discussion_r1854=
+90835&gt;
+&gt; :
+&gt;
+&gt; &gt; @@ -12,7 +12,8 @@ checksum=3D8179a7a843d257ddb585f4c65599844bc0e516fe=
+85e97f6f87a7ceade4eb5165
+&gt;  hostmakedepends=3D"pkg-config"
+&gt;  makedepends=3D"ncurses-devel faad2-devel libflac-devel libao-devel lib=
+mad-devel
+&gt;   libmodplug-devel libmp4v2-devel libmpcdec-devel pulseaudio-devel
+&gt; - opusfile-devel wavpack-devel alsa-lib-devel libvorbis-devel ffmpeg-de=
+vel"
+&gt;
+&gt; Thanks for your feedback but I think I don't understand. revision is in=
+&gt; line 4 and depends are in line 12 and 13 and clearly below it?
+&gt;
+&gt; =E2=80=94
+&gt; You are receiving this because you commented.
+&gt; Reply to this email directly, view it on GitHub
+&gt; &lt;https://github.com/voidlinux/void-packages/pull/14046#discussion_r1854=
+90835&gt;,
+&gt; or mute the thread
+&gt; &lt;https://github.com/notifications/unsubscribe-auth/AdUHTXat_l6MeJHGKkY6=
+tAD2IfOgsWajks5tubFHgaJpZM4Tvat7&gt;
+&gt; .
+&gt;
+-- =
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/14046#issuecomment-385982=
+449=
+</section><section id="post5">
+<h5>David Flatz at <a href="#post5">Wed, 02 May 2018 06:57:55 -0700</a></h5>
+freshprince commented on this pull request.
+&gt; @@ -1,7 +1,7 @@
+ # Template file for 'cmus'
+ pkgname=cmus
+ version=2.7.1
+-revision=3
++revision=4
+ short_desc="Small, fast and powerful console music player"
+ maintainer="Juan RP &lt;xtraeme@voidlinux.eu&gt;"
+ license="GPL-2"
+I changed it, but I'm a bit confused now. The [manual](https://github.com/voidlinux/void-packages/blob/master/Manual.md) states that `license` should be
+&gt; A string matching any license file available in `/usr/share/licenses`.
+And there is no `GPL-2.0` in `/usr/share/licenses` but there is `GPL-2`.
+</section><section id="post6">
+<h5>maxice8 at <a href="#post6">Wed, 02 May 2018 08:27:36 -0700</a></h5>
+maxice8 commented on this pull request.
+&gt; @@ -1,7 +1,7 @@
+ # Template file for 'cmus'
+ pkgname=cmus
+ version=2.7.1
+-revision=3
++revision=4
+ short_desc="Small, fast and powerful console music player"
+ maintainer="Juan RP &lt;xtraeme@voidlinux.eu&gt;"
+ license="GPL-2"
+yeah sorry we are in transition to adopt SPDX identifiers for licenses, see https://github.com/voidlinux/void-packages/issues/12219
+the manual.md is outdated in that regard
+</section><section id="post7">
+<h5>maxice8 at <a href="#post7">Wed, 02 May 2018 08:29:11 -0700</a></h5>
+maxice8 commented on this pull request.
+&gt;  short_desc="Small, fast and powerful console music player"
+ maintainer="Juan RP &lt;xtraeme@voidlinux.eu&gt;"
+-license="GPL-2"
++license="GPL-2.0"
+the SPDX identifier for GPL licenses need -or-later or -only.
+</section><section id="post8">
+<h5>maxice8 at <a href="#post8">Wed, 02 May 2018 16:04:31 +0000 (UTC)</a></h5>
+maxice8 commented on this pull request.
+&gt; @@ -12,7 +12,8 @@ checksum=8179a7a843d257ddb585f4c65599844bc0e516fe85e97f6f87a7ceade4eb5165
+ hostmakedepends="pkg-config"
+ makedepends="ncurses-devel faad2-devel libflac-devel libao-devel libmad-devel
+  libmodplug-devel libmp4v2-devel libmpcdec-devel pulseaudio-devel
+- opusfile-devel wavpack-devel alsa-lib-devel libvorbis-devel ffmpeg-devel"
+i mean directly below revision.
+</section><section id="post9">
+<h5>David Flatz at <a href="#post9">Wed, 02 May 2018 09:46:36 -0700</a></h5>
+@freshprince pushed 1 commit.
+7a5b057  cmus: move depends directly below revision
+</section><section id="post10">
+<h5>David Flatz at <a href="#post10">Mon, 18 Jun 2018 03:07:41 -0700</a></h5>
+Closed #14046.
+</section><section id="post11">
+<h5>David Flatz at <a href="#post11">Mon, 18 Jun 2018 03:07:41 -0700</a></h5>
+moving to new org
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

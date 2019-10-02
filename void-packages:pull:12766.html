@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] android-studio: fix dependency conflict
+ (#12766)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] android-studio: fix dependency conflict
+ (#12766)</h1>
+<section id="post1">
+<h5>Jürgen Buchmüller at <a href="#post1">Tue, 10 Apr 2018 12:54:35 +0000 (UTC)</a></h5>
+If you run `xbps-rindex -Rx android-studio` you will see the dependencies which it currently has:
+```
+libGL&gt;=0
+musl&gt;=0.9.9_1
+glibc&gt;=2.25_1
+openjdk-jre&gt;=8u20_1
+freetype&gt;=2.3.9_1
+libgcc&gt;=4.4.0_1
+libXext&gt;=1.0.5_1
+libX11&gt;=1.2_1
+libXrender&gt;=0.9.4_1
+libXtst&gt;=1.0.3_1
+libXi&gt;=1.2.1_1
+alsa-lib&gt;=1.0.20_1
+```
+So these are the same which you explicitly list, except for `musl&gt;=0.9.9_1`.
+Running `sudo xbps-install -d -S android-studio` reveals that the reason for the failing dependency tracking is the dependency on `libc.so` which is provided by the `musl` package, but not by `glibc`.
+I don't know if the workaround to set `noverifyrdeps=yes` and explicitly listing the dependencies is a good choice to deal with the underlying problem, @voidlinux/pkg-committers ?
+</section><section id="post2">
+<h5>Jürgen Buchmüller at <a href="#post2">Tue, 10 Apr 2018 13:28:27 +0000 (UTC)</a></h5>
+@voidlinux/pkg-committers what happens, if we add
+```
+shlib_provides="libc.so"
+```
+to `srcpkgs/glibc/template` ?
+</section><section id="post3">
+<h5>Pretch at <a href="#post3">Tue, 10 Apr 2018 14:53:35 +0000 (UTC)</a></h5>
+@pullmoll, If I understand correctly linking directly to `libc.so` is not valid in terms of glibc.
+I checked my Debian sid chroot with `objdump -p bin/* usr/bin usr/sbin 2&gt;/dev/null | grep libc.so | sort | uniq`:
+```
+  NEEDED               libc.so.6
+  required from libc.so.6:
+```
+Same on Void Linux with glibc.
+I belive `libc.so` entries come from Android shared libraries included in archive. See https://github.com/voidlinux/void-packages/issues/9830#issuecomment-369981172
+Those are for Android system. Should we collect deps for them?
+</section><section id="post4">
+<h5>Jürgen Buchmüller at <a href="#post4">Tue, 10 Apr 2018 15:07:57 +0000 (UTC)</a></h5>
+If there are libs inside the android-studio binary package which are not required for the target system (x86_64 or i686), they should be removed from the `$DESTDIR/usr/lib/...` in `post_install()`.
+I'll have a look at it to see if I can get rid of that wrong dependency this way.
+</section><section id="post5">
+<h5>Pretch at <a href="#post5">Tue, 10 Apr 2018 08:11:00 -0700</a></h5>
+@pullmoll My guess: `libperfa.so` are added to Android .apk to provide perfomance metrics while in development. So it is part of Android Studio functionality.
+</section><section id="post6">
+<h5>Jürgen Buchmüller at <a href="#post6">Tue, 10 Apr 2018 15:19:21 +0000 (UTC)</a></h5>
+I'm not really acquainted with Android or smart phones at all. I don't even have one.
+The problem here seems to be that libperfa.so is detected as a runtime dependency for the host, while it is meant to be run on a target device or emulation?
+IMO we need to find a way to exclude specific libs from the reverse dependency scanning happening in `04-generate-runtime-deps.sh`. Then adding `libperfa.so` to such a list should result in a useable list of runtime dependencies.
+</section><section id="post7">
+<h5>Pretch at <a href="#post7">Tue, 10 Apr 2018 08:27:40 -0700</a></h5>
+&gt; IMO we need to find a way to exclude specific libs from the reverse dependency scanning happening in 04-generate-runtime-deps.sh. Then adding libperfa.so to such a list should result in a useable list of runtime dependencies.
+Besides `04-generate-runtime-deps.sh` does not test shared library architecture, should it?
+(Just checked: Android Studio 3.1 released already)
+</section><section id="post8">
+<h5>Michael Gehring at <a href="#post8">Tue, 10 Apr 2018 08:31:04 -0700</a></h5>
+Yes, it doesn't check architecture. Yes it should. Current hack to work around bogus dependencies is to add an common/shlibs entry (see 7cece6a8dd3d0b079f1aa4f9e0e8130a8fa0a706 for example)
+</section><section id="post9">
+<h5>Jürgen Buchmüller at <a href="#post9">Tue, 10 Apr 2018 15:37:06 +0000 (UTC)</a></h5>
+Got it:
+```
+=&gt; /opt/android-studio/plugins/android/resources/perfd/armeabi-v7a/perfd depends on libc.so
+=&gt; /opt/android-studio/plugins/android/resources/perfd/x86/perfd depends on libc.so
+=&gt; /opt/android-studio/plugins/android/resources/perfd/arm64-v8a/perfd depends on libc.so
+```
+</section><section id="post10">
+<h5>Pretch at <a href="#post10">Tue, 10 Apr 2018 15:42:15 +0000 (UTC)</a></h5>
+@pullmoll, is it okay to use filename only? Perhaps it is better to use glob or full path (in case `a/libwhatever.so` needed but not `b/libwhatever.so`)?
+</section><section id="post11">
+<h5>Jürgen Buchmüller at <a href="#post11">Tue, 10 Apr 2018 15:45:44 +0000 (UTC)</a></h5>
+@Pretch  I just wanted to write that down :)
+Full path would be the safest, yes.
+I think we could add this to the the `common/=E2=80=A6` scripts, even if it=
+'s just another hack.
+IMO better than modifying templates to entirely skip the dependency scannin=
+g and fail on the next update due to a `depends=3D=E2=80=A6` entry missing.
+--=20
+You are receiving this because you are on a team that was mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/12766#issuecomment-380149085=
+</section><section id="post12">
+<h5>Jürgen Buchmüller at <a href="#post12">Tue, 10 Apr 2018 09:06:15 -0700</a></h5>
+Closed #12766 via 8fb44e50ca3b3214b984395b2806944e78de4813.
+</section><section id="post13">
+<h5>Pretch at <a href="#post13">Tue, 10 Apr 2018 09:14:34 -0700</a></h5>
+@pullmoll, so how exactly we will do that?
+</section><section id="post14">
+<h5>Jürgen Buchmüller at <a href="#post14">Tue, 10 Apr 2018 16:15:33 +0000 (UTC)</a></h5>
+@Pretch: it's there and sitting in the pipe. I could install my locally built android-studio-3.0.1_2 here. The builders are currently stalled, so it will take some time.
+Now I need to document `skiprdeps` in the `Manual.md` file...
+</section><section id="post15">
+<h5>Pretch at <a href="#post15">Tue, 10 Apr 2018 16:21:11 +0000 (UTC)</a></h5>
+@pullmoll, awww, sorry. I thought you just closed this. Noticed just now that you actually commited.
+I'am not that familiar with GitHub (or even contributing, seens it's my first one).
+Thanks for investigation!
+</section><section id="post16">
+<h5>Jürgen Buchmüller at <a href="#post16">Tue, 10 Apr 2018 16:39:33 +0000 (UTC)</a></h5>
+You're welcome. I uploaded my locally built xbps to https://repo.voidlinux.de/current/nonfree in case you want to try using `xbps-install -R &lt;thatrepo&gt;`.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

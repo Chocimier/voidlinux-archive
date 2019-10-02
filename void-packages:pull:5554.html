@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] [WIP] New package: vimpager-2.06
+ (#5554)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] [WIP] New package: vimpager-2.06
+ (#5554)</h1>
+<section id="post1">
+<h5>ivierlin at <a href="#post1">Wed, 18 Jan 2017 09:34:57 -0800</a></h5>
+So should I leave it like that?
+It's kind of obvious `vimpager` needs some form of `vim`. On the other hand resolving dependencies is half the fun in using a package manager at all.
+</section><section id="post2">
+<h5>Jürgen Buchmüller at <a href="#post2">Wed, 18 Jan 2017 10:02:03 -0800</a></h5>
+You can just add an `INSTALL.msg` file telling the user to install either `vim` or `neovim`, too.
+</section><section id="post3">
+<h5>Anachron at <a href="#post3">Wed, 18 Jan 2017 20:59:29 -0800</a></h5>
+I think an "dependsonany='vim neovim ...'" would not be a bad idea after all.
+If someone uninstalls vim the pkg-manager could then pick up the useless parent-pkg if none dependsonany are remaining.
+This could be done to many more packages.
+</section><section id="post4">
+<h5>ivierlin at <a href="#post4">Thu, 19 Jan 2017 04:06:02 -0800</a></h5>
+Or we simply use `build_options` for that? There is a `$(vopt_if &lt;option&gt; &lt;pkg&gt;)` parser anyway.
+In this case set `build_options_default` to `vim` and provide `neovim` as option.
+That's the beauty of a binary/source model. Provide sensible default binaries and make it easy to change them.
+</section><section id="post5">
+<h5>Anachron at <a href="#post5">Thu, 19 Jan 2017 04:18:28 -0800</a></h5>
+Not a bad idea. XBPS would still not realize that vimpager is useless without vim/neovim though, right?
+</section><section id="post6">
+<h5>ivierlin at <a href="#post6">Thu, 19 Jan 2017 05:07:11 -0800</a></h5>
+It would. Have a look in the template I just pushed. Should be self explaining.
+The package now depends on vim unless you rebuild it with `-o neovim`.
+I think that's the most sane option?
+</section><section id="post7">
+<h5>Anachron at <a href="#post7">Thu, 19 Jan 2017 06:20:42 -0800</a></h5>
+Ah, now that is a good idea! I somehow didn't realize you could just `vopt` on `depends` too.
+</section><section id="post8">
+<h5>Toyam Cox at <a href="#post8">Tue, 24 Jan 2017 13:31:18 -0800</a></h5>
+Closed #5554 via 38afeb88f8c3ea8c50fe79cfaf13b4ad10b9274e.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] vkpurge not working on arm (rpi)
+ (#6225)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] vkpurge not working on arm (rpi)
+ (#6225)</h1>
+<section id="post1">
+<h5>engblom at <a href="#post1">Thu, 20 Apr 2017 09:30:07 -0700</a></h5>
+I have been cleaning up everything as the card got full, but now again after latest update I have under /boot:
+vmlinux-4.10.10_1*
+vmlinux-4.10.11_1*
+vmlinux-rpi3*
+System.map-4.10.10_1*
+System.map-4.10.11_1*
+config-4.10.10_1*
+config-4.10.11_1*
+And under /lib/modules:
+4.10.10_1/
+4.10.11_1/
+The boot partition gets easily full if one does not frequently clean up and the module libraries are not small either. This is especially a problem when running from small SD cards.
+</section><section id="post2">
+<h5>engblom at <a href="#post2">Thu, 20 Apr 2017 09:33:04 -0700</a></h5>
+In case there is a difference between the rpi images, I need to add that I am running aarch64 on rpi3.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

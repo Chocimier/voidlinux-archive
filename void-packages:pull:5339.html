@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] RFC linux4.9: kernel hardening (#5339)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] RFC linux4.9: kernel hardening (#5339)</h1>
+<section id="post1">
+<h5>Andrea Brancaleoni at <a href="#post1">Mon, 12 Dec 2016 23:48:45 -0800</a></h5>
+@chneukirchen @Duncaen ... others
+http://desktop.pompel.me/compound.results
+The results on the left belongs to the non hardened kernel while the one on the right belongs the hardened one. To sum up, only the process creation is affected more than 10%, but i hardly fork bomb on my computer.
+I obviously reenabled CONFIG_INET_DIAG.
+</section><section id="post2">
+<h5>Andrea Brancaleoni at <a href="#post2">Mon, 12 Dec 2016 23:55:45 -0800</a></h5>
+Another thing i should disable is livepatch given we have no real usage right now.
+</section><section id="post3">
+<h5>Christian Neukirchen at <a href="#post3">Tue, 13 Dec 2016 05:52:07 -0800</a></h5>
+Note that running configure and building software is bound limited by process creation.
+</section><section id="post4">
+<h5>Andrea Brancaleoni at <a href="#post4">Tue, 13 Dec 2016 06:27:04 -0800</a></h5>
+Ok then a good benchmark could be compiling a linux kernel or chromium with the two configurations.
+</section><section id="post5">
+<h5>Andrea Brancaleoni at <a href="#post5">Tue, 13 Dec 2016 14:40:52 -0800</a></h5>
+@chneukirchen
+Without hardening:
+```
+bash-4.3# time make -j16
+real    27m22.752s
+user    96m49.877s
+sys     8m0.508s
+```
+With hardening and poisoning enabled at startup:
+```
+bash-4.3# time make -j16
+real    28m29.004s
+user    98m21.723s
+sys     10m19.178s
+```
+20% overhead on systime less then 1% overhead on usertime.
+</section><section id="post6">
+<h5>Andrea Brancaleoni at <a href="#post6">Wed, 14 Dec 2016 16:51:23 -0800</a></h5>
+The patches is okay. I'm not quite sure how to split the sysctl.conf file instead @chneukirchen for other infos.
+</section><section id="post7">
+<h5>Andrea Brancaleoni at <a href="#post7">Sat, 17 Dec 2016 13:24:36 -0800</a></h5>
+Merged #5339.
+</section><section id="post8">
+<h5>Christian Neukirchen at <a href="#post8">Fri, 10 Feb 2017 12:10:41 -0800</a></h5>
+More fallout: https://groups.google.com/forum/#!topic/voidlinux/imKgCybt6Q4
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] dmenu-4.7 doesn't allow cyrillic input
+ (#7614)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] dmenu-4.7 doesn't allow cyrillic input
+ (#7614)</h1>
+<section id="post1">
+<h5>gravicappa at <a href="#post1">Sun, 10 Sep 2017 09:30:36 -0700</a></h5>
+It shows cyrillics correctly but inputting whose with keyboard yields nothing.
+</section><section id="post2">
+<h5>Lain at <a href="#post2">Sun, 10 Sep 2017 09:38:26 -0700</a></h5>
+This doesn't seem to be specific to cyrillic, it seems to be UTF-8 in gen=
+eral that cant be entered.
+Also, UTF-8 characters enter something invisible into the searchbar (caus=
+es the search results to change), and those "invisible" characters can be=
+ deleted like normal characters.
+This sounds like a font issue, but if you do "echo =C3=A4|dmenu" you cant=
+ select this entry by typing "=C3=A4" - which means that dmenu considers =
+those two different characters.
+Also, characters after an "invisible" one are likewise not visible, even =
+if they are from the ascii range.
+Judging from that, its probably a wrong input charset issue, and its not =
+displayed because its not valid utf8.
+-- =
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/7614#issuecomment-32835=
+4677=
+</section><section id="post3">
+<h5>Enno Boland at <a href="#post3">Wed, 13 Sep 2017 23:15:15 -0700</a></h5>
+Closed #7614 via #7633.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

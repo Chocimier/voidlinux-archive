@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/xbps] Updating python-requests fails with "[unpack]
+ failed to extract file [...]: Directory not empty" (#220)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/xbps] Updating python-requests fails with "[unpack]
+ failed to extract file [...]: Directory not empty" (#220)</h1>
+<section id="post1">
+<h5>Alain Kalker at <a href="#post1">Sat, 03 Dec 2016 06:31:17 -0800</a></h5>
+I've captured an [strace log](https://gist.github.com/508e07e299f05f81f928eb187b6a69ff) from re-running `xbps-install -Su`.
+As can be seen from the log, I have several local repositories enabled, pointing into `~/void-packages/hostdir/binpkgs/*` directories, and I haven't had any problems with installing locally-built packages from these repositories in the past.
+</section><section id="post2">
+<h5>Alessio Sergi at <a href="#post2">Sat, 03 Dec 2016 06:39:32 -0800</a></h5>
+@ackalker as a workaroud force the removal of python-requests and then reinstall it.
+</section><section id="post3">
+<h5>Alain Kalker at <a href="#post3">Sat, 03 Dec 2016 06:42:05 -0800</a></h5>
+@asergi Thanks for the tip! I will follow your advice.
+</section><section id="post4">
+<h5>"Suraj N. Kurapati" at <a href="#post4">Wed, 07 Dec 2016 14:33:38 -0800</a></h5>
+Uninstalling and then reinstalling did the trick. :+1:  Thanks @Duncaen!
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

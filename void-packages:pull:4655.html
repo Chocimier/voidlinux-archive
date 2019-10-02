@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] [WIP] Firefox 48.0.1 (#4655)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] [WIP] Firefox 48.0.1 (#4655)</h1>
+<section id="post1">
+<h5>Alessio Sergi at <a href="#post1">Tue, 23 Aug 2016 04:33:16 -0700</a></h5>
+`nss` updated and fixed(?) in 68c853e.
+</section><section id="post2">
+<h5>Christian Neukirchen at <a href="#post2">Tue, 23 Aug 2016 04:39:49 -0700</a></h5>
+@asergi FREEBL_NO_DEPEND is the magic? can you explain how you found it and what it does?
+</section><section id="post3">
+<h5>Alessio Sergi at <a href="#post3">Tue, 23 Aug 2016 08:10:36 -0700</a></h5>
+I found it reading the `nss/coreconf/Linux.mk` file. After googling, `FREEBL_NO_DEPEND=1` seems to avoid clashes with glibc, but I didn't have time to dig in and really figure out what's going on.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

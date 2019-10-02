@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>[voidlinux/void-packages] firejail: unbreak aarch64 / disable seccomp
+ only for cross (#11836)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>[voidlinux/void-packages] firejail: unbreak aarch64 / disable seccomp
+ only for cross (#11836)</h1>
+<section id="post1">
+<h5>newbluemoon at <a href="#post1">Fri, 23 Feb 2018 07:56:16 -0800</a></h5>
+Removed `broken`. The issue was fixed upstream in the last release.
+@Duncaen I modified the template to only disable seccomp when cross compiling, because it works when doing a native build (if memory serves right the issue is that a test program is run when configuring). Is this OK with you or are there other reasons? :)
+You can view, comment on, or merge this pull request online at:
+  https://github.com/voidlinux/void-packages/pull/11836
+-- Commit Summary --
+  * firejail: unbreak aarch64 / disable seccomp only for cross
+-- File Changes --
+    M srcpkgs/firejail/template (12)
+-- Patch Links --
+https://github.com/voidlinux/void-packages/pull/11836.patch
+https://github.com/voidlinux/void-packages/pull/11836.diff
+</section><section id="post2">
+<h5>Jürgen Buchmüller at <a href="#post2">Mon, 26 Mar 2018 11:47:02 +0000 (UTC)</a></h5>
+Closed #11836 via 0231de97ba6a60f27ced44fa10ebf92d14fffbd5.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

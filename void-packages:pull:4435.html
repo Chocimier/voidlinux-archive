@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] openssh: enable kerberos5 support
+ (#4435)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] openssh: enable kerberos5 support
+ (#4435)</h1>
+<section id="post1">
+<h5>Enno Boland at <a href="#post1">Wed, 06 Jul 2016 22:53:23 -0700</a></h5>
+Do we want kerberos in base? cc @voidlinux/pkg-committers
+---
+You are receiving this because you are on a team that was mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4435#issuecomment-230985438
+</section><section id="post2">
+<h5>Michael Aldridge at <a href="#post2">Wed, 06 Jul 2016 22:57:08 -0700</a></h5>
+From conversations with @bougyman there is desire to manage the servers a bit better than "here are some servers".  Adding kerberos into ssh is one of the technologies that would make that substantially easier, though I suppose we could do a custom build with a vopt for void infrastructure if it is deemed too heavy for base.
+Seems kind of silly though that void infrastructure wouldn't be using mainline void packages though.
+---
+You are receiving this because you are on a team that was mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4435#issuecomment-230985918
+</section><section id="post3">
+<h5>Toyam Cox at <a href="#post3">Thu, 07 Jul 2016 07:10:10 -0700</a></h5>
+It's about 10 megabtytes for mit-krb5 + dependencies, so it's not oppressive. It would not be useful to a live CD, but it would be nice to have it present in a package for a developer who wants to change login methods.
+I support it so long as it's a build option.
+---
+You are receiving this because you are on a team that was mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4435#issuecomment-231088863
+</section><section id="post4">
+<h5>Enno Boland at <a href="#post4">Thu, 07 Jul 2016 07:14:10 -0700</a></h5>
+We could switch from openssh to dropbear in base.
+---
+You are receiving this because you are on a team that was mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4435#issuecomment-231090073
+</section><section id="post5">
+<h5>Christian Neukirchen at <a href="#post5">Thu, 07 Jul 2016 07:19:35 -0700</a></h5>
+Please keep openssh in base.
+These issues are mainly build issues, not that base-system is too big.
+---
+You are receiving this because you are on a team that was mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4435#issuecomment-231091729
+</section><section id="post6">
+<h5>Toyam Cox at <a href="#post6">Thu, 07 Jul 2016 07:48:42 -0700</a></h5>
+Against dropbear in base.
+---
+You are receiving this because you are on a team that was mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4435#issuecomment-231100709
+</section><section id="post7">
+<h5>Michael Aldridge at <a href="#post7">Thu, 07 Jul 2016 11:57:45 -0700</a></h5>
+I also am weary of anything that isn't openssh.  The others just don't feel "battle tested" enough.
+---
+You are receiving this because you are on a team that was mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4435#issuecomment-231174237
+</section><section id="post8">
+<h5>Michael Aldridge at <a href="#post8">Sun, 17 Jul 2016 18:46:39 -0700</a></h5>
+Closed #4435.
+---
+You are receiving this because you are on a team that was mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4435#event-725601157
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

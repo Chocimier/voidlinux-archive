@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-runit] /etc/runit/core-services/08-sysctl.sh can
+ override admin defined sysctl settings (#70)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-runit] /etc/runit/core-services/08-sysctl.sh can
+ override admin defined sysctl settings (#70)</h1>
+<section id="post1">
+<h5>amak79 at <a href="#post1">Thu, 11 May 2017 20:43:34 -0700</a></h5>
+I checked with my Gentoo system which uses `sysctl --system`, and it too can override any admin settings defined in `/etc/sysctl.d/*.conf`. It appears that the files are processed in the order they are listed in the `sysctl.conf` man page.
+</section><section id="post2">
+<h5>Leah Neukirchen at <a href="#post2">Fri, 12 May 2017 03:20:15 -0700</a></h5>
+The commit 5f719f131c3 removes `sysctl --system`, not sure why.
+(Ah, busybox doesn't have it.)
+</section><section id="post3">
+<h5>Michael Gehring at <a href="#post3">Wed, 28 Jun 2017 11:52:03 -0700</a></h5>
+@xtraeme is reverting 5f719f1 an option?
+</section><section id="post4">
+<h5>Faule Socke at <a href="#post4">Thu, 04 Jan 2018 08:54:39 +0000 (UTC)</a></h5>
+`sysctl --system` has the same issue as the OP described and should therefore **not** be used. I will file a PR for fixing the order, so that local admin settings never get overwritten by "vendor" settings.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>=?UTF-8?Q?Re:_[voidlinux/void-mklive]_mklive.sh:_simplify_finding?=
+ =?UTF-8?Q?_KERNELVERSION_by_searching_after_=22$ROOTFS=E2=80=A6_=28#168=29?=</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>=?UTF-8?Q?Re:_[voidlinux/void-mklive]_mklive.sh:_simplify_finding?=
+ =?UTF-8?Q?_KERNELVERSION_by_searching_after_=22$ROOTFS=E2=80=A6_=28#168=29?=</h1>
+<section id="post1">
+<h5>mobinmob at <a href="#post1">Thu, 07 Jun 2018 13:25:47 +0000 (UTC)</a></h5>
+If you want to account for multiple kernel packages installed  (certainly possible, but not exactly something I 'll expect in a live cd), then the relevant live becomes:
+`KERNELVERSION=$(find "$ROOTFS"/boot/ -name "vmlinuz-*" -print|head -1|sed 's|.*\-\(.*\)|\1|'`
+If you want to account for changes in the kernel image name (are there any kernel images with different names/compression in the repos; ), you can use the config file or the System.map file to extract the kernel version.
+</section><section id="post2">
+<h5>Michael Gehring at <a href="#post2">Thu, 07 Jun 2018 08:30:05 -0700</a></h5>
+&gt; If you want to account for multiple kernel packages installed  (certainly possible, but not exactly something I 'll expect in a live cd), then the relevant live becomes:
+&gt; `KERNELVERSION=$(find "$ROOTFS"/boot/ -name "vmlinuz-*" -print|head -1|sed 's|.*\-\(.*\)|\1|'`
+&gt; If you want to account for changes in the kernel image name (are there any kernel images with different names/compression in the repos; ), you can use the config file or the System.map file to extract the kernel version.
+Or you could simplify the whole thing by asking the package manager for
+the current version of the linux meta package.
+</section><section id="post3">
+<h5>mobinmob at <a href="#post3">Thu, 07 Jun 2018 10:43:09 -0700</a></h5>
+Got it! My simple approach gets really  complicated. Thank you. =F0=9F=99=
+=82
+-- =
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-mklive/pull/168#issuecomment-395505994=
+</section><section id="post4">
+<h5>mobinmob at <a href="#post4">Thu, 07 Jun 2018 10:44:57 -0700</a></h5>
+Closed #168.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

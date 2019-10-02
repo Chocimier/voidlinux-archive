@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] New Package: libsass 3.3.6 (#4089)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] New Package: libsass 3.3.6 (#4089)</h1>
+<section id="post1">
+<h5>Gerardo Di Iorio at <a href="#post1">Thu, 28 Apr 2016 04:49:46 -0700</a></h5>
+ok , i have removed the line 5.
+regards
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4089#issuecomment-215399970
+</section><section id="post2">
+<h5>Toyam Cox at <a href="#post2">Thu, 28 Apr 2016 11:11:13 -0700</a></h5>
+Do the move with `vmove usr/lib/*.a`
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4089#issuecomment-215514519
+</section><section id="post3">
+<h5>Gerardo Di Iorio at <a href="#post3">Thu, 28 Apr 2016 12:28:39 -0700</a></h5>
+i have update pull request
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4089#issuecomment-215536530
+</section><section id="post4">
+<h5>Michael Gehring at <a href="#post4">Thu, 28 Apr 2016 12:49:05 -0700</a></h5>
+&gt; +homepage="http://libsass.org/"
+&gt; +license="MIT"
+&gt; +distfiles="https://github.com/sass/${pkgname}/archive/${version}.tar.gz"
+&gt; +checksum=4b004b0fcef55420dc916216b1961e0d86925e6bf4a6be37d0b6db42f7f25da5
+&gt; +
+&gt; +pre_configure() {
+&gt; +	autoreconf  -i
+&gt; +}
+&gt; +
+&gt; +
+&gt; +post_install() {
+&gt; +	vlicense LICENSE
+&gt; +}
+&gt; +
+&gt; +libsass-devel_package() {
+&gt; +	depends="libsass&gt;=${version}_${revision}"
+Could use `depends="${sourcepkg}&gt;=${version}_${revision}"`
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4089/files/41fb349bce742a78032287624706e625698cc1fa#r61491220
+</section><section id="post5">
+<h5>Gerardo Di Iorio at <a href="#post5">Thu, 28 Apr 2016 22:06:16 -0700</a></h5>
+ok i have modify the commit wiut yours suggestion
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4089#issuecomment-215627660
+</section><section id="post6">
+<h5>Juan RP at <a href="#post6">Thu, 28 Apr 2016 22:28:44 -0700</a></h5>
+Merged #4089.
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4089#event-645191253
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

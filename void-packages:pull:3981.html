@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] New package: neomutt-20160404 (#3981)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] New package: neomutt-20160404 (#3981)</h1>
+<section id="post1">
+<h5>Toyam Cox at <a href="#post1">Tue, 05 Apr 2016 18:13:16 -0700</a></h5>
+Given the file lists, I am not sure alternatives are the best option. There are 9
+manpages in `mutt-kz` and 7 in `mutt`, there are muttrc config files in both, but
+Mutt has an extra file in there. There are several similarly named binaries as well.
+If it's probably the better way to go, I can start writing alternatives.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/3981#issuecomment-206062166
+</section><section id="post2">
+<h5>Alessio Sergi at <a href="#post2">Fri, 08 Apr 2016 06:07:29 -0700</a></h5>
+I really doubt someone wants to install/use all mutt flavors at the same time.
+`provides` and `replaces` are enough, imo. Other than that, LGTM.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/3981#issuecomment-207424404
+</section><section id="post3">
+<h5>logenkain at <a href="#post3">Fri, 08 Apr 2016 10:07:47 -0700</a></h5>
+On Fri, Apr 08, 2016 at 06:07:29AM -0700, Alessio Sergi wrote:
+&gt; I really doubt someone wants to install/use all mutt flavors at the same time.
+&gt; `provides` and `replaces` are enough, imo. Other than that, LGTM.
+&gt;
+&gt; ---
+&gt; You are receiving this because you are subscribed to this thread.
+&gt; Reply to this email directly or view it on GitHub:
+&gt; https://github.com/voidlinux/void-packages/pull/3981#issuecomment-207424404
+Don't underestimate how much I love mutt and want to play with its flavors, but I agree.  I doubt anyone actually wants to use multiple flavors at the same time. I suppose for that we can always use a VM.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/3981#issuecomment-207519665
+</section><section id="post4">
+<h5>Christian Neukirchen at <a href="#post4">Fri, 08 Apr 2016 11:38:02 -0700</a></h5>
+Could be relevant on a multi-user system...
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/3981#issuecomment-207550522
+</section><section id="post5">
+<h5>Toyam Cox at <a href="#post5">Fri, 08 Apr 2016 11:43:43 -0700</a></h5>
+So what should the flavors be renamed? Where things need renaming that is.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/3981#issuecomment-207551978
+</section><section id="post6">
+<h5>Toyam Cox at <a href="#post6">Fri, 08 Apr 2016 13:30:34 -0700</a></h5>
+Okay, going to go with provides and replaces. Should I bother with replaces or just provides?
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/3981#issuecomment-207591352
+</section><section id="post7">
+<h5>Toyam Cox at <a href="#post7">Wed, 15 Jun 2016 23:36:32 -0700</a></h5>
+This PR has been updated to have all the mutts using alternative groups. Should sysconfdir be changed, however? Might be cleaner to keep sysconfdir at `/etc` and pollute `/etc` with `Muttrc-$pkgname`
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/3981#issuecomment-226400265
+</section><section id="post8">
+<h5>Toyam Cox at <a href="#post8">Wed, 15 Jun 2016 23:43:13 -0700</a></h5>
+&gt;  post_install() {
+&gt; -	rm ${DESTDIR}/etc/Muttrc.dist
+&gt; -	rm ${DESTDIR}/etc/mime.types{,.dist}
+&gt; -	rm ${DESTDIR}/usr/bin/{flea,muttbug}
+&gt; -	rm ${DESTDIR}/usr/share/man/man1/{flea,muttbug}.1
+&gt; +	# provided by mime-types
+&gt; +	rm ${DESTDIR}/etc/${pkgname}/mime.types{,.dist}
+&gt; +
+&gt; +	rm ${DESTDIR}/etc/${pkgname}/Muttrc.dist
+&gt; +
+&gt;  	vinstall contrib/gpg.rc 644 etc Muttrc.gpg.dist
+Don't know if this should be `vconf` at all. I'm thinking `vsconf` is all that is necessary.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/3981/files/a1a7282e4bc7bae4c52cba410b2428d1cf1c59e6#r67293878
+</section><section id="post9">
+<h5>Toyam Cox at <a href="#post9">Thu, 07 Jul 2016 07:45:39 -0700</a></h5>
+Was merged.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/3981#issuecomment-231099713
+</section><section id="post10">
+<h5>Toyam Cox at <a href="#post10">Thu, 07 Jul 2016 07:45:39 -0700</a></h5>
+Closed #3981.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/3981#event-715816679
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

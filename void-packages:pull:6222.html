@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] New package: openblas-0.2.19 (#6222)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] New package: openblas-0.2.19 (#6222)</h1>
+<section id="post1">
+<h5>Michael Gehring at <a href="#post1">Sun, 07 May 2017 01:55:06 -0700</a></h5>
+```
+...
+        i686 | /usr/lib/libopenblas_nehalemp-r0.2.19.so | openblas-0.2.19_1
+      x86_64 | /usr/lib/libopenblas_haswellp-r0.2.19.so | openblas-0.2.19_1
+ x86_64-musl | /usr/lib/libopenblas_nehalemp-r0.2.19.so | openblas-0.2.19_1
+...
+```
+This is a bit odd, do these .sos work on all cpus?
+</section><section id="post2">
+<h5>Michael Gehring at <a href="#post2">Sun, 07 May 2017 05:49:05 -0700</a></h5>
+And conflicts with lapacke-devel:
+```
+lapacke-devel-3.7.0_1   /usr/include/lapacke.h
+openblas-devel-0.2.19_1 /usr/include/lapacke.h
+```
+</section><section id="post3">
+<h5>Julien Dehos at <a href="#post3">Sun, 07 May 2017 06:34:59 -0700</a></h5>
+I've just seen some options solving these issues. I'll send a PR when everything is ok.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

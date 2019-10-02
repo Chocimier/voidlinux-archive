@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] volumeicon: add GTK2 version (#8094)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] volumeicon: add GTK2 version (#8094)</h1>
+<section id="post1">
+<h5>Michael Aldridge at <a href="#post1">Sun, 15 Oct 2017 15:40:53 -0700</a></h5>
+I'm not really keen to merge this.  maintaining multiple versions of GTK is not a fun thing to do and this is a rather invasive change that doesn't exist anywhere else.  Perhaps someone else from @voidlinux/pkg-committers will see things differently.
+</section><section id="post2">
+<h5>cr6git at <a href="#post2">Mon, 16 Oct 2017 13:11:44 +0000 (UTC)</a></h5>
+Just to be complete, another porribility:
+In Debian 9 Stretch they have [volumeicon-alsa](https://packages.debian.org/stretch/volumeicon-alsa) version 0.4.6 for GTK2.
+They use this little patch:
+````
+Description: Including individual glib headers no longer supported
+Author: Michael Biebl &lt;biebl@debian.org&gt;
+Index: volumeicon-0.4.6/src/alsa_backend.c
+==================================================================
+--- volumeicon-0.4.6.orig/src/alsa_backend.c	2011-10-25 15:35:10.000000000 +0200
++++ volumeicon-0.4.6/src/alsa_backend.c	2012-12-16 07:23:51.568024692 +0100
+@@ -22,10 +22,8 @@
+ //##############################################################################
+ #include &lt;alsa/asoundlib.h&gt;
+-#include &lt;glib/gstring.h&gt;
++#include &lt;glib.h&gt;
+ #include &lt;glib/gstdio.h&gt;
+-#include &lt;glib/glist.h&gt;
+-#include &lt;glib/giochannel.h&gt;
+ #include "alsa_backend.h"
+Index: volumeicon-0.4.6/src/oss_backend.c
+===================================================================
+--- volumeicon-0.4.6.orig/src/oss_backend.c	2011-11-09 12:37:18.000000000 +0100
++++ volumeicon-0.4.6/src/oss_backend.c	2012-12-16 07:23:51.708026103 +0100
+@@ -26,10 +26,8 @@
+ #include &lt;fcntl.h&gt;
+ #include &lt;assert.h&gt;
+ #include &lt;stdlib.h&gt;
+-#include &lt;glib/gstring.h&gt;
++#include &lt;glib.h&gt;
+ #include &lt;glib/gstdio.h&gt;
+-#include &lt;glib/glist.h&gt;
+-#include &lt;glib/giochannel.h&gt;
+ #include "oss_backend.h"
+````
+Tested on my system. I think it works, but I am not an expert, of course...
+If you are not happy with that it's ok, no problem! ;)
+</section><section id="post3">
+<h5>Enno Boland at <a href="#post3">Mon, 16 Oct 2017 13:39:50 +0000 (UTC)</a></h5>
+The patch looks scary... xterm scary.
+</section><section id="post4">
+<h5>cr6git at <a href="#post4">Mon, 16 Oct 2017 13:50:37 +0000 (UTC)</a></h5>
+@Gottox ahah! ok, ok...
+Everyone is against `volumeicon-gtk2` ?
+So I will close.
+</section><section id="post5">
+<h5>cr6git at <a href="#post5">Mon, 16 Oct 2017 06:51:32 -0700</a></h5>
+Closed #8094.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

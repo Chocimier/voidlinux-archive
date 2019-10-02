@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] New package: nerd-fonts-2.0.0 (#13150)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] New package: nerd-fonts-2.0.0 (#13150)</h1>
+<section id="post1">
+<h5>Jürgen Buchmüller at <a href="#post1">Sun, 22 Apr 2018 21:27:58 -0700</a></h5>
+Whoa! `v2.0.0.tar.gz` is more than `2.0 GiB (2,125,832,713)`.
+I'll rather wait for some @voidlinux/pkg-committers to confirm this PR can be merged.
+</section><section id="post2">
+<h5>Michael Aldridge at <a href="#post2">Sun, 22 Apr 2018 21:47:09 -0700</a></h5>
+Way too big!
+For packages of this size you would ideally have a data package as well since this appears to have executables as well as data.
+</section><section id="post3">
+<h5>Jürgen Buchmüller at <a href="#post3">Mon, 23 Apr 2018 04:49:06 +0000 (UTC)</a></h5>
+The package is `noarch=yes` so it will be in the repo once.
+</section><section id="post4">
+<h5>Daniel Santana at <a href="#post4">Sun, 22 Apr 2018 22:04:25 -0700</a></h5>
+@the-maldridge the scripts are only as helper scripts to be sourced by th=
+e shell in order to render the characters using environment variables (e.=
+g. `echo $i_weather_day_cloudy_gusts` =3D&gt; =EE=8C=80).
+The package is &gt;2G because all fonts are installed by the package. I coul=
+d split it (one subpackage per font) but it would be ~45 subpackages and =
+make `nerd-fonts` as only a meta-package. Not sure if this amount of subp=
+ackages would be any problem, but I'm sure users with low bandwidth surel=
+y will be happy with this. What do you think?
+-- =
+You are receiving this because you are on a team that was mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/13150#issuecomment-383455=
+108=
+</section><section id="post5">
+<h5>Michael Aldridge at <a href="#post5">Sun, 22 Apr 2018 22:05:52 -0700</a></h5>
+I am infinitely more likely to entertain this package as a meta-package with subpkgs than as one giant package.
+</section><section id="post6">
+<h5>Jürgen Buchmüller at <a href="#post6">Mon, 23 Apr 2018 05:14:42 +0000 (UTC)</a></h5>
+FWIW the resulting xbps file is 256,314,456 bytes "only" :)
+IMO we can merge this hoping the builders can handle it.
+</section><section id="post7">
+<h5>Enno Boland at <a href="#post7">Mon, 23 Apr 2018 02:03:43 -0700</a></h5>
+I'm with @the-maldridge here.
+Also I'm not sure about any licensing issues.
+</section><section id="post8">
+<h5>Toyam Cox at <a href="#post8">Mon, 23 Apr 2018 16:18:29 +0000 (UTC)</a></h5>
+Project itself does say MIT.
+</section><section id="post9">
+<h5>Enno Boland at <a href="#post9">Mon, 23 Apr 2018 10:07:23 -0700</a></h5>
+* [Anonymous Pro](https://www.marksimonson.com/fonts/view/anonymous-pro) is OFL, which is a copyleft license.
+* [plex](https://github.com/IBM/plex/blob/master/LICENSE.txt) is OFL
+* [Fantasque Sans Mono](https://github.com/belluzj/fantasque-sans#author-and-license) is OFL
+* Stopped looking, there are more issues, I guess.
+</section><section id="post10">
+<h5>Toyam Cox at <a href="#post10">Mon, 23 Apr 2018 17:27:40 +0000 (UTC)</a></h5>
+https://github.com/ryanoasis/nerd-fonts/issues/7
+</section><section id="post11">
+<h5>Daniel Santana at <a href="#post11">Fri, 15 Jun 2018 21:26:45 -0700</a></h5>
+Moved to https://github.com/void-linux/void-packages/pull/96
+</section><section id="post12">
+<h5>Daniel Santana at <a href="#post12">Fri, 15 Jun 2018 21:26:45 -0700</a></h5>
+Closed #13150.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] Package Request: Syncthing service
+ (#6314)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] Package Request: Syncthing service
+ (#6314)</h1>
+<section id="post1">
+<h5>Toyam Cox at <a href="#post1">Fri, 13 Apr 2018 13:07:50 +0000 (UTC)</a></h5>
+`void-install-user-sv syncthing` or something like that?
+</section><section id="post2">
+<h5>go2null at <a href="#post2">Sat, 28 Jul 2018 18:55:02 -0700</a></h5>
+http://smarden.org/runit/faq.html#userservices
+</section><section id="post3">
+<h5>lemmi at <a href="#post3">Sun, 29 Jul 2018 03:07:32 -0700</a></h5>
+```If a user wants to use the syncthing service for multiple users they would have to copy the whole directory and fix the supervise symlinks. (Otherwise the two services conflict and only one really starts)```
+@Duncaen syncthing doesn't really support multiple users without running under different ports. This requires another approach entirely.
+@go2null huh. that's good to know. maybe we can just install a service as an example that need to be copied by the user.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

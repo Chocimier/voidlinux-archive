@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] Our wiki slowly dies and turns into
+ garbage (#4961)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] Our wiki slowly dies and turns into
+ garbage (#4961)</h1>
+<section id="post1">
+<h5>Anachron at <a href="#post1">Mon, 24 Oct 2016 23:07:08 -0700</a></h5>
+Ok for static stuff I suggest something like pandoc (german example): https://wiki.failover.de/pandoc/
+</section><section id="post2">
+<h5>Enno Boland at <a href="#post2">Mon, 24 Oct 2016 23:30:43 -0700</a></h5>
+This is the wikiengine github itself uses:
+https://github.com/gollum/gollum
+We could provide a readonly wiki on our page and link to gh to make changes. This would prevent spam mostly and provide a nice webinterface to make changes without doing user management by ourselves.
+</section><section id="post3">
+<h5>Anachron at <a href="#post3">Mon, 24 Oct 2016 23:35:54 -0700</a></h5>
+But then again we have something with a web interface to manage the wiki, it also seems to need a db.
+</section><section id="post4">
+<h5>Enno Boland at <a href="#post4">Mon, 24 Oct 2016 23:37:25 -0700</a></h5>
+Not true.
+</section><section id="post5">
+<h5>Enno Boland at <a href="#post5">Mon, 24 Oct 2016 23:38:00 -0700</a></h5>
+(both)
+</section><section id="post6">
+<h5>Anachron at <a href="#post6">Mon, 24 Oct 2016 23:48:13 -0700</a></h5>
+Since it is based on Sinatra and uses a permission system I figured that would be the case, didnt check the auth system yet.
+</section><section id="post7">
+<h5>Enno Boland at <a href="#post7">Tue, 25 Oct 2016 00:20:42 -0700</a></h5>
+A general note: We switched our wiki system from gh pages to mediawiki because nobody contributed at github. I'd like to know what goal we want to achieve with a switch and how we can achieve this with a technology switch.
+Note that it was a lot of work to setup mediawiki and make a void theme for it. If you like to throw that away, then your solution needs to solve problems in the long term and safe us enough time to be worth the effort. For that, I want to know what problems we need to solve and how you plan to solve them.
+</section><section id="post8">
+<h5>Enno Boland at <a href="#post8">Tue, 25 Oct 2016 00:33:55 -0700</a></h5>
+Is our problem spam? Is it the lack of contribution? Is it the poor quality of our documentation?
+</section><section id="post9">
+<h5>Anachron at <a href="#post9">Tue, 25 Oct 2016 00:47:47 -0700</a></h5>
+I'm very new to Void but from what I have seen:
+Is our problem spam? -&gt; Nope
+Is it the lack of contribution? -&gt; Yes
+Is it the poor quality of our documentation? -&gt; Yes
+In my opinion I rather have something hosted on github an pushed to a wiki than having to open an account and create a system of reviewing and publishing around this platform.
+It could be something easy as just a few markdown-files with yaml-variables which generate html-pages that are hosted on github.
+Editing/Creating new content is as easy as making a pull-request and can go through formatters and alike.
+A `Makefile` would be enough of a command line tool to fit the needs. Don't make it too complicated.
+</section><section id="post10">
+<h5>logenkain at <a href="#post10">Tue, 25 Oct 2016 11:54:37 -0700</a></h5>
+On Tue, Oct 25, 2016 at 12:47:47AM -0700, Anachron wrote:
+&gt; In my opinion I rather have something hosted on github an pushed to a wiki than having to open an account and create a system of reviewing and publishing around this platform.
+^this
+Although I doubt a technology switch would encourage contribution, I do feel like this would better follow the spirit of Void.
+Our distro wouldn't exist without the wonders of git, at least it wouldn't look anything like it does today. Our repo is similar to the AUR in that anyone can contribute packages, but the community reviews every package before it becomes part of the repository. Why should our wiki be any different?
+As fun and "wild west" as Void feels sometimes, I also know that Void is held to a fairly high standard, and I think the same should be of our documentation. Do we want to just create another Arch Wiki? What's the point? We can just use the Arch wiki, if we're going to bother with documentation in the form of a wiki it should be held to a very high standard to differentiate itself.
+Otherwise what's the point? In that case, we should just write documentation for Void specific nuances, we don't need to bother with an actual wiki at all, nor go into the type of detail that the Arch wiki does for most individual applications.
+But if we want to do this, perhaps jekyll could be of use.
+</section><section id="post11">
+<h5>Tai Chi Minh Ralph Eastwood at <a href="#post11">Tue, 25 Oct 2016 12:15:04 -0700</a></h5>
+I've been playing around with modifying https://github.com/voidlinux/voidlinux.github.com all day to generate a wiki.  I have been moderately successful so far, with a few things to be resolved:
+1. Navigation: There's sitemaps - probably using this data could be used to generate navigation
+2. Search: There's https://github.com/christian-fei/Simple-Jekyll-Search
+3. Layout: The current layout of the void website has a gargantuan logo with a blurb rendered on every page... I think that needs to only appear on the home page.
+</section><section id="post12">
+<h5>Toyam Cox at <a href="#post12">Tue, 25 Oct 2016 17:22:00 -0700</a></h5>
+Stop.
+Discussing.
+Platforms.
+When there is content, there will also be some means to display it.
+Until then, please stop throwing out solutions for a problem that doesn't exist.
+</section><section id="post13">
+<h5>Anachron at <a href="#post13">Tue, 25 Oct 2016 23:51:22 -0700</a></h5>
+Once my laptop is fixed I will make a detailed installation documentation: https://m.reddit.com/r/voidlinux/comments/59g60m/hey_guys/
+</section><section id="post14">
+<h5>zqqw at <a href="#post14">Wed, 26 Oct 2016 13:51:22 -0700</a></h5>
+Probably spam is the greatest issue - for those responsible for deleting it I imagine.
+Looking here:
+https://www.mediawiki.org/wiki/MediaWiki
+This is quite a big professional project, bringing Wikipedia to the Web for example.
+Why not ask them how to stop the spam, surely Wikipedia doesn't delete it manually?
+The wiki is already pretty good, it would take a long while to read it all, although it can always be improved or extended. All distro's have some outdated and incomplete documentation which can still contain much useful information.
+</section><section id="post15">
+<h5>Peter Bui at <a href="#post15">Sun, 15 Jan 2017 12:42:23 -0800</a></h5>
+I put together a proof of concept of the proposal at https://github.com/pbui/void-docs
+I've only ported three pages from the existing wiki, but the document generating infrastructure works:
+- http://weasel.h4x0r.space:8000/void/installation-guide.html
+- http://weasel.h4x0r.space:8000/void/live-images.html
+- http://weasel.h4x0r.space:8000/general/disks.html
+</section><section id="post16">
+<h5>Anachron at <a href="#post16">Sun, 15 Jan 2017 13:31:07 -0800</a></h5>
+Wow mate that is great!
+The content list is a bit offset in style but else its great! I like the use of Makefile and pandoc.
+</section><section id="post17">
+<h5>Enno Boland at <a href="#post17">Thu, 25 May 2017 23:53:06 -0700</a></h5>
+We now have a decently managed wiki. Can be closed
+</section><section id="post18">
+<h5>Enno Boland at <a href="#post18">Thu, 25 May 2017 23:53:32 -0700</a></h5>
+Closed #4961.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

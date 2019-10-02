@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] linux4.14: enable gcc plugins (#10542)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] linux4.14: enable gcc plugins (#10542)</h1>
+<section id="post1">
+<h5>Andrea Brancaleoni at <a href="#post1">Sun, 07 Jan 2018 02:12:13 +0000 (UTC)</a></h5>
+@thypon requested your review on: voidlinux/void-packages#10542 linux4.14: enable gcc plugins.
+</section><section id="post2">
+<h5>Andrea Brancaleoni at <a href="#post2">Sun, 07 Jan 2018 02:33:56 +0000 (UTC)</a></h5>
+Since RANDSTRUCT is incompatible with some of our supported dkms modules we should test all of them before deploying RANDSTRUCT.
+</section><section id="post3">
+<h5>Jürgen Buchmüller at <a href="#post3">Sun, 07 Jan 2018 02:51:22 +0000 (UTC)</a></h5>
+We definitely need to verify if/what impact these flags (namely RANDSTRUCT) has on each and every dkms package. I failed to verify that when going from 4.14.8 to 4.14.10 and learned my lesson by breaking nvidia.
+The referenced nvidia patch can't hurt whether or not we actually employ RANDSTRUCT. Positional initialization is so 1990s ;-P All in all it's beginning to look as if we should write our own Void test procedures for kernel updates, or should we?
+</section><section id="post4">
+<h5>Leаh Neukirchen at <a href="#post4">Sun, 07 Jan 2018 19:52:08 +0000 (UTC)</a></h5>
+Imo RANDSTRUCT is useless for us as we provide the same kernel to all users. Not worth it.
+</section><section id="post5">
+<h5>Andrea Brancaleoni at <a href="#post5">Sun, 07 Jan 2018 14:00:47 -0800</a></h5>
+I disabled RANDSTRUCT. It will need more testing.
+</section><section id="post6">
+<h5>Jürgen Buchmüller at <a href="#post6">Mon, 08 Jan 2018 10:49:14 +0000 (UTC)</a></h5>
+pullmoll approved this pull request.
+</section><section id="post7">
+<h5>Andrea Brancaleoni at <a href="#post7">Mon, 08 Jan 2018 11:05:27 +0000 (UTC)</a></h5>
+Merged #10542.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

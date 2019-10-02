@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] New package: anbox-0.0.0.20170714
+ (#7120)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] New package: anbox-0.0.0.20170714
+ (#7120)</h1>
+<section id="post1">
+<h5>Andrea Brancaleoni at <a href="#post1">Sun, 23 Jul 2017 15:51:45 +0000 (UTC)</a></h5>
+@thypon requested your review on: voidlinux/void-packages#7120 New package: anbox-0.0.0.20170714.
+</section><section id="post2">
+<h5>Leаh Neukirchen at <a href="#post2">Mon, 24 Jul 2017 15:49:33 +0000 (UTC)</a></h5>
+I'd strongly prefer to build ashmem and binder using dkms (as in anbox upstream), instead of polluting our distro kernels with this stuff.
+</section><section id="post3">
+<h5>Leаh Neukirchen at <a href="#post3">Mon, 24 Jul 2017 09:26:06 -0700</a></h5>
+I'd strongly prefer to build ashmem and binder using dkms (as in anbox upstream), instead of polluting our distro kernels with this stuff.
+</section><section id="post4">
+<h5>Andrea Brancaleoni at <a href="#post4">Mon, 24 Jul 2017 10:32:50 -0700</a></h5>
+Polluting: I LOLled. I don't think we can consider 4000 self contained sloc pollution in a 20 million sloc Linux kernel codebase. But you should ask the kernel guys that thought android binder should be merged in mainline kernel, maybe.
+Btw it is not possible to pursue what you proposed since anbox binder/ashmem are only synced with latest ubuntu supported kernel and they don't even compile on recent kernels. Otherwise, one possibility is a Linux mainline patch to made these modules loadable, or maybe you could simple `rm /dev/binder /dev/ashmem` if you consider them harmful.
+</section><section id="post5">
+<h5>Enno Boland at <a href="#post5">Fri, 28 Jul 2017 13:59:46 +0000 (UTC)</a></h5>
+How big are those modules?
+dkms is only a workaround for licencing issues. imho it's not the right tool to split up 'bloatness'.
+</section><section id="post6">
+<h5>Andrea Brancaleoni at <a href="#post6">Fri, 28 Jul 2017 07:43:40 -0700</a></h5>
+They are not modules; they need to be compiled into the kernel image. The anbox modules are modified to compile outside the main kernel image.
+</section><section id="post7">
+<h5>Andrea Brancaleoni at <a href="#post7">Mon, 31 Jul 2017 20:33:31 +0000 (UTC)</a></h5>
+Updates?
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

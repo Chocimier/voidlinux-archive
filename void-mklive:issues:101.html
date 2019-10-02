@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-mklive] current ISO outdated (#101)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-mklive] current ISO outdated (#101)</h1>
+<section id="post1">
+<h5>Juan RP at <a href="#post1">Sun, 19 Feb 2017 06:24:52 -0800</a></h5>
+The issue is that I sign all files and I've been having real life
+problems...
+I will be back in 2 months max, please be patient.
+The `void-mklive` repo can be used to make your own ISOs easily...
+Thanks!
+</section><section id="post2">
+<h5>Enno Boland at <a href="#post2">Sun, 19 Feb 2017 06:32:11 -0800</a></h5>
+@xtraeme We can upload the ISOs by ourselves. But we need to sign them.
+</section><section id="post3">
+<h5>cr6void at <a href="#post3">Sun, 19 Feb 2017 10:07:05 -0800</a></h5>
+@xtraeme I just want to say: I have an **immense respect** for your work. Void is wonderful.
+If you need something I will do whatever I can to help you at this difficult moment...
+@Duncaen Maybe the "target audience" does not need ISO images, if you say so...
+...but **why** should we offer **outdated ISO** on the [Download page](http://www.voidlinux.eu/download/) ??
+It doesn't make sense, at least for me. Don't get me wrong ;)
+</section><section id="post4">
+<h5>masato9000 at <a href="#post4">Sun, 19 Feb 2017 12:20:48 -0800</a></h5>
+@cr6void perhaps this will help you make some sense of it.
+The "outdated" isos are needed to install the system.  The way I always did it was to do a local install of the base system and do a post-install update after booting the system.
+In this case, I don't personally see the benefit of a netinstall over a local install + update, since the download isn't any smaller, but some like it as an option (it IS one less step and there could be cases where that's important) and I wouldn't question their preferences here.
+I know of this issue because I was playing with the installation recently.  But I've seen enough "images out of date" posts already and had no wish to add to it (I figure the maintainers are all aware of that fact by now... when you have a full plate, you can only eat so much, so fast).
+</section><section id="post5">
+<h5>masato9000 at <a href="#post5">Sun, 19 Feb 2017 12:39:20 -0800</a></h5>
+And since it hasn't actually been done here, a clarification of the SPECIFIC issue ("current iso outdated" isn't really a good bug, since that doesn't say ***why that's a problem*** and again, I think everyone's already aware).
+**problem**
+On a network install, your user doesn't get created, and you end up with a seemingly successful install, but no added user.  I think you might have a problem changing the root password from the installer default too, but since I've been leaving that alone (nonproduction VMs).
+Local-media installs are unaffected
+**description:**
+The part of the installer script that does useradd and password-related changes targeted at the installed system (useradd -r $TARGETDIR) you get a pam related error when you've done a netinstall with the latest packages.
+My _layman's_ interepretation is that the useradd and related binaries in the install environment want to use pam modules in the install target, but due to the spread between versions, have become incompatible with each other.
+If instead the installer does those commands in chroot, then they'd succeed (this I've confirmed).  But there's a design decision in there that I know none of the details on, so have no informed opinion.
+</section><section id="post6">
+<h5>cr6void at <a href="#post6">Sun, 19 Feb 2017 13:05:42 -0800</a></h5>
+@masato I don't know **who** is in charge of the [Void's website](http://www.voidlinux.eu/download/), but this person should write clearly:
+For the moment you must use these ISO TO DO A LOCAL INSTALLATION ONLY !
+Why this information should be **omitted ?**
+&gt;  I think you might have a problem changing the root password from the installer default too
+**No.** No problem with the root account, only with the normal user account.
+</section><section id="post7">
+<h5>James Campos at <a href="#post7">Sun, 19 Feb 2017 14:11:56 -0800</a></h5>
+is it possible to have a key usable by all the void core members for signing isos, instead of using @xtraeme's personal key?
+</section><section id="post8">
+<h5>masato9000 at <a href="#post8">Sun, 19 Feb 2017 15:26:00 -0800</a></h5>
+A void-keyring of sorts?  (but with a better name... too boring/unoriginal for Void, don't you think?)
+</section><section id="post9">
+<h5>Enno Boland at <a href="#post9">Sun, 19 Feb 2017 15:39:28 -0800</a></h5>
+We're working on a solution. I suspect that we will have new ISO tomorrow :)
+</section><section id="post10">
+<h5>cr6void at <a href="#post10">Sun, 19 Feb 2017 22:22:22 -0800</a></h5>
+@Gottox Oh yes I can see new the ISO [here...](https://repo.voidlinux.eu/live/20170219/)
+Thanks ! Good Job.
+</section><section id="post11">
+<h5>cr6void at <a href="#post11">Thu, 09 Mar 2017 13:16:59 -0800</a></h5>
+Closed #101.
+</section><section id="post12">
+<h5>cr6void at <a href="#post12">Thu, 09 Mar 2017 13:16:59 -0800</a></h5>
+Oups... I forgot to **close** this issue. I apologize !!
+Regards.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] qt5 needs to be patched to work with
+ libressl (#5998)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] qt5 needs to be patched to work with
+ libressl (#5998)</h1>
+<section id="post1">
+<h5>"Jason A. Donenfeld" at <a href="#post1">Fri, 17 Mar 2017 13:58:14 -0700</a></h5>
+But your patch changes the line to:
+```
+#if (OPENSSL_VERSION_NUMBER &gt;= 0x10001000L) &amp;&amp; !defined(LIBRESSL_VERSION_NUMBER)
+```
+So it always falls to the error case.
+</section><section id="post2">
+<h5>"Jason A. Donenfeld" at <a href="#post2">Fri, 17 Mar 2017 14:04:16 -0700</a></h5>
+&gt; Its definitively too easy to make such mistakes which could be really bad.
+This is one such mistake, unfortunately. :(
+Can this ticket be assigned to whoever does the Qt stuff for y'all?
+</section><section id="post3">
+<h5>Jürgen Buchmüller at <a href="#post3">Fri, 17 Mar 2017 15:29:51 -0700</a></h5>
+Thank you! Well, this is going to be a tedious job: 48 patches to inspect and validate ;-P
+</section><section id="post4">
+<h5>Jürgen Buchmüller at <a href="#post4">Fri, 17 Mar 2017 16:09:08 -0700</a></h5>
+Ok, the TLSv1_{1,2}_{client,server}_method are available in libressl and thus a good number of patches are wrong. I [stripped them from the patch](http://misc.voidlinux.de/libressl-compat.patch) in a first round. 41 patches left.
+</section><section id="post5">
+<h5>Jürgen Buchmüller at <a href="#post5">Fri, 17 Mar 2017 16:21:09 -0700</a></h5>
+Patches validation
+- [x] TLSv1_{1,2}_{client,server}_method available in libressl; related patches removed
+- [x] EC_curve_nist2nid not available in libressl; patches must remain
+- [ ] SSL_{set,get}_ex_data, SSL_get_ex_new_index are available in libressl.
+      Need to closely inspect the related patches.
+- [x] SSL_set_psk_{client,server}_callback not available, i.e. related patches must remain
+       or I could perhaps use -DOPENSSL_NO_PSK
+- [ ] more to come...
+</section><section id="post6">
+<h5>Jürgen Buchmüller at <a href="#post6">Fri, 17 Mar 2017 19:34:25 -0700</a></h5>
+Closed #5998 via 92db076a8d5d603fb49b674d369f9ba15622e01a.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

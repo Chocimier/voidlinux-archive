@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] uthash: update to 2.0.0 (#4426)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] uthash: update to 2.0.0 (#4426)</h1>
+<section id="post1">
+<h5>Toyam Cox at <a href="#post1">Tue, 05 Jul 2016 09:45:36 -0700</a></h5>
+&gt; -	vcopy src/utlist.h usr/include
+&gt; -	vcopy src/utstring.h usr/include
+&gt; -	vdoc doc/userguide.txt
+&gt; -	vdoc doc/utarray.txt
+&gt; -	vdoc doc/utlist.txt
+&gt; -	vdoc doc/utstring.txt
+&gt; -	vlicense LICENSE
+&gt; +
+&gt; +	for files in src; do
+&gt; +		vcopy src/$file usr/include
+&gt; +	done
+&gt; +
+&gt; +	cd doc/
+&gt; +	for docs in *.txt; do
+&gt; +		vdoc $docs
+&gt; +	done
+So make these loops, if they are actually supposed to be every file, just two lines:
+```
+vcopy src/* usr/include
+vdoc doc/*.txt
+```
+and this will be ready for merging.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4426/files/9a26ac8447f90c97862d08a7afdba52df1d5c2e3#r69597373
+</section><section id="post2">
+<h5>Diogo Leal at <a href="#post2">Tue, 05 Jul 2016 22:54:35 -0700</a></h5>
+When I use vdoc doc/*.txt, ocorreus this error:
+```
+=&gt; ERROR: uthash-2.0.0_1: vinstall: cannot find 'doc/*.txt'...
+=&gt; ERROR: uthash-2.0.0_1: failed to run do_install() at line 140.
+```
+This is motive is in commit.
+```for files in src; do
+              vcopy src/$file usr/include
+done```
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4426#issuecomment-230677222
+</section><section id="post3">
+<h5>Toyam Cox at <a href="#post3">Wed, 06 Jul 2016 07:14:42 -0700</a></h5>
+Merged #4426.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4426#event-714382573
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

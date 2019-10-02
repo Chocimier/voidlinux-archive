@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] Chromium crashes (#8483)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] Chromium crashes (#8483)</h1>
+<section id="post1">
+<h5>Alexey Semigradsky at <a href="#post1">Mon, 23 Oct 2017 17:22:28 +0000 (UTC)</a></h5>
++1
+Chromium 61.0.3163.100
+```
+[3093:3093:1023/202119.882071:ERROR:platform_thread_posix.cc(119)] pthread_create: Invalid argument
+[3093:3093:1023/202119.882313:ERROR:shutdown_signal_handlers_posix.cc(200)] Failed to create shutdown detector task.
+Received signal 11 SEGV_MAPERR 55d01959a6ac
+#0 0x55c812457d06 &lt;unknown&gt;
+#1 0x55c810b849c2 &lt;unknown&gt;
+#2 0x55c8124580ad &lt;unknown&gt;
+#3 0x7f1e222bd7d0 &lt;unknown&gt;
+#4 0x7f1e1cf4d6d1 hb_set_subtract
+#5 0x55c8129179ae &lt;unknown&gt;
+#6 0x55c812917dc5 &lt;unknown&gt;
+#7 0x55c812918474 &lt;unknown&gt;
+#8 0x55c81292ae25 &lt;unknown&gt;
+#9 0x55c812859975 &lt;unknown&gt;
+#10 0x55c8125acac2 &lt;unknown&gt;
+#11 0x55c81256a427 &lt;unknown&gt;
+#12 0x55c81256a481 &lt;unknown&gt;
+#13 0x55c81258af9d &lt;unknown&gt;
+#14 0x55c8143803e8 &lt;unknown&gt;
+#15 0x55c81436b969 &lt;unknown&gt;
+#16 0x55c814378bec &lt;unknown&gt;
+#17 0x55c814410ce4 &lt;unknown&gt;
+#18 0x55c81441199f &lt;unknown&gt;
+#19 0x55c814413d25 &lt;unknown&gt;
+#20 0x55c814414eb0 &lt;unknown&gt;
+#21 0x55c81440fb25 &lt;unknown&gt;
+#22 0x55c814372005 &lt;unknown&gt;
+#23 0x55c814350526 &lt;unknown&gt;
+#24 0x55c8146f8f26 &lt;unknown&gt;
+#25 0x55c8146fb9fc &lt;unknown&gt;
+#26 0x55c81475408b &lt;unknown&gt;
+#27 0x55c814756f17 &lt;unknown&gt;
+#28 0x55c8146362fe &lt;unknown&gt;
+#29 0x55c814638848 &lt;unknown&gt;
+#30 0x55c814638d0d &lt;unknown&gt;
+#31 0x55c81462a140 &lt;unknown&gt;
+#32 0x55c81462c2ac &lt;unknown&gt;
+#33 0x55c814619d9b &lt;unknown&gt;
+#34 0x55c814622cb2 &lt;unknown&gt;
+#35 0x55c814629033 &lt;unknown&gt;
+#36 0x55c814629706 &lt;unknown&gt;
+#37 0x55c81462a1c0 &lt;unknown&gt;
+#38 0x55c81462c2ac &lt;unknown&gt;
+#39 0x55c814619d9b &lt;unknown&gt;
+#40 0x55c814622cb2 &lt;unknown&gt;
+#41 0x55c814629033 &lt;unknown&gt;
+#42 0x55c814629706 &lt;unknown&gt;
+#43 0x55c81462a1c0 &lt;unknown&gt;
+#44 0x55c81462c2ac &lt;unknown&gt;
+#45 0x55c814619d9b &lt;unknown&gt;
+#46 0x55c814622cb2 &lt;unknown&gt;
+#47 0x55c814629033 &lt;unknown&gt;
+#48 0x55c814629706 &lt;unknown&gt;
+#49 0x55c81462a1c0 &lt;unknown&gt;
+#50 0x55c81462c2ac &lt;unknown&gt;
+#51 0x55c814619d9b &lt;unknown&gt;
+#52 0x55c814622cb2 &lt;unknown&gt;
+#53 0x55c814629033 &lt;unknown&gt;
+#54 0x55c814629706 &lt;unknown&gt;
+#55 0x55c81462a1c0 &lt;unknown&gt;
+#56 0x55c81462c2ac &lt;unknown&gt;
+#57 0x55c814619d9b &lt;unknown&gt;
+#58 0x55c814716178 &lt;unknown&gt;
+#59 0x55c8144ccbc0 &lt;unknown&gt;
+#60 0x55c8144cbd11 &lt;unknown&gt;
+#61 0x55c8144ce3c4 &lt;unknown&gt;
+  r8: 000055c81959a4a0  r9: 000055c81959a6b0 r10: fffffffffffffe00 r11: 000055c81959a450
+ r12: 000055c819599f60 r13: 0000000000000000 r14: 0000000000000002 r15: 00007fff373a113c
+  di: 0000000000000001  si: 00000000ffffffff  bp: 0000000000000002  bx: 000055c8195999a0
+  dx: 00000000ffffffff  ax: 0000000000000000  cx: 0000000000000001  sp: 00007fff373a1010
+  ip: 00007f1e1cf4d6d1 efl: 0000000000010213 cgf: 002b000000000033 erf: 0000000000000004
+ trp: 000000000000000e msk: 0000000000000000 cr2: 000055d01959a6ac
+[end of stack trace]
+Calling _exit(1). Core file will not be generated.
+```
+</section><section id="post2">
+<h5>Enno Boland at <a href="#post2">Mon, 23 Oct 2017 11:59:56 -0700</a></h5>
+@aleki @ogdenwebb
+Please check if https://github.com/voidlinux/void-packages/commit/5ef2a0a2d299a2a76f6fd25b07ebb8649c2b5b23 fixes your issue.
+</section><section id="post3">
+<h5>Alexey Semigradsky at <a href="#post3">Mon, 23 Oct 2017 19:02:51 +0000 (UTC)</a></h5>
+@Gottox Yes, now chromium work fine.
+</section><section id="post4">
+<h5>Enno Boland at <a href="#post4">Mon, 23 Oct 2017 12:04:48 -0700</a></h5>
+Closed #8483.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] New package: sklogw (#5236)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] New package: sklogw (#5236)</h1>
+<section id="post1">
+<h5>Toyam Cox at <a href="#post1">Tue, 29 Nov 2016 16:58:51 -0800</a></h5>
+Vaelatern commented on this pull request.
+&gt; @@ -0,0 +1,21 @@
++# Template file for 'sklogw'
++pkgname=sklogw
++version=0.1
++revision=1
++short_desc="A simple cache for dns query"
++maintainer="xant0me &lt;xant0me@openmailbox.org&gt;"
++license="MIT"
++homepage="https://framagit.org/xant0me/cache_dns"
++distfiles="https://framagit.org/xant0me/cache_dns/repository/archive.tar.gz?ref=v${version}&gt;sklogw-${version}.tar.gz"
++checksum="7f28ab7f6b9a1cee4f16a49c3314b72f6bb192c3e4a119d4a3aa0de300e80b04"
++build_style="gnu-makefile"
++make_build_args="CFLAGS=-fPIC"
+This really should be already set.
+</section><section id="post2">
+<h5>xant0me at <a href="#post2">Tue, 29 Nov 2016 23:48:05 -0800</a></h5>
+xant0me commented on this pull request.
+&gt; @@ -0,0 +1,21 @@
++# Template file for 'sklogw'
++pkgname=sklogw
++version=0.1
++revision=1
++short_desc="A simple cache for dns query"
++maintainer="xant0me &lt;xant0me@openmailbox.org&gt;"
++license="MIT"
++homepage="https://framagit.org/xant0me/cache_dns"
++distfiles="https://framagit.org/xant0me/cache_dns/repository/archive.tar.gz?ref=v${version}&gt;sklogw-${version}.tar.gz"
++checksum="7f28ab7f6b9a1cee4f16a49c3314b72f6bb192c3e4a119d4a3aa0de300e80b04"
++build_style="gnu-makefile"
++make_build_args="CFLAGS=-fPIC"
+I put this option because I have an error when I `./xbps-src pkg` saying I should try with -fPIC.
+If It's a mistake to do this way I'll add it in the Makefile.
+</section><section id="post3">
+<h5>xant0me at <a href="#post3">Tue, 29 Nov 2016 23:54:41 -0800</a></h5>
+I'll remove the post-extract and set wrksrc. I didn't want to do this way because I would have change it every new version. But the way I do now I still have to change every new version.
+</section><section id="post4">
+<h5>xant0me at <a href="#post4">Wed, 30 Nov 2016 11:20:52 -0800</a></h5>
+@xant0me pushed 1 commit.
+aa46d4a  remove CFLAGS=-fPIC, set wrksrc
+</section><section id="post5">
+<h5>xant0me at <a href="#post5">Wed, 30 Nov 2016 13:52:51 -0800</a></h5>
+@xant0me pushed 1 commit.
+6924e08  remove trailing empty lines, chpst and /usr/local/bin in run exec
+</section><section id="post6">
+<h5>xant0me at <a href="#post6">Wed, 30 Nov 2016 14:04:30 -0800</a></h5>
+Thanks @Duncaen, I change the scripts.
+</section><section id="post7">
+<h5>Toyam Cox at <a href="#post7">Thu, 01 Dec 2016 00:40:25 -0800</a></h5>
+Vaelatern commented on this pull request.
+&gt; @@ -0,0 +1,21 @@
++# Template file for 'sklogw'
++pkgname=sklogw
++version=0.1
++revision=1
++short_desc="A simple cache for dns query"
++maintainer="xant0me &lt;xant0me@openmailbox.org&gt;"
++license="MIT"
++homepage="https://framagit.org/xant0me/cache_dns"
++distfiles="https://framagit.org/xant0me/cache_dns/repository/archive.tar.gz?ref=v${version}&gt;sklogw-${version}.tar.gz"
++checksum="7f28ab7f6b9a1cee4f16a49c3314b72f6bb192c3e4a119d4a3aa0de300e80b04"
++build_style="gnu-makefile"
++make_build_args="CFLAGS=-fPIC"
+The makefiles should respect our CFLAGS and LDFLAGS.
+-fPIC is set there.
+</section><section id="post8">
+<h5>Toyam Cox at <a href="#post8">Thu, 01 Dec 2016 00:41:54 -0800</a></h5>
+Vaelatern commented on this pull request.
+&gt; @@ -0,0 +1,21 @@
++# Template file for 'sklogw'
++pkgname=sklogw
++version=0.1
++revision=1
++short_desc="A simple cache for dns query"
++maintainer="xant0me &lt;xant0me@openmailbox.org&gt;"
++license="MIT"
++homepage="https://framagit.org/xant0me/cache_dns"
++distfiles="https://framagit.org/xant0me/cache_dns/repository/archive.tar.gz?ref=v${version}&gt;sklogw-${version}.tar.gz"
++checksum="7f28ab7f6b9a1cee4f16a49c3314b72f6bb192c3e4a119d4a3aa0de300e80b04"
++build_style="gnu-makefile"
++make_build_args="CFLAGS=-fPIC"
+Seems it is done.
+</section><section id="post9">
+<h5>Toyam Cox at <a href="#post9">Thu, 01 Dec 2016 00:42:33 -0800</a></h5>
+Vaelatern approved this pull request.
+</section><section id="post10">
+<h5>Toyam Cox at <a href="#post10">Thu, 01 Dec 2016 00:43:49 -0800</a></h5>
+Please have only one commit, with the message:
+`New package: sklogw-0.1`
+</section><section id="post11">
+<h5>Toyam Cox at <a href="#post11">Thu, 01 Dec 2016 21:48:44 -0800</a></h5>
+Merged #5236.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

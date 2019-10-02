@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] New Package: telegram-desktop and
+ dependencies (#11729)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] New Package: telegram-desktop and
+ dependencies (#11729)</h1>
+<section id="post1">
+<h5>Jürgen Buchmüller at <a href="#post1">Fri, 02 Mar 2018 21:22:21 +0000 (UTC)</a></h5>
+We have a serious lag now because of many huge packages hitting the builders, changes like the libressl and its dependencies updates and failing builders were holding up things. I'm sure everyone of @voidlinux/pkg-committers does her best to catch up.
+</section><section id="post2">
+<h5>Toyam Cox at <a href="#post2">Fri, 02 Mar 2018 13:45:23 -0800</a></h5>
+Vaelatern commented on this pull request.
+&gt; @@ -0,0 +1,25 @@
++# Template file for 'gyp'
++pkgname=gyp
++version=20180218
+Who decides this version?
+</section><section id="post3">
+<h5>Toyam Cox at <a href="#post3">Fri, 02 Mar 2018 21:45:44 +0000 (UTC)</a></h5>
+Vaelatern commented on this pull request.
+&gt; @@ -0,0 +1,25 @@
++# Template file for 'gyp'
++pkgname=gyp
++version=20180218
+If it's you, it should be 0.0.0.20180218
+</section><section id="post4">
+<h5>John Zimmermann at <a href="#post4">Fri, 02 Mar 2018 13:57:38 -0800</a></h5>
+Johnnynator commented on this pull request.
+&gt; @@ -0,0 +1,25 @@
++# Template file for 'gyp'
++pkgname=gyp
++version=20180218
+Yep, I changed it. The project it self doesn't have any versioning. At least no visible one.
+</section><section id="post5">
+<h5>Jürgen Buchmüller at <a href="#post5">Fri, 02 Mar 2018 22:37:09 +0000 (UTC)</a></h5>
+Provided #12055 is accepted, you could then make `gyp` download the tarball.
+I really hate package templates fetching distfiles with `git clone` everytime I build them :)
+</section><section id="post6">
+<h5>John Zimmermann at <a href="#post6">Fri, 02 Mar 2018 14:50:35 -0800</a></h5>
+Updated gyp template to use the tarball
+</section><section id="post7">
+<h5>Jürgen Buchmüller at <a href="#post7">Fri, 02 Mar 2018 16:31:23 -0800</a></h5>
+Closed #11729 via f0db49e3adfeae21925ee0c8f16f364c1c7a80ca.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

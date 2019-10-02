@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] chromium-53.0.2785.116_1 on x86_64-musl
+ seems broken (#4843)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] chromium-53.0.2785.116_1 on x86_64-musl
+ seems broken (#4843)</h1>
+<section id="post1">
+<h5>Steven Dee at <a href="#post1">Mon, 26 Sep 2016 11:03:59 -0700</a></h5>
+[chromium.txt](https://github.com/voidlinux/void-packages/files/493815/chromium.txt)
+[chromium-no-sandbox.txt](https://github.com/voidlinux/void-packages/files/493816/chromium-no-sandbox.txt)
+</section><section id="post2">
+<h5>Steven Dee at <a href="#post2">Mon, 26 Sep 2016 11:08:30 -0700</a></h5>
+No chromium instance is running on subsequent start -- I'm guessing the log output is only when it first creates the config directory.
+</section><section id="post3">
+<h5>Steven Dee at <a href="#post3">Mon, 26 Sep 2016 11:28:47 -0700</a></h5>
+Everything's upated -- this is a fresh install. I'm on a Thinkpad X220 with Intel video fwiw.
+</section><section id="post4">
+<h5>Steven Dee at <a href="#post4">Mon, 26 Sep 2016 11:33:33 -0700</a></h5>
+Bizarre! Maybe there's some dependency one of us has installed that is needed but not listed.
+</section><section id="post5">
+<h5>Steven Dee at <a href="#post5">Mon, 26 Sep 2016 11:48:29 -0700</a></h5>
+Fascinating!
+I'm also noticing that glxgears doesn't work, so this may not be a chromium issue after all. But the way glxgears is broken is slightly different: it always shows a black screen, regardless of what used to be under it.
+</section><section id="post6">
+<h5>Steven Dee at <a href="#post6">Mon, 26 Sep 2016 11:54:23 -0700</a></h5>
+And fwiw Xorg.0.log seems to indicate that the intel module is being loaded.
+</section><section id="post7">
+<h5>Steven Dee at <a href="#post7">Mon, 26 Sep 2016 12:28:22 -0700</a></h5>
+Huh. In linux4.8 chromium is at least usable -- in linux4.7 my success rate was 0.
+</section><section id="post8">
+<h5>zqqw at <a href="#post8">Mon, 26 Sep 2016 14:41:51 -0700</a></h5>
+https://forum.voidlinux.eu/t/hardware-acceleration-chromium/867
+You can disable various features with graphics drivers such as 3D rendering or hardware acceleration. It is usually done via conf files, kernel module options or options added to the kernel command line, and could provide a workaround. Intel are quite good with computers I have observed which might also suggest the real problem is not in the kernel. Most of the graphics stack is outside it in xorg and various rendering libs.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

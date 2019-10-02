@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] New package: xkblayout-state-1 (#4525)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] New package: xkblayout-state-1 (#4525)</h1>
+<section id="post1">
+<h5>DirectorX at <a href="#post1">Sat, 30 Jul 2016 08:39:27 -0700</a></h5>
+@Duncaen, i tried many times...
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4525#issuecomment-236371959
+</section><section id="post2">
+<h5>Toyam Cox at <a href="#post2">Sat, 30 Jul 2016 20:27:14 -0700</a></h5>
+@DirectorX The workflow that would have likely fixed that problem: `git rebase master; git push -f`
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4525#issuecomment-236406642
+</section><section id="post3">
+<h5>Toyam Cox at <a href="#post3">Sat, 30 Jul 2016 20:27:53 -0700</a></h5>
+&gt; @@ -0,0 +1,13 @@
+&gt; +# Template file for 'xkblayout-state'
+&gt; +pkgname=xkblayout-state
+&gt; +version=1
+&gt; +revision=1
+&gt; +license="GPL-2"
+&gt; +homepage="https://github.com/nonpop/xkblayout-state"
+&gt; +makedepends="libX11-devel"
+&gt; +build_style=gnu-makefile
+&gt; +short_desc="A small command-line program to get/set the current keyboard layout"
+&gt; +maintainer="DirectorX &lt;DirectorX@users.noreply.github.com&gt;"
+&gt; +distfiles="https://github.com/nonpop/${pkgname}/archive/v${version}.tar.gz"
+Can we use `${homepage}`?
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4525/files/98a6698ae6e9e43ad2e333ced702f38c7377db76#r72897395
+</section><section id="post4">
+<h5>Toyam Cox at <a href="#post4">Sat, 30 Jul 2016 20:29:52 -0700</a></h5>
+Can you try and merge your makefile patch upstream? Not necessary before the package is merged, but will greatly reduce the burden of maintaining a patch.
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4525#issuecomment-236406755
+</section><section id="post5">
+<h5>DirectorX at <a href="#post5">Tue, 02 Aug 2016 10:54:12 -0700</a></h5>
+&gt; @@ -0,0 +1,13 @@
+&gt; +# Template file for 'xkblayout-state'
+&gt; +pkgname=xkblayout-state
+&gt; +version=1
+&gt; +revision=1
+&gt; +license="GPL-2"
+&gt; +homepage="https://github.com/nonpop/xkblayout-state"
+&gt; +makedepends="libX11-devel"
+&gt; +build_style=gnu-makefile
+&gt; +short_desc="A small command-line program to get/set the current keyboard layout"
+&gt; +maintainer="DirectorX &lt;DirectorX@users.noreply.github.com&gt;"
+&gt; +distfiles="https://github.com/nonpop/${pkgname}/archive/v${version}.tar.gz"
+sure thing
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4525/files/98a6698ae6e9e43ad2e333ced702f38c7377db76#r73204197
+</section><section id="post6">
+<h5>DirectorX at <a href="#post6">Tue, 02 Aug 2016 11:01:26 -0700</a></h5>
+@Vaelatern i will try merge my makefile patch upstream.. from my point of view there is no point in doing that. `xkblayout-state` project is not maintained consistently.
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4525#issuecomment-236988813
+</section><section id="post7">
+<h5>Toyam Cox at <a href="#post7">Tue, 02 Aug 2016 18:01:08 -0700</a></h5>
+Merged #4525.
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4525#event-743220375
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

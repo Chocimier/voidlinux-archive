@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] Surprising behavior: xbps-query -R -o
+ "*/xlocate" (#4773)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] Surprising behavior: xbps-query -R -o
+ "*/xlocate" (#4773)</h1>
+<section id="post1">
+<h5>Jürgen Buchmüller at <a href="#post1">Sat, 17 Sep 2016 06:30:29 -0700</a></h5>
+&gt; First, I'm sorry for having used doublequotes when the documentation clearly called for singlequotes.
+I changed the Wiki only after your report. It is true that there were doublequotes before.
+</section><section id="post2">
+<h5>Christian Neukirchen at <a href="#post2">Sat, 17 Sep 2016 09:03:01 -0700</a></h5>
+Shell quoting makes absolutely no difference here, please learn those rules people...
+</section><section id="post3">
+<h5>Jürgen Buchmüller at <a href="#post3">Sat, 17 Sep 2016 09:32:32 -0700</a></h5>
+D'OH! :blush:
+</section><section id="post4">
+<h5>zqqw at <a href="#post4">Mon, 19 Sep 2016 07:53:38 -0700</a></h5>
+Same behaviour here, also:
+~$ xbps-query -Ro '*/xterm'
+~$ xbps-query -o '*/xterm'
+adwaita-icon-theme-3.20_1: /usr/share/icons/Adwaita/cursors/xterm (regular file)
+ncurses-base-6.0_2: /usr/share/terminfo/x/xterm (regular file)
+vte-0.28.2_14: /usr/share/vte/termcap-0.0/xterm (regular file)
+I don't have the sshd service enabled though, possibly something like that is blocking the connection? I can do xbps-query -Rs pkgname for uninstalled packages while offline, so that -R must be looking in a local list, not online.
+~$ xbps-query -Rdo '*/xlocate' 2&gt;locatelog
+(Complete output)
+[DEBUG] XBPS: 0.51 API: 20151030 GIT: UNSET
+[DEBUG] Processing configuration directory: /etc/xbps.d
+[DEBUG] /etc/xbps.d: ignoring .empty
+[DEBUG] Processing system configuration directory: /usr/share/xbps.d
+[DEBUG] Parsing configuration file: /usr/share/xbps.d/00-repository-main.conf
+[DEBUG] [repo] `https://repo.voidlinux.eu/current' stored successfully
+[DEBUG] /usr/share/xbps.d/00-repository-main.conf: added repository https://repo.voidlinux.eu/current
+[DEBUG] Parsing configuration file: /usr/share/xbps.d/void-virtualpkgs.conf
+[DEBUG] /usr/share/xbps.d/void-virtualpkgs.conf: added virtualpkg awk for gawk
+[DEBUG] /usr/share/xbps.d/void-virtualpkgs.conf: added virtualpkg cron-daemon for dcron
+[DEBUG] /usr/share/xbps.d/void-virtualpkgs.conf: added virtualpkg editor for nvi
+[DEBUG] /usr/share/xbps.d/void-virtualpkgs.conf: added virtualpkg man for openbsd-man
+[DEBUG] /usr/share/xbps.d/void-virtualpkgs.conf: added virtualpkg ntp-daemon for openntpd
+[DEBUG] /usr/share/xbps.d/void-virtualpkgs.conf: added virtualpkg openssl for libressl-openssl
+[DEBUG] /usr/share/xbps.d/void-virtualpkgs.conf: added virtualpkg shell for dash
+[DEBUG] /usr/share/xbps.d/void-virtualpkgs.conf: added virtualpkg smtp-server for opensmtpd
+[DEBUG] Parsing configuration file: /usr/share/xbps.d/xbps.conf
+[DEBUG] rootdir=/
+[DEBUG] metadir=//var/db/xbps
+[DEBUG] cachedir=/var/cache/xbps
+[DEBUG] confdir=/etc/xbps.d
+[DEBUG] sysconfdir=/usr/share/xbps.d
+[DEBUG] syslog=true
+[DEBUG] bestmatching=false
+[DEBUG] Architecture: i686
+[DEBUG] Target Architecture: (null)
+[DEBUG] Repository[0]=https://repo.voidlinux.eu/current
+[DEBUG] [rpool] `https://repo.voidlinux.eu/current' registered.
+[DEBUG] Adapta-3.21.5.88_1: couldn't fetch files.plist from https://repo.voidlinux.eu/current/Adapta-3.21.5.88_1.noarch.xbps: Success
+</section><section id="post5">
+<h5>zqqw at <a href="#post5">Mon, 19 Sep 2016 13:12:21 -0700</a></h5>
+Going to the address https://repo.voidlinux.eu/current in my browser I see:
+Adapta-3.21.6.19_1.noarch.xbps
+Above:
+Adapta-3.21.5.88_1.noarch.xbps
+I think an xbps-install -Syu could be what I'm missing, I'll try it when I have time!
+</section><section id="post6">
+<h5>zqqw at <a href="#post6">Mon, 19 Sep 2016 13:45:44 -0700</a></h5>
+Yay! It works now!
+$ xbps-query -Ro '*/xterm'
+adwaita-icon-theme-3.20_1: /usr/share/icons/Adwaita/cursors/xterm (regular file)
+^C
+(I got bored before it finished)
+Presumably this gets updated very frequently and the version info needs refreshing just before use.
+</section><section id="post7">
+<h5>Michael Gehring at <a href="#post7">Tue, 20 Sep 2016 15:32:15 -0700</a></h5>
+That might actually be the answer.  If `xtools` was updated between the last sync (`xbps-install -S`) and the query `xbps-install -R -o '*/xlocate'` the package might be skipped since it's no longer available in the repo and so no results. @stevelitt care to try again after a sync?
+</section><section id="post8">
+<h5>Michael Gehring at <a href="#post8">Sat, 22 Oct 2016 07:37:33 -0700</a></h5>
+Closed #4773.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

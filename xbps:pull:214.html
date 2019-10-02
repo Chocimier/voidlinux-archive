@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/xbps] Added -P and -u formatting options. Unified
+ commit (#214)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/xbps] Added -P and -u formatting options. Unified
+ commit (#214)</h1>
+<section id="post1">
+<h5>Roman Neuhauser at <a href="#post1">Mon, 17 Oct 2016 06:34:23 -0700</a></h5>
+@ebfe @Gottox @Duncaen how should we approach the compiler warning?  https://travis-ci.org/voidlinux/xbps/jobs/168287633#L3067
+</section><section id="post2">
+<h5>Roman Neuhauser at <a href="#post2">Mon, 17 Oct 2016 06:35:13 -0700</a></h5>
+@aditya3098 no worries, you're doing fine.
+</section><section id="post3">
+<h5>Enno Boland at <a href="#post3">Mon, 17 Oct 2016 06:40:35 -0700</a></h5>
+@roman-neuhauser by fixing it:
+https://github.com/voidlinux/xbps/blob/969d300c9b809cd264ee5270d30ca4ac68da85b0/bin/xbps-query/main.c#L119
+```
+format = ... = NULL;
+```
+</section><section id="post4">
+<h5>Roman Neuhauser at <a href="#post4">Mon, 17 Oct 2016 06:45:09 -0700</a></h5>
+@aditya3098 you'll have to initialize the `char *format` to `NULL` since it's a local variable.
+</section><section id="post5">
+<h5>Roman Neuhauser at <a href="#post5">Mon, 17 Oct 2016 06:45:57 -0700</a></h5>
+@Gottox right, sorry, i'm not very good at C. (and only spotted your comment just now).
+</section><section id="post6">
+<h5>Enno Boland at <a href="#post6">Mon, 17 Oct 2016 06:46:53 -0700</a></h5>
+Nobody is ;)
+</section><section id="post7">
+<h5>Aditya Goturu at <a href="#post7">Mon, 17 Oct 2016 08:04:15 -0700</a></h5>
+@aditya3098 pushed 1 commit.
+00b1696  Fixed null initialization
+</section><section id="post8">
+<h5>Aditya Goturu at <a href="#post8">Mon, 17 Oct 2016 08:06:32 -0700</a></h5>
+@aditya3098 pushed 1 commit.
+e5aafa0  Added Sx in man page. Am I doing that commit-snake thing again?
+</section><section id="post9">
+<h5>Roman Neuhauser at <a href="#post9">Mon, 17 Oct 2016 09:50:59 -0700</a></h5>
+roman-neuhauser requested changes on this pull request.
+looks better, thanks!  we'll need feedback from authorities soon. :)
+&gt; @@ -65,6 +65,9 @@ usage(bool fail)
+ 	    " -o --ownedby FILE        Search for package files by matching STRING or REGEX\n"
+ 	    " -S --show PKG            Show information for PKG [default mode]\n"
+ 	    " -s --search PKG          Search for packages by matching PKG, STRING or REGEX\n"
++	    "    -P --printf FORMAT    Print as FORMAT, for substitutions see man page\n"
++	    "    -u --unformatted      Print search output without an formatting or description\n"
++        "                          Useful for installing multiple packages using regexs\n"
+the previous line is still mis-indented.
+&gt; @@ -52,6 +52,59 @@ struct search_data {
+ };
+ static void
++print_results_formatted(struct xbps_handle *xhp, struct search_data *sd, const char *format)
++{
++	const char *pkgver, *desc;
++	char tmp[256], instc;
++	const char *origformat;
++	bool process = false;
++	instc = '+';
++	origformat = format;
++	/* Iterate over results array and find out largest pkgver string */
++	for (unsigned int i = 0; i &lt; xbps_array_count(sd-&gt;results); i+=2)
++		xbps_array_get_cstring_nocopy(sd-&gt;results, i, &amp;pkgver);
+shouldn't the above loop be removed completely?  it seems to serve no purpose.
+&gt; +			instc = '+';
++		while (true) {
++			if ((char)(*format) == '\0') break;
++			if (process) {
++				switch ((char)(*format)) {
++					case '%':
++						printf("%%");
++						break;
++					case 'd':
++						printf("%s", desc);
++						break;
++					case 'i':
++						printf("%c", instc);
++						break;
++					case 'n':
++                        printf("\n");
+the previous line uses spaces for indentation, it should use tabs like everything else.
+</section><section id="post10">
+<h5>Enno Boland at <a href="#post10">Mon, 17 Oct 2016 12:00:56 -0700</a></h5>
+Gottox requested changes on this pull request.
+&gt; +	origformat = format;
++	/* Iterate over results array and find out largest pkgver string */
++	for (unsigned int i = 0; i &lt; xbps_array_count(sd-&gt;results); i+=2) {
++		xbps_array_get_cstring_nocopy(sd-&gt;results, i, &amp;pkgver);
++		len = strlen(pkgver);
++		if (tlen == 0 || len &gt; tlen)
++			tlen = len;
++	}
++	for (unsigned int i = 0; i &lt; xbps_array_count(sd-&gt;results); i+=2) {
++		xbps_array_get_cstring_nocopy(sd-&gt;results, i, &amp;pkgver);
++		xbps_array_get_cstring_nocopy(sd-&gt;results, i+1, &amp;desc);
++		xbps_strlcpy(tmp, pkgver, sizeof(tmp));
++		if (xbps_pkgdb_get_pkg(xhp, pkgver))
++			instc = '=';
++		else
++			instc = '+';
+I prefer the same quantifier as in the default output.
+&gt; @@ -259,7 +312,10 @@ search(struct xbps_handle *xhp, bool repo_mode, const char *pat, const char *pro
+ 		}
+ 	}
+ 	if (!prop &amp;&amp; xbps_array_count(sd.results)) {
+-		print_results(xhp, &amp;sd);
++        if (format)
++		    print_results_formatted(xhp, &amp;sd, format);
++        else
++            print_results(xhp, &amp;sd);
+please use tabs for indention
+</section><section id="post11">
+<h5>Aditya Goturu at <a href="#post11">Tue, 18 Oct 2016 04:17:42 -0700</a></h5>
+Okay I will make the changes
+</section><section id="post12">
+<h5>Aditya Goturu at <a href="#post12">Tue, 15 Nov 2016 05:55:33 -0800</a></h5>
+@aditya3098 pushed 1 commit.
+b5f0b90  Some changes to formatting
+</section><section id="post13">
+<h5>Aditya Goturu at <a href="#post13">Tue, 15 Nov 2016 05:55:43 -0800</a></h5>
+Sorry that took a while
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

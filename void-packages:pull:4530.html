@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] New package: mergerfs-2.14.0 (#4530)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] New package: mergerfs-2.14.0 (#4530)</h1>
+<section id="post1">
+<h5>xinterer at <a href="#post1">Sat, 30 Jul 2016 18:26:38 -0700</a></h5>
+@xinterer pushed 1 commit.
+f906cec  Update template
+---
+You are receiving this because you are subscribed to this thread.
+View it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4530/files/acd3ea61f26788b15d7648039d616eda07c70077..f906cec6924e2389edf13d2edff7be93ef2aafca
+</section><section id="post2">
+<h5>xinterer at <a href="#post2">Sat, 30 Jul 2016 18:42:40 -0700</a></h5>
+&gt; +version="2.14.0"
+&gt; +revision=1
+&gt; +build_style=gnu-makefile
+&gt; +make_install_args=PREFIX=/usr
+&gt; +makedepends="fuse-devel python attr-devel pandoc pkg-config"
+&gt; +depends="fuse"
+&gt; +nopie=true
+&gt; +short_desc="FUSE union filesystem"
+&gt; +maintainer="xinterer &lt;xinterer@users.noreply.github.com&gt;"
+&gt; +license="ISC License"
+&gt; +homepage="https://github.com/trapexit/mergerfs"
+&gt; +distfiles="https://github.com/trapexit/$pkgname/releases/download/$version/$pkgname-$version.tar.gz"
+&gt; +checksum="54f04cd6f9660f82fd9b3f0e3bedfb22784fcaa82de93c866c1c05940c15fd6f"
+&gt; +
+&gt; +do_build() {
+&gt; +	make
+I've done this because I think that build_style=gnu-makefile is overriding the Makefile flags and I don't know other way to make it work.
+https://forum.voidlinux.eu/t/making-template-for-mergerfs-help-needed/882
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4530/files/e074e4651c047a3cd0887575bf6344356ba81a30#r72896708
+</section><section id="post3">
+<h5>xinterer at <a href="#post3">Sat, 30 Jul 2016 18:43:36 -0700</a></h5>
+&gt; @@ -0,0 +1,24 @@
+&gt; +# Template file for 'mergerfs'
+&gt; +pkgname="mergerfs"
+&gt; +version="2.14.0"
+&gt; +revision=1
+&gt; +build_style=gnu-makefile
+&gt; +make_install_args=PREFIX=/usr
+&gt; +makedepends="fuse-devel python attr-devel pandoc pkg-config"
+&gt; +depends="fuse"
+&gt; +nopie=true
+Gives me this error after compilation:
+ERROR: mergerfs-2.14.0_1: non-PIE executable found in PIE build: /usr/bin/mergerfs
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4530/files/e074e4651c047a3cd0887575bf6344356ba81a30#r72896711
+</section><section id="post4">
+<h5>xinterer at <a href="#post4">Sat, 30 Jul 2016 18:45:11 -0700</a></h5>
+@xinterer pushed 1 commit.
+8eca735  Update template
+---
+You are receiving this because you are subscribed to this thread.
+View it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4530/files/f906cec6924e2389edf13d2edff7be93ef2aafca..8eca73577ffd3d178f19fb5faa033233047ce6f2
+</section><section id="post5">
+<h5>xinterer at <a href="#post5">Sat, 30 Jul 2016 18:53:21 -0700</a></h5>
+@xinterer pushed 1 commit.
+a4a7a75  Update template
+---
+You are receiving this because you are subscribed to this thread.
+View it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4530/files/8eca73577ffd3d178f19fb5faa033233047ce6f2..a4a7a75aefce1eeef0a123a58ae42a69e29343c1
+</section><section id="post6">
+<h5>xinterer at <a href="#post6">Sat, 30 Jul 2016 19:33:44 -0700</a></h5>
+@xinterer pushed 1 commit.
+a01d1cc  Update template
+---
+You are receiving this because you are subscribed to this thread.
+View it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4530/files/a4a7a75aefce1eeef0a123a58ae42a69e29343c1..a01d1ccf041a0d7765298b1bdf63d69351438d84
+</section><section id="post7">
+<h5>xinterer at <a href="#post7">Sat, 30 Jul 2016 19:39:25 -0700</a></h5>
+@xinterer pushed 1 commit.
+9391025  Update template
+---
+You are receiving this because you are subscribed to this thread.
+View it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4530/files/a01d1ccf041a0d7765298b1bdf63d69351438d84..9391025668318d48c5056ec99a1617a4b6f3b569
+</section><section id="post8">
+<h5>xinterer at <a href="#post8">Sat, 30 Jul 2016 19:44:55 -0700</a></h5>
+As I see it compiles only on glibc x86_64 and i686. Is it again problem in the template?
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4530#issuecomment-236404866
+</section><section id="post9">
+<h5>Toyam Cox at <a href="#post9">Sat, 30 Jul 2016 20:01:11 -0700</a></h5>
+@xinterer If it's a matter of dependencies not being present, and not actual technical reasons, then do not at all put `nocross` or `only_for_archs` at all. Such things only matter if the software itself can inherently not be cross-built or whatnot.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4530#issuecomment-236405549
+</section><section id="post10">
+<h5>xinterer at <a href="#post10">Sun, 31 Jul 2016 04:36:18 -0700</a></h5>
+Guys, thank you very much for the help and the explanations!
+So, what remains to be done to the template if it builds only for glibc x86_64 and i686? Its builds, right?
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4530#issuecomment-236425243
+</section><section id="post11">
+<h5>xinterer at <a href="#post11">Sun, 31 Jul 2016 04:39:18 -0700</a></h5>
+@xinterer pushed 1 commit.
+1948d60  Update template
+---
+You are receiving this because you are subscribed to this thread.
+View it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4530/files/9391025668318d48c5056ec99a1617a4b6f3b569..1948d607c78934b4955e09f72c4e4b53d8fd85bd
+</section><section id="post12">
+<h5>Toyam Cox at <a href="#post12">Sun, 31 Jul 2016 08:54:07 -0700</a></h5>
+&gt; @@ -0,0 +1,24 @@
+&gt; +# Template file for 'mergerfs'
+&gt; +pkgname="mergerfs"
+&gt; +version="2.14.0"
+&gt; +revision=1
+&gt; +build_style=gnu-makefile
+&gt; +makedepends="fuse-devel attr-devel "
+&gt; +hostmakedepends="pandoc python pkg-config"
+&gt; +short_desc="FUSE union filesystem"
+&gt; +maintainer="xinterer &lt;xinterer@users.noreply.github.com&gt;"
+&gt; +license="ISC License"
+&gt; +homepage="https://github.com/trapexit/mergerfs"
+&gt; +distfiles="https://github.com/trapexit/$pkgname/releases/download/$version/$pkgname-$version.tar.gz"
+Can we use `${homepage}`?
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4530/files/1948d607c78934b4955e09f72c4e4b53d8fd85bd#r72906439
+</section><section id="post13">
+<h5>Toyam Cox at <a href="#post13">Sun, 31 Jul 2016 08:55:29 -0700</a></h5>
+&gt; @@ -0,0 +1,24 @@
+&gt; +# Template file for 'mergerfs'
+&gt; +pkgname="mergerfs"
+&gt; +version="2.14.0"
+&gt; +revision=1
+&gt; +build_style=gnu-makefile
+&gt; +makedepends="fuse-devel attr-devel "
+&gt; +hostmakedepends="pandoc python pkg-config"
+&gt; +short_desc="FUSE union filesystem"
+&gt; +maintainer="xinterer &lt;xinterer@users.noreply.github.com&gt;"
+&gt; +license="ISC License"
+Please do as @Duncaen said and make this consistent with other packages. `license="ISC"`
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4530/files/1948d607c78934b4955e09f72c4e4b53d8fd85bd#r72906458
+</section><section id="post14">
+<h5>xinterer at <a href="#post14">Sun, 31 Jul 2016 14:49:06 -0700</a></h5>
+@xinterer pushed 1 commit.
+a3f99c4  Update template
+---
+You are receiving this because you are subscribed to this thread.
+View it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4530/files/1948d607c78934b4955e09f72c4e4b53d8fd85bd..a3f99c454ca73b76040a7ed22531a2c8a9a8de8d
+</section><section id="post15">
+<h5>Jürgen Buchmüller at <a href="#post15">Sat, 06 Aug 2016 09:59:24 -0700</a></h5>
+You can remove `pandoc` from the `hostmakedepends` and add these lines to global:
+```
+case "$XBPS_TARGET_MACHINE" in
+	*-musl) # Does not have pandoc
+		;;
+	*)	hostmakedepends+=" pandoc"
+		;;
+esac
+```
+The man page is still installed, just not built from the source for *-musl.
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4530#issuecomment-238033603
+</section><section id="post16">
+<h5>Jürgen Buchmüller at <a href="#post16">Sat, 06 Aug 2016 10:16:29 -0700</a></h5>
+Also `python` can be removed from `hostmakedepends`. It isn't required AFAICT.
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4530#issuecomment-238034446
+</section><section id="post17">
+<h5>xinterer at <a href="#post17">Sat, 06 Aug 2016 11:31:04 -0700</a></h5>
+@xinterer pushed 1 commit.
+8155091  Update template
+---
+You are receiving this because you are subscribed to this thread.
+View it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4530/files/a3f99c454ca73b76040a7ed22531a2c8a9a8de8d..8155091569b65f92291deb29af5492d4c60568cf
+</section><section id="post18">
+<h5>xinterer at <a href="#post18">Sat, 06 Aug 2016 11:54:47 -0700</a></h5>
+Well, I've seen that the template with the changes from @pullmoll  was added and the package are already in the Void repo. So, I assume that this pull request should be closed...
+Thank you again, I learned a lot of things here.
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4530#issuecomment-238042718
+</section><section id="post19">
+<h5>xinterer at <a href="#post19">Sat, 06 Aug 2016 11:54:48 -0700</a></h5>
+Closed #4530.
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4530#event-747506008
+</section><section id="post20">
+<h5>Jürgen Buchmüller at <a href="#post20">Sat, 06 Aug 2016 16:41:05 -0700</a></h5>
+Yea, I made a mistake when I accidentially pushed my own (wrong) version of a template for mergerfs.
+I reverted that commit and decided to take your template, apply the fixes and push it.
+I hope it works for you @xinterer
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4530#issuecomment-238054627
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

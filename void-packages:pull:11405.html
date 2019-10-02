@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] New package: oomox-1.4.99 (#11405)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] New package: oomox-1.4.99 (#11405)</h1>
+<section id="post1">
+<h5>Toyam Cox at <a href="#post1">Mon, 05 Feb 2018 23:31:55 +0000 (UTC)</a></h5>
+Vaelatern commented on this pull request.
+&gt; +revision=1
++# python-gobject failes to install on other platforms with this error:
++# ERROR: python-gobject-3.26.1_1: cannot be cross compiled, exiting...
++only_for_archs="i686 x86_64-musl x86_64"
++build_style=meta
++hostmakedepends="git"
++depends="python python-gobject gtk+3 gdk-pixbuf glib-devel glib sassc bc sed librsvg librsvg-utils optipng parallel inkscape"
++short_desc="Application for generating different color themes"
++maintainer="Tim Wanders &lt;timwanders241@gmail.com&gt;"
++license="GPL-3"
++homepage="https://github.com/actionless/oomox"
++do_fetch() {
++	if [ ! -d oomox-$version ]; then
++		git clone --recursive --depth=1 --branch $version https://github.com/actionless/oomox/ oomox-$version
++	fi
++}
+@voidlinux/pkg-committers ?
+</section><section id="post2">
+<h5>Jürgen Buchmüller at <a href="#post2">Mon, 05 Feb 2018 16:09:33 -0800</a></h5>
+Perhaps I can help to clarify some requests which @Vaelatern made or rath=
+er the policies regarding Void templates and how we believe they should l=
+ook like.
+If at all possible, avoid `git clone` and try to use releases - is [1.4.5=
+.2](https://github.com/actionless/oomox/archive/1.4.5.2.tar.gz) not suffi=
+ciently new? And if it isn't, you're cloning 1.4.99 if I understood your =
+template?
+We generally don't like packages which are not in some definend and repro=
+ducible state for anyone who tries to build them locally and `git clone =E2=
+=80=A6` has a tendency to break every now and then. I think we even have =
+a (silent?) agreement to not accept new `*-git` packages, which means pac=
+kages which don't download distfiles but use some RCS to fetch files.
+If no releases exist, you should use the git revision of the commit you t=
+hink is usable and download the tarball from e.g. the latest commit [fa9e=
+b21f69d7ac76e9c673d91b9a7b2ee0b72118](https://github.com/actionless/oomox=
+/archive/fa9eb21f69d7ac76e9c673d91b9a7b2ee0b72118.tar.gz).
+For going this way our common practise is to define a `version=3D` includ=
+ing a date stamp, e.g. 1.4.99.20180128 and also define a variable like `_=
+git_hash=3Dfa9eb21f69d7ac76e9c673d91b9a7b2ee0b72118` to be used in the di=
+stfiles line like this:
+```
+distfiles=3D"https://github.com/actionless/oomox/archive/${_git_hash}.tar=
+.gz&gt;${pkgname}-${version}.tar.gz"
+```
+Now if a github (or other git repository's) package contains references t=
+o other packages with a specific git hash of their own, download them alo=
+ng with the main package using the same scheme. In this case you could de=
+fine `_oomoxify_hash=3Dabcbadbadbad...` (find it in the tree) and use tha=
+t hash in a second line in `distfiles=3D"=E2=80=A6`.
+Finally in a `post_extract()` or perhaps `pre_configure()` function in yo=
+ur template move the referenced packages where they are expected to resid=
+e.
+For an example of a template doing just that [take a look at tracebox](ht=
+tps://github.com/voidlinux/void-packages/blob/master/srcpkgs/tracebox/tem=
+plate).
+Finally a template should never try to optimize for possibly already exis=
+ting `git clone =E2=80=A6` directories. You can think of the builders as =
+always being in a clean state when a package is to be built. We do everyt=
+hing to make sure they are clean, because otherwise no build would be rep=
+roducible.
+Collecting the necessary info from a package and its submodules is a burd=
+en which upstream puts on us by not using released versions of their inte=
+grated packages. They all should be slapped around with a large trout =E2=
+=80=93 or rather be kindly asked to use a downloadable set of subpackages=
+ instead of recursive submodules. Most of them probably would never chang=
+e their mind, though, and this is where a packager's job is beginning to =
+become tedious... you asked for it :grimacing: =
+HTH + Cheers
+J=C3=BCrgen
+-- =
+You are receiving this because you are on a team that was mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/11405#issuecomment-363264=
+677=
+</section><section id="post3">
+<h5>Tim Wanders at <a href="#post3">Tue, 06 Feb 2018 06:22:07 -0800</a></h5>
+Alright, thanks for the explanation @pullmoll, I have 1 question though, with this `install` script, which build style should I choose? I cannot find one that fits the needs of this packages(meta is not allowed, configure doesn't fit either because I don't have a `do_build` part and fetch doesn't extract from the start, so that means I'd need to extract all the files myself{possible, but not really clean})?
+</section><section id="post4">
+<h5>John Zimmermann at <a href="#post4">Tue, 06 Feb 2018 14:29:00 +0000 (UTC)</a></h5>
+@tim241 not specifying any build style should be the correct way
+</section><section id="post5">
+<h5>Jürgen Buchmüller at <a href="#post5">Tue, 06 Feb 2018 14:32:21 +0000 (UTC)</a></h5>
+As @Johnnynator said: if no build style matches, remove that line from the =
+template and write your own `do_build()` and `do_install()` functions. You =
+can find quite a few templates w/o `build_style=3D=E2=80=A6` in the reposit=
+ory.
+--=20
+You are receiving this because you are on a team that was mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/11405#issuecomment-363439533=
+</section><section id="post6">
+<h5>Tim Wanders at <a href="#post6">Tue, 06 Feb 2018 06:43:47 -0800</a></h5>
+Alright, thanks!
+</section><section id="post7">
+<h5>Jürgen Buchmüller at <a href="#post7">Tue, 06 Feb 2018 10:05:48 -0800</a></h5>
+I merged it after applying some changes to your template:
++ It's a (shell) script only package, so I set `noarch=3Dyes`
++ It doesn't expect python, but python3, so I modified the `depends=3D=E2=
+=80=A6`
++ If a package doesn't cross compile solely because of a dependency, ther=
+e shouldn't be a `nocross=3Dyes`, except for cases where this dependency =
+will never be cross compilable or is hidden deep in a tree. `python3-gobj=
+ect` may some day be available for cross builds and then `oomox` as well.=
++ Changed to install to `/usr/share/oomox` rather than `/opt/oomox` becau=
+se Void doesn't like `/opt` (exceptions exist, though)
+-- =
+You are receiving this because you are on a team that was mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/11405#issuecomment-363511=
+739=
+</section><section id="post8">
+<h5>Jürgen Buchmüller at <a href="#post8">Tue, 06 Feb 2018 18:07:44 +0000 (UTC)</a></h5>
+Closed #11405 via ed53f8532bdcbe1f9c58b8ac8175af9ea0c6f2b4.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

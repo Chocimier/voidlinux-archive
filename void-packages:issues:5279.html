@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] Package "gdb": unresolvable shlib
+ `libreadline.so.6' (#5279)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] Package "gdb": unresolvable shlib
+ `libreadline.so.6' (#5279)</h1>
+<section id="post1">
+<h5>Andrea Brancaleoni at <a href="#post1">Sat, 03 Dec 2016 05:00:58 -0800</a></h5>
+[*] readline-7.0.000_1                The GNU Readline Library
+[*] readline-devel-7.0.000_1          The GNU Readline Library - development files
+</section><section id="post2">
+<h5>raimundomartins at <a href="#post2">Sat, 03 Dec 2016 05:01:42 -0800</a></h5>
+```
+13:05:47 raimundo@yamtech:~$ sudo xbps-install readline
+Package `readline' already installed.
+13:06:18 raimundo@yamtech:~$ sudo xbps-install readline-devel
+Name           Action    Version           New version            Download size
+readline-devel install   -                 7.0.000_1              282KB
+Size to download:              282KB
+Size required on disk:        1282KB
+Free space on disk:            169GB
+Do you want to continue? [Y/n]
+[*] Downloading binary packages
+readline-devel-7.0.000_1.x86_64.xbps: 282KB [avg rate: 11GB/s]
+readline-devel-7.0.000_1.x86_64.xbps.sig: 512B [avg rate: 54MB/s]
+[*] Verifying package integrity
+readline-devel-7.0.000_1: verifying RSA signature...
+[*] Running transaction tasks
+readline-devel-7.0.000_1: unpacking ...
+[*] Configuring unpacked packages
+readline-devel-7.0.000_1: configuring ...
+readline-devel-7.0.000_1: installed successfully.
+1 downloaded, 1 installed, 0 updated, 1 configured, 0 removed.
+13:06:33 raimundo@yamtech:~$ sudo xbps-install -S gdb
+[*] Updating `https://repo.voidlinux.eu/current/x86_64-repodata' ...
+[*] Updating `https://repo.voidlinux.eu/current/multilib/nonfree/x86_64-repodata' ...
+[*] Updating `https://repo.voidlinux.eu/current/multilib/x86_64-repodata' ...
+[*] Updating `https://repo.voidlinux.eu/current/nonfree/x86_64-repodata' ...
+gdb-7.9_1: broken, unresolvable shlib `libreadline.so.6'
+Transaction aborted due to unresolved shlibs.
+```
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

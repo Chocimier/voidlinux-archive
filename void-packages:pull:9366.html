@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] rpi-kernel: update to 4.9.65 (#9366)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] rpi-kernel: update to 4.9.65 (#9366)</h1>
+<section id="post1">
+<h5>Peter Bui at <a href="#post1">Mon, 27 Nov 2017 20:51:38 +0000 (UTC)</a></h5>
+Hmm.  I'm not sure what is going on.  I tested with the following kernels:
+```
+4.9.61_1 = Wireless works
+4.9.62_1 = Wireless does not work
+4.9.65_1 = Wireless sometimes work
+4.9.65_2 = Wireless works
+```
+Attached are logs for each kernel version.  I don't really see anything different between .61 and .62 and .65 other than the wireless not working (the device is seen, but wpa_supplicant never connects).
+I'm not sure why 4.9.65_1 (which has the CONFIG changes) works on one RPI 3, but not another.  4.9.65_2 (which does not have the CONFIG changes) always seems to work however.
+[log.4.9.61_1.txt](https://github.com/voidlinux/void-packages/files/1507552/log.4.9.61_1.txt)
+[log.4.9.62_1.txt](https://github.com/voidlinux/void-packages/files/1507553/log.4.9.62_1.txt)
+[log.4.9.65_1.txt](https://github.com/voidlinux/void-packages/files/1507554/log.4.9.65_1.txt)
+[log.4.9.65_2.txt](https://github.com/voidlinux/void-packages/files/1507555/log.4.9.65_2.txt)
+</section><section id="post2">
+<h5>Peter Bui at <a href="#post2">Fri, 01 Dec 2017 14:44:37 +0000 (UTC)</a></h5>
+Closing b/c I'm going to update to 4.9.66
+</section><section id="post3">
+<h5>Peter Bui at <a href="#post3">Fri, 01 Dec 2017 14:44:38 +0000 (UTC)</a></h5>
+Closed #9366.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

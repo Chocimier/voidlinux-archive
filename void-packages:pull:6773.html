@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>[voidlinux/void-packages] Manual.md: clarify the maintainer field
+ (#6773)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>[voidlinux/void-packages] Manual.md: clarify the maintainer field
+ (#6773)</h1>
+<section id="post1">
+<h5>Michael Aldridge at <a href="#post1">Sat, 17 Jun 2017 20:37:25 -0700</a></h5>
+We have enough packages that people have added and abandoned, IMHO we shouldn't accept anymore where people are outright refusing contact information on something they're supposedly maintaining.
+@voidlinux/pkg-committers What do you think?
+You can view, comment on, or merge this pull request online at:
+  https://github.com/voidlinux/void-packages/pull/6773
+-- Commit Summary --
+  * Manual.md: clarify the maintainer field
+-- File Changes --
+    M Manual.md (5)
+-- Patch Links --
+https://github.com/voidlinux/void-packages/pull/6773.patch
+https://github.com/voidlinux/void-packages/pull/6773.diff
+</section><section id="post2">
+<h5>lemmi at <a href="#post2">Sat, 17 Jun 2017 20:45:52 -0700</a></h5>
+It won't solve all the problems with people not being reachable, but it's a start.
+</section><section id="post3">
+<h5>lemmi at <a href="#post3">Sat, 17 Jun 2017 20:48:57 -0700</a></h5>
+If we do this, we maybe should open an issue mentioning everybody with packages that use such an address and ask them to update their packages. That way they at least get a notification over their registered github email.
+</section><section id="post4">
+<h5>Toyam Cox at <a href="#post4">Sat, 17 Jun 2017 20:56:55 -0700</a></h5>
+We already basically assume that pkg commiters who are not in IRC are not reachable. How many times would we benefit from always being able to email contributors?
+</section><section id="post5">
+<h5>Michael Aldridge at <a href="#post5">Sat, 17 Jun 2017 21:09:38 -0700</a></h5>
+I think the statement that's being made is to let the people know that they are not using a valid address and this is no officially in violation of a package management policy.  Perhaps a deadline would be set so that if the individuals in question did not respond in a timely manner their packages would be changed over to "Orphaned &lt;nobody@voidlinux.eu&gt;".
+</section><section id="post6">
+<h5>Leah Neukirchen at <a href="#post6">Sun, 18 Jun 2017 09:27:38 -0700</a></h5>
+I could live with github noreply addresses, but there doesn't seem a way to send any messages to a github user (except by at-mentioning them).
+</section><section id="post7">
+<h5>Michael Aldridge at <a href="#post7">Sun, 18 Jun 2017 12:00:04 -0700</a></h5>
+I'm coming at this from a technical as well as philisophical angle.  I look at it that if you aren't willing to put a real email onto the package, are you actually maintaining it?  If the github emails actually went somewhere, like an aliased forwarder, then that would be fine.  As is those aren't even valid addresses, its just a format of a URI that github has seeded out (there isn't an MX record backing any of those subdomains, nor an A record).
+</section><section id="post8">
+<h5>Leah Neukirchen at <a href="#post8">Mon, 19 Jun 2017 05:12:58 -0700</a></h5>
+They are CNAMES to an A record. (They really should use a null MX there...)
+</section><section id="post9">
+<h5>Enno Boland at <a href="#post9">Mon, 19 Jun 2017 15:05:51 -0700</a></h5>
+ok with me.
+</section><section id="post10">
+<h5>Enno Boland at <a href="#post10">Mon, 19 Jun 2017 15:06:36 -0700</a></h5>
+And maybe we should contact the maintainers once a package isn't updated for weeks/months.
+</section><section id="post11">
+<h5>Michael Aldridge at <a href="#post11">Thu, 22 Jun 2017 01:28:29 -0700</a></h5>
+Closed #6773.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

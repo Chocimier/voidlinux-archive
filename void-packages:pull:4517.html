@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] new package: discogs_client-2.2.0
+ (#4517)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] new package: discogs_client-2.2.0
+ (#4517)</h1>
+<section id="post1">
+<h5>Toyam Cox at <a href="#post1">Tue, 02 Aug 2016 20:10:36 -0700</a></h5>
+&gt; @@ -0,0 +1,19 @@
+&gt; +# Template file for 'discogs_client'
+&gt; +pkgname=discogs_client
+&gt; +version=2.2.0
+&gt; +revision=1
+&gt; +noarch=yes
+&gt; +build_style="python-module"
+&gt; +hostmakedepends="python-setuptools"
+&gt; +depends="python-requests python-oauthlib"
+&gt; +pycompile_module="discogs_client"
+&gt; +short_desc="Official Discogs API client for Python"
+&gt; +maintainer="Georg Schabel &lt;gescha@posteo.de&gt;"
+&gt; +homepage="https://github.com/discogs/discogs_client"
+&gt; +license="BSD-2"
+&gt; +distfiles="https://github.com/discogs/${pkgname}/archive/v${version}.tar.gz"
+Can we use `${homepage}` here?
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4517/files/2e7463c04aaced2796448795869c4e48fcccb101#r73274747
+</section><section id="post2">
+<h5>Toyam Cox at <a href="#post2">Tue, 02 Aug 2016 20:14:05 -0700</a></h5>
+Why should we include this when it seems to be just a pip module best installed from pip?
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4517#issuecomment-237123060
+</section><section id="post3">
+<h5>Toyam Cox at <a href="#post3">Tue, 02 Aug 2016 20:14:42 -0700</a></h5>
+Can we get a python 3 subpackage?
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4517#issuecomment-237123127
+</section><section id="post4">
+<h5>Toyam Cox at <a href="#post4">Tue, 02 Aug 2016 20:15:01 -0700</a></h5>
+Should be named like the python module it is.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4517#issuecomment-237123171
+</section><section id="post5">
+<h5>Georg Schabel at <a href="#post5">Mon, 08 Aug 2016 05:42:31 -0700</a></h5>
+Something like `discogs_client-python discogs_client-python3.4`?
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4517#issuecomment-238223829
+</section><section id="post6">
+<h5>Toyam Cox at <a href="#post6">Mon, 08 Aug 2016 05:46:44 -0700</a></h5>
+Sure. But first try building it with python3.4 at all
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4517#issuecomment-238224774
+</section><section id="post7">
+<h5>Toyam Cox at <a href="#post7">Mon, 09 Jan 2017 16:00:22 -0800</a></h5>
+Closed #4517 via 1251e2d8ddb98997636c916116a8a8063a22f266.
+</section><section id="post8">
+<h5>Toyam Cox at <a href="#post8">Mon, 09 Jan 2017 16:00:44 -0800</a></h5>
+Thank you for your contribution!
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

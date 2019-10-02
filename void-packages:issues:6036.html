@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] fish_update_completions broken? (#6036)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] fish_update_completions broken? (#6036)</h1>
+<section id="post1">
+<h5>Vintodrimmer at <a href="#post1">Sun, 26 Mar 2017 09:37:22 -0700</a></h5>
+Thank you.
+Is it reasonable to ask here for a void-specific patch?
+Or is it better to ask fish-guys to check for mdocml?
+</section><section id="post2">
+<h5>Fabian Homborg at <a href="#post2">Thu, 30 Mar 2017 07:55:44 -0700</a></h5>
+This has been fixed in fish's master branch since 03e0f1eb21e9df76ed792cbd8349d04ec29b8906. You'll want to backport 03e0f1eb21e9df76ed792cbd8349d04ec29b8906, 94b71353ef16e90db850431fa226ff7c33939254 and b3d5fb71f484de4dae8103ab4ac099377b3b698c (i.e. the current state of create_manpath_completions.py, which shouldn't depend on any other changes in what will become 2.6.0) or wait for the next release.
+</section><section id="post3">
+<h5>Vintodrimmer at <a href="#post3">Fri, 14 Jul 2017 13:57:26 -0700</a></h5>
+Closed #6036.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] xbps-src: preserve proxy environment
+ variables (#8117)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] xbps-src: preserve proxy environment
+ variables (#8117)</h1>
+<section id="post1">
+<h5>Maurizio Porrato at <a href="#post1">Fri, 13 Oct 2017 18:35:17 +0000 (UTC)</a></h5>
+No special reason. IMO, this implementation is easier to extend in case there's a need to add more variables to the list.
+</section><section id="post2">
+<h5>Toyam Cox at <a href="#post2">Mon, 16 Oct 2017 08:47:39 +0000 (UTC)</a></h5>
+Please at least use `$()` instead of `` to denote a subshell.
+</section><section id="post3">
+<h5>Michael Gehring at <a href="#post3">Mon, 16 Oct 2017 02:16:14 -0700</a></h5>
+I'm not sure if passing through environment variables into the chroot is a good idea at all. Explicit configuration via an XBPS_PROXYS variable or similar in /etc/conf keeps the chroot independent.
+</section><section id="post4">
+<h5>Juan RP at <a href="#post4">Mon, 16 Oct 2017 03:07:14 -0700</a></h5>
+Exactly
+2017-10-16 11:16 GMT+02:00 Michael Gehring &lt;notifications@github.com&gt;:
+&gt; I'm not sure if passing through environment variables into the chroot i=
+s a
+&gt; good idea at all. Explicit configuration via an XBPS_PROXYS variable or=
+&gt; similar in /etc/conf keeps the chroot independent.
+&gt;
+&gt; =E2=80=94
+&gt; You are receiving this because you are subscribed to this thread.
+&gt; Reply to this email directly, view it on GitHub
+&gt; &lt;https://github.com/voidlinux/void-packages/pull/8117#issuecomment-3368=
+28479&gt;,
+&gt; or mute the thread
+&gt; &lt;https://github.com/notifications/unsubscribe-auth/AA0fqYGo6sc_XElgyrLC=
+Jxx1xKcacoTKks5ssx7dgaJpZM4P4vCV&gt;
+&gt; .
+&gt;
+-- =
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/8117#issuecomment-3368414=
+89=
+</section><section id="post5">
+<h5>pulux at <a href="#post5">Tue, 17 Oct 2017 07:59:56 +0000 (UTC)</a></h5>
+I'm work behind a proxy, set XBPS_PROXYS in /etc/conf dosn't work.
+This PR works well.
+</section><section id="post6">
+<h5>Michael Gehring at <a href="#post6">Tue, 17 Oct 2017 08:32:24 +0000 (UTC)</a></h5>
+&gt; I'm work behind a proxy, set XBPS_PROXYS in /etc/conf dosn't work.
+&gt; This PR works well.
+I neither claimed that this PR doesn't work nor that setting XBPS_PROXYS currently works. I just don't think that unconditionally passing through environment variables is a good idea.
+</section><section id="post7">
+<h5>Maurizio Porrato at <a href="#post7">Tue, 17 Oct 2017 02:26:52 -0700</a></h5>
+What about using a sudo-like approach where you can define the list of the variables you want to passthrough in a conf file? (`env_keep` in `/etc/sudoers`)
+</section><section id="post8">
+<h5>maxice8 at <a href="#post8">Thu, 03 May 2018 09:10:29 -0700</a></h5>
+any updates on this ?
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

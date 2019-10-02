@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] glibc-2.26 breakage (#7307)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] glibc-2.26 breakage (#7307)</h1>
+<section id="post1">
+<h5>Enno Boland at <a href="#post1">Wed, 09 Aug 2017 11:33:15 +0000 (UTC)</a></h5>
+@Duncaen found a commit regarding glibc breakage. Unfortunately I only have the commit hash of the commit
+</section><section id="post2">
+<h5>Enno Boland at <a href="#post2">Wed, 09 Aug 2017 11:38:55 +0000 (UTC)</a></h5>
+Are there compilerflags that enable the old behavior again? - The correctest behavior is utterly bullshit (sorry for the Torvaldism) if it breaks our packages.
+</section><section id="post3">
+<h5>Jürgen Buchmüller at <a href="#post3">Wed, 09 Aug 2017 12:16:47 +0000 (UTC)</a></h5>
+I'm not even sure, if this is a gcc or a glibc problem.
+Perhaps it's just a missing detail in how we compile gcc, but then it worked fine before glibc-2.26.
+The gcc patch for glibc-2.26 changes nothing c++11 related but just the necessary bits.
+This is why I highly doubt there could be compiler flags for _old behaviour_ - there is no such thing.
+</section><section id="post4">
+<h5>Jürgen Buchmüller at <a href="#post4">Wed, 09 Aug 2017 05:36:00 -0700</a></h5>
+&gt; I think #include &lt;cmath&gt; should be enough for these functions.
+For llvm I tried to `#include &lt;cmath&gt;` both after and before `#include &lt;cstdint&gt;` in `include/llbm/Support/NativeFormatting.h`.
+Now there are some more errors  besides the known ones :-P
+```
+/builddir/llvm-4.0.1.src/projects/compiler-rt/lib/builtins/atomic.c: In function 'unlock':
+/builddir/llvm-4.0.1.src/projects/compiler-rt/lib/builtins/atomic.c:93:3: warning: implicit declaration of function '__c11_atomic_store' [-Wimplicit-function-declaration]
+   __c11_atomic_store(l, 0, __ATOMIC_RELEASE);
+   ^~~~~~~~~~~~~~~~~~
+/builddir/llvm-4.0.1.src/projects/compiler-rt/lib/builtins/atomic.c: In function 'lock':
+/builddir/llvm-4.0.1.src/projects/compiler-rt/lib/builtins/atomic.c:99:11: warning: implicit declaration of function '__c11_atomic_compare_exchange_weak' [-Wimplicit-function-declaration]
+   while (!__c11_atomic_compare_exchange_weak(l, &amp;old, 1, __ATOMIC_ACQUIRE,
+           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
+So no, including cmath does not seem to solve the problem.
+</section><section id="post5">
+<h5>Jürgen Buchmüller at <a href="#post5">Wed, 09 Aug 2017 12:54:05 +0000 (UTC)</a></h5>
+Looking at `/usr/include/c++/6.3/cmath` I see many of the seemingly missing definitions being wrapped in one or more of
+```
+#ifndef __CORRECT_ISO_CPP_MATH_H_PROTO
+```
+```
+#ifndef __CORRECT_ISO_CPP_MATH_H_PROTO_FP
+```
+```
+#ifndef __CORRECT_ISO_CPP_MATH_H_PROTO_INT
+```
+and I see no definition of this macro in e.g. `/usr/include/c++/6.3/x86_64-unknown-linux-gnu/bits/c++config.h` or anywhere else below `/usr/include`. This doesn't help me to understand where the real problem arises from...
+</section><section id="post6">
+<h5>Jürgen Buchmüller at <a href="#post6">Fri, 18 Aug 2017 10:34:10 +0000 (UTC)</a></h5>
+Closed #7307.
+</section><section id="post7">
+<h5>Jürgen Buchmüller at <a href="#post7">Fri, 18 Aug 2017 03:34:10 -0700</a></h5>
+Problems are solved.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

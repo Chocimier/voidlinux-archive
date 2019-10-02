@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] Trackpad is incorrectly listed as a
+ pointer device and is not picked up by synaptics or mtrack.  (#3897)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] Trackpad is incorrectly listed as a
+ pointer device and is not picked up by synaptics or mtrack.  (#3897)</h1>
+<section id="post1">
+<h5>Tony O at <a href="#post1">Fri, 22 Apr 2016 13:47:49 -0700</a></h5>
+hi xa0, this is entirely unrelated, could you message me?
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/3897#issuecomment-213583964
+</section><section id="post2">
+<h5>xa0 at <a href="#post2">Fri, 20 May 2016 12:29:45 -0700</a></h5>
+Ok, I got mkinitcpio working now. However, I have to use the `initramfs-4.5.5_1.img.old-dkms` image, the other one freezes Xorg for me.
+The trackpad is still not working though, I believe it's because of these kernel messages:
+```
+[  103.768651] udevd[677]: Unable to EVIOCGABS device "/dev/input/event11"
+[  103.768673] udevd[677]: Unable to EVIOCGABS device "/dev/input/event11"
+[  103.768686] udevd[677]: Unable to EVIOCGABS device "/dev/input/event11"
+[  103.768698] udevd[677]: Unable to EVIOCGABS device "/dev/input/event11"
+[  103.776381] udevd[679]: Unable to EVIOCGABS device "/dev/input/event10"
+[  103.776397] udevd[679]: Unable to EVIOCGABS device "/dev/input/event10"
+[  103.776405] udevd[679]: Unable to EVIOCGABS device "/dev/input/event10"
+[  103.776412] udevd[679]: Unable to EVIOCGABS device "/dev/input/event10"
+```
+And here's the relevant parts of xorg.log:
+```
+[  1366.147] (II) config/udev: Adding input device Apple Inc. Apple Internal Keyboard / Trackpad (/dev/input/event10)
+[  1366.147] (**) Option "Device" "/dev/input/event10"
+[  1366.148] (II) input device 'Apple Inc. Apple Internal Keyboard / Trackpad', /dev/input/event10 is tagged by udev as: Mouse
+[  1366.148] (II) input device 'Apple Inc. Apple Internal Keyboard / Trackpad', /dev/input/event10 is a pointer caps
+[  1366.162] (**) Option "config_info" "udev:/sys/devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.8/2-1.8.3/2-1.8.3:1.2/input/input10/event10"
+[  1366.162] (II) input device 'Apple Inc. Apple Internal Keyboard / Trackpad', /dev/input/event10 is tagged by udev as: Mouse
+[  1366.163] (II) input device 'Apple Inc. Apple Internal Keyboard / Trackpad', /dev/input/event10 is a pointer caps
+[  1366.132] (II) config/udev: Adding input device Apple Inc. Apple Internal Keyboard / Trackpad (/dev/input/event11)
+[  1366.132] (**) Option "Device" "/dev/input/event11"
+[  1366.133] (II) input device 'Apple Inc. Apple Internal Keyboard / Trackpad', /dev/input/event11 is tagged by udev as: Keyboard
+[  1366.133] (II) input device 'Apple Inc. Apple Internal Keyboard / Trackpad', /dev/input/event11 is a keyboard
+[  1366.146] (**) Option "config_info" "udev:/sys/devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.8/2-1.8.3/2-1.8.3:1.0/0003:05AC:0253.0005/input/input11/event11"
+[  1366.147] (II) input device 'Apple Inc. Apple Internal Keyboard / Trackpad', /dev/input/event11 is tagged by udev as: Keyboard
+[  1366.147] (II) input device 'Apple Inc. Apple Internal Keyboard / Trackpad', /dev/input/event11 is a keyboard
+```
+I have also tried manually configuring Xorg to no avail.
+@Pizza-Boy Any ideas?
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/3897#issuecomment-220697754
+</section><section id="post3">
+<h5>Ilya Prokin at <a href="#post3">Fri, 03 Jun 2016 09:11:01 -0700</a></h5>
+Same problem here.
+Regenerating initramfs with mkinitcpio does not solve the issue for me.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/3897#issuecomment-223622391
+</section><section id="post4">
+<h5>d-kraus at <a href="#post4">Thu, 01 Sep 2016 12:41:42 -0700</a></h5>
+Hello,
+i have the same problem.
+The touchpad of my mid-2012 macbook pro is identified as a pointer instead of a touchpad.
+Is there any solution at the  moment?
+Using mkinitcpio did not work for me.
+</section><section id="post5">
+<h5>d-kraus at <a href="#post5">Fri, 02 Sep 2016 06:54:12 -0700</a></h5>
+I managed to get the touchpad working by including the bcm5974 driver when building the initramfs.
+I still get the 'Unable to EVIOCGABS device' error for the keyboard, but it works nevertheless.
+</section><section id="post6">
+<h5>Pizza-Boy at <a href="#post6">Fri, 02 Sep 2016 07:53:13 -0700</a></h5>
+Hi @d-kraus, what steps did you take to include the bcm5974 driver during the initramfs build? And was this using dracut or mkinitcpio? I can try and replicate it to see if that works on my end.
+</section><section id="post7">
+<h5>d-kraus at <a href="#post7">Fri, 02 Sep 2016 07:56:12 -0700</a></h5>
+I just did
+`sudo dracut --force --add-drivers bcm5974`
+</section><section id="post8">
+<h5>Pizza-Boy at <a href="#post8">Fri, 02 Sep 2016 08:00:03 -0700</a></h5>
+ah, alright. I'll give it a test today and see if that works on a fresh installation.
+</section><section id="post9">
+<h5>Pizza-Boy at <a href="#post9">Sat, 03 Sep 2016 14:25:53 -0700</a></h5>
+I used a similar method to @d-kraus (although I just added the bcm5974 driver to a conf file for Dracut so it's loaded each time the init file is generated). That appears to fix the issues.
+I have run into some other issues with `xf86-input-synaptics` and `xf86-input-mtrack`, namely, that you have to remove the synaptics driver to load the mtrack driver and trying to remove the synaptics driver throws up dep errors with `xorg` (which woudl be resolved by having mtrack installed). And some issues with forcing the removal of synaptics. Should I open a new issue for those?
+</section><section id="post10">
+<h5>Ankur Kothari at <a href="#post10">Mon, 10 Oct 2016 03:32:38 -0700</a></h5>
+Same problem for me on Macbook5,1
+Fixed with:
+`sudo dracut --force --add-drivers bcm5974`
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

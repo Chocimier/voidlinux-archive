@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] New package: netbsd-curses-0.2.1
+ (#14294)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] New package: netbsd-curses-0.2.1
+ (#14294)</h1>
+<section id="post1">
+<h5>cr6git at <a href="#post1">Thu, 10 May 2018 18:14:16 +0000 (UTC)</a></h5>
+@Duncaen you're right, I modified the template.
+````
+provides="ncurses-${version}_${revision}"
+replaces="ncurses&gt;=0"
+````
+</section><section id="post2">
+<h5>John Zimmermann at <a href="#post2">Thu, 10 May 2018 11:55:29 -0700</a></h5>
+@cr6git does this actually work as a drop in replacement without the need of recompilation?
+</section><section id="post3">
+<h5>John Zimmermann at <a href="#post3">Thu, 10 May 2018 12:01:15 -0700</a></h5>
+Also the `*.so` should not be in the `-devel` subpackage
+</section><section id="post4">
+<h5>cr6git at <a href="#post4">Thu, 10 May 2018 14:32:52 -0700</a></h5>
+@Johnnynator I removed `*.so` from `-devel` subpkg.
+</section><section id="post5">
+<h5>cr6git at <a href="#post5">Sun, 09 Sep 2018 04:34:44 -0700</a></h5>
+Closed #14294.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

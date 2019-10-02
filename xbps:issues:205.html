@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/xbps] xbps-install: After install of base-system to
+ directory for chroot and enter the chroot, `xbps-query -l` shows no output,
+ unable to install more packages (#205)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/xbps] xbps-install: After install of base-system to
+ directory for chroot and enter the chroot, `xbps-query -l` shows no output,
+ unable to install more packages (#205)</h1>
+<section id="post1">
+<h5>Alain Kalker at <a href="#post1">Sun, 25 Sep 2016 08:31:57 -0700</a></h5>
+@Duncaen Thanks, I will upload new logs asap.
+</section><section id="post2">
+<h5>Alain Kalker at <a href="#post2">Sun, 25 Sep 2016 08:41:23 -0700</a></h5>
+@Duncaen Logs with more debug info, [on host](https://gist.github.com/60c0005471cc62983c78867ece1fa0b2) and [in VM](https://gist.github.com/52dc6f2cfac7711dd170c919941b0910)
+</section><section id="post3">
+<h5>Alain Kalker at <a href="#post3">Sun, 25 Sep 2016 09:01:24 -0700</a></h5>
+Hmm,
+```diff
+-+ sudo arch-chroot /home/miki/proj/qemu/archlinux/mnt xbps-install -yd syslinux
+++ sudo xbps-uchroot /home/miki/mnt -- xbps-install -yd syslinux
+[..snip..]
+-[DEBUG] [repo] `//var/db/xbps/https___repo_voidlinux_eu_current/x86_64-repodata'
+-[DEBUG] [repo] `//var/db/xbps/https___repo_voidlinux_eu_current/x86_64-repodata'
+-Unable to locate 'syslinux' in repository pool.
+```
+Maybe `xbps-install` forgets to store repodata *in the chroot dir* when used with `-r` option? Just a guess...
+</section><section id="post4">
+<h5>Alain Kalker at <a href="#post4">Sun, 25 Sep 2016 10:29:09 -0700</a></h5>
+@Duncaen Good catch! I will try the static xbps binaries, and perhaps I could leave a comment about the Arch PKGBUILD in the AUR.
+Thanks a lot for looking into this.
+</section><section id="post5">
+<h5>thomas berryhill at <a href="#post5">Sun, 25 Sep 2016 10:39:44 -0700</a></h5>
+@ackalker I'm the maintainer of aur/xbps-git, and I believe I just fixed the PKGBUILD. Could you please rebuild it, test again, and report back?
+</section><section id="post6">
+<h5>Alain Kalker at <a href="#post6">Sun, 25 Sep 2016 11:07:08 -0700</a></h5>
+@oatberry Thanks for the quick reply! Our actions have crossed, I made the exact same change as you did and rebuilt `xbps-git` package. Succes, the problem no longer occurs.
+[Here](https://gist.github.com/dd966d5f29db1d8f377a08e1eae33492) is the (hopefully final) output log of the repro script.
+@Duncaen Please feel free to close this issue if you wish, sorry to have bothered you with what turned out was an Arch Linux packaging issue.
+</section><section id="post7">
+<h5>Enno Boland at <a href="#post7">Sun, 25 Sep 2016 11:09:36 -0700</a></h5>
+I don't think this issue is solved yet as the options should not be interpreted as relative paths. Thanks for pointing this out :)
+</section><section id="post8">
+<h5>Alain Kalker at <a href="#post8">Sun, 25 Sep 2016 11:10:01 -0700</a></h5>
+@Gottox You're welcome :smile:
+</section><section id="post9">
+<h5>Enno Boland at <a href="#post9">Sun, 25 Sep 2016 11:20:32 -0700</a></h5>
+Closed #205.
+</section><section id="post10">
+<h5>Enno Boland at <a href="#post10">Sun, 25 Sep 2016 11:20:32 -0700</a></h5>
+Ah, no that one can be closed then.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

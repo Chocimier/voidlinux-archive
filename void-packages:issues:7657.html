@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>[voidlinux/void-packages] Replace caddy with wedge in light of
+ caddy's new EULA (#7657)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>[voidlinux/void-packages] Replace caddy with wedge in light of
+ caddy's new EULA (#7657)</h1>
+<section id="post1">
+<h5>lemmi at <a href="#post1">Thu, 14 Sep 2017 03:28:55 -0700</a></h5>
+Yesterday the caddy maintainers announced their new commercial licenses along with a new EULA for their free version as well. (Applying to the binaries they provide on their site, not self-compiled binaries)
+https://caddyserver.com/blog/accouncing-caddy-commercial-licenses.html
+Especially [this commit](https://github.com/mholt/caddy/commit/ad973f1d125d4da9ba8bc21448dcd3de3fe79cbe) is source for a lot of grief.
+It introduces a Header to every HTTP Response that includes the name of their sponsors. Users of their binary version are not allowed to temper that header with other tools. The config file won't allow for removing that header even for self-compiled versions.
+This is an unacceptable situation for us, but we have a few options:
+1. remove caddy
+2. patch caddy ourselves (which I think is legally allowed)
+3. replace caddy with [https://github.com/WedgeServer/wedge](https://github.com/WedgeServer/wedge), a caddy fork that removes the header.
+I think option 3 is the most sensible. The caddy developers seem to be content with this fork aswell.
+@SevereOverfl0w @voidlinux/pkg-committers
+</section><section id="post2">
+<h5>Dominic Monroe at <a href="#post2">Thu, 14 Sep 2017 10:34:25 +0000 (UTC)</a></h5>
+Why is 1 a requirement? The code is still apache licensed, so there's no
+need to remove it altogether.
+On 14 Sep 2017 11:28 am, "lemmi" &lt;notifications@github.com&gt; wrote:
+&gt; Yesterday the caddy maintainers announced their new commercial licenses
+&gt; along with a new EULA for their free version as well. (Applying to the
+&gt; binaries they provide on their site, not self-compiled binaries)
+&gt; https://caddyserver.com/blog/accouncing-caddy-commercial-licenses.html
+&gt;
+&gt; Especially this commit
+&gt; &lt;https://github.com/mholt/caddy/commit/ad973f1d125d4da9ba8bc21448dcd3de3f=
+e79cbe&gt;
+&gt; is source for a lot of grief.
+&gt; It introduces a Header to every HTTP Response that includes the name of
+&gt; their sponsors. Users of their binary version are not allowed to temper
+&gt; that header with other tools. The config file won't allow for removing th=
+at
+&gt; header even for self-compiled versions.
+&gt;
+&gt; This is an unacceptable situation for us, but we have a few options:
+&gt;
+&gt;    1. remove caddy
+&gt;    2. patch caddy ourselves (which I think is legally allowed)
+&gt;    3. replace caddy with https://github.com/WedgeServer/wedge, a caddy
+&gt;    fork that removes the header.
+&gt;
+&gt; I think option 3 is the most sensible. The caddy developers seem to be
+&gt; content with this fork aswell.
+&gt;
+&gt; @SevereOverfl0w &lt;https://github.com/severeoverfl0w&gt;
+&gt; @voidlinux/pkg-committers
+&gt; &lt;https://github.com/orgs/voidlinux/teams/pkg-committers&gt;
+&gt;
+&gt; =E2=80=94
+&gt; You are receiving this because you were mentioned.
+&gt; Reply to this email directly, view it on GitHub
+&gt; &lt;https://github.com/voidlinux/void-packages/issues/7657&gt;, or mute the
+&gt; thread
+&gt; &lt;https://github.com/notifications/unsubscribe-auth/AF2h2ou-71RGh6gON33E86=
+wxot02xV2Vks5siP_pgaJpZM4PXXxt&gt;
+&gt; .
+&gt;
+--=20
+You are receiving this because you are on a team that was mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/7657#issuecomment-3294426=
+60=
+</section><section id="post3">
+<h5>lemmi at <a href="#post3">Thu, 14 Sep 2017 10:39:24 +0000 (UTC)</a></h5>
+@SevereOverfl0w we had a short discussion on IRC and at that time this the favourite option, which is why I included it. Adding wedge doesn't mean we have to remove the old caddy version. I'd like to keep version 0.10.8 around for a while to give people time to migrate.
+</section><section id="post4">
+<h5>Karol Woźniak at <a href="#post4">Fri, 15 Sep 2017 02:02:11 -0700</a></h5>
+FYI: https://github.com/mholt/caddy/pull/1866
+</section><section id="post5">
+<h5>lemmi at <a href="#post5">Sun, 17 Sep 2017 13:49:12 -0700</a></h5>
+I'm glad this blew over, and mholt being a real professional about it.
+</section><section id="post6">
+<h5>lemmi at <a href="#post6">Sun, 17 Sep 2017 13:49:12 -0700</a></h5>
+Closed #7657.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] FYI: qt-5.9.0 does not build with musl
+ libc (#6893)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] FYI: qt-5.9.0 does not build with musl
+ libc (#6893)</h1>
+<section id="post1">
+<h5>Michael Gehring at <a href="#post1">Thu, 29 Jun 2017 23:52:16 -0700</a></h5>
+@Duncaen i think you've also hit the x86/bro issue in chromium too. Do you remember the fix?
+</section><section id="post2">
+<h5>Michael Gehring at <a href="#post2">Fri, 30 Jun 2017 03:31:24 -0700</a></h5>
+disabling gold on musl fixed that
+</section><section id="post3">
+<h5>Jürgen Buchmüller at <a href="#post3">Fri, 30 Jun 2017 04:38:37 -0700</a></h5>
+Good news! Thanks @ebfe. With this set of patches we can update the monolithic build to 5.9.0.
+For the split modules I couldn't get cross building to work, i.e. everything depending upon `qt5-base-devel` is failing with wrong compiler, C{XX]FLAGS or L{,D}FLAGS.
+</section><section id="post4">
+<h5>Michael Gehring at <a href="#post4">Fri, 30 Jun 2017 04:53:14 -0700</a></h5>
+```index: added `qt5-webengine-5.9.0_1' (x86_64-musl).```
+Updated the branch.
+@pullmoll i used a sledgehammer to disable gold on musl in `files/musl-patches/musl-no-gold.patch`, I'm sure someone who understands the qt config stuff can come up with something better.
+Oh, and i take the pink unicorn hoof :)
+</section><section id="post5">
+<h5>Jürgen Buchmüller at <a href="#post5">Fri, 30 Jun 2017 11:52:26 -0700</a></h5>
+Here you go @ebfe
+![unicorn_t41](https://user-images.githubusercontent.com/10061347/27749913-e867a566-5dd5-11e7-93fc-d99974ce709e.jpg)
+I integrated your patches in my branch. Next I'll be trying to solve cross building issues.
+</section><section id="post6">
+<h5>Jürgen Buchmüller at <a href="#post6">Wed, 16 Aug 2017 08:16:58 -0700</a></h5>
+Closed #6893.
+</section><section id="post7">
+<h5>Jürgen Buchmüller at <a href="#post7">Wed, 16 Aug 2017 15:16:59 +0000 (UTC)</a></h5>
+Closing because qt5-split does not seem to be easy enough for me to finish (read: I can't get it working for cross building qt5).
+</section><section id="post8">
+<h5>Kieran Coldron at <a href="#post8">Wed, 16 Aug 2017 09:04:20 -0700</a></h5>
+@pullmoll any luck upgrading qt to 5.9 though?
+</section><section id="post9">
+<h5>Jürgen Buchmüller at <a href="#post9">Wed, 16 Aug 2017 16:30:27 +0000 (UTC)</a></h5>
+IIRC I tried 5.8.0 some time ago. I'd say let's wait for 5.9.2 which is said to be out soon.
+Then we need to take some care to get the beast built for all targets (avoid ENOMEM :-)
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

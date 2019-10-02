@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] New package: acoustibrainz-client
+ (#5008)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] New package: acoustibrainz-client
+ (#5008)</h1>
+<section id="post1">
+<h5>Felix Hanley at <a href="#post1">Wed, 26 Oct 2016 02:10:54 -0700</a></h5>
+felix commented on this pull request.
+&gt; @@ -0,0 +1,38 @@
++# Template file for 'acousticbrainz-client'
++pkgname=acousticbrainz-client
++version=0.1
++revision=1
++only_for_archs="i686 x86_64"
+It pulls in the statically built essentia extractor which is only available for i686 and x86_64. The project wants/recommends using their binary over building your own to provide consistent results.
+</section><section id="post2">
+<h5>ayghor at <a href="#post2">Wed, 26 Oct 2016 08:39:30 -0700</a></h5>
+just noticed a small typo on teh subject:
+[voidlinux/void-packages] New package: acoustibrainz-client (#5008)
+is missing teh last c of acoustic
+--
+Igor
+</section><section id="post3">
+<h5>Jürgen Buchmüller at <a href="#post3">Wed, 26 Oct 2016 09:10:23 -0700</a></h5>
+If you really need to install one of two binary packages, you need to add a case/esac statement to set both, distfiles and checksum for the binary.
+I'd still prefer to have this built from source. At the very least this binary package should have a `-bin` extension, if some day the same package is built from source. This already happened for some packages in Void, e.g. lightzone and libreoffice.
+</section><section id="post4">
+<h5>Felix Hanley at <a href="#post4">Wed, 26 Oct 2016 09:15:19 -0700</a></h5>
+Okay, leave this for now and I will play with a local build from source.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

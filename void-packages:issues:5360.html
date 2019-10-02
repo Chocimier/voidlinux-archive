@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] JavaScript seems to not work in
+ WebKit-GTK+ web browsers on musl x86 (#5360)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] JavaScript seems to not work in
+ WebKit-GTK+ web browsers on musl x86 (#5360)</h1>
+<section id="post1">
+<h5>mmmmarascio at <a href="#post1">Thu, 15 Dec 2016 09:15:46 -0800</a></h5>
+yes @Duncaen
+</section><section id="post2">
+<h5>mmmmarascio at <a href="#post2">Sat, 17 Dec 2016 19:53:09 -0800</a></h5>
+@Duncaen: Interesting.  I created a patch from that Openwall discussion[*]
+```
+--- Source/JavaScriptCore/runtime/VMEntryScope.cpp.orig	2016-04-09 23:48:36.000000000 -0700
++++ Source/JavaScriptCore/runtime/VMEntryScope.cpp    	2016-12-17 08:52:06.336000000 -0700
+@@ -84,8 +84,8 @@
+     //
+     // These sizes were derived from the stack usage of a number of sites when
+     // layout occurs when we've already consumed most of the C stack.
+-    const size_t requiredStack = 128 * KB;
+-    const size_t errorModeRequiredStack = 64 * KB;
++    const size_t requiredStack = 32 * KB;
++    const size_t errorModeRequiredStack = 16 * KB;
+     size_t requiredCapacity = interpreter-&gt;isInErrorHandlingMode() ? errorModeRequiredStack : requiredStack;
+     RELEASE_ASSERT(m_stack.size() &gt;= requiredCapacity);
+```
+then patched and built webkit with xbps-src.  The result is that JavaScript appears to work in surf and that xombrero segfaults on startup.
+[*]: &lt;http://www.openwall.com/lists/musl/2014/11/04/1&gt;
+</section><section id="post3">
+<h5>svenper at <a href="#post3">Tue, 21 Feb 2017 11:25:46 -0800</a></h5>
+I think I'm having a similar issue on x64. Any idea what the appropriate change would be in the [webkit2 source](https://webkitgtk.org/releases/webkitgtk-2.14.4.tar.xz)?
+I am trying to get it working with the [surf-webkit2 branch](http://git.suckless.org/surf/tree/?h=surf-webkit2) (xbps-src [template](https://gist.githubusercontent.com/svenper/abb0438f77319bea4d33d9ce8456f26e/raw/34e278670f2ae30e82e5b5062eb04b97ab708550)) and currently everything seems to be working except JavaScript.
+</section><section id="post4">
+<h5>Pavel Kiselev at <a href="#post4">Fri, 19 May 2017 10:33:50 -0700</a></h5>
+I tried bumping `musl`'s stack size from the default all the way up to `glibc`'s 8MB, as per https://github.com/voidlinux/void-packages/issues/4147. It fixed _some_ JavaScript, but, sadly, not all of it. Some sites that are okay on `glibc` still don't function properly on `musl` (tested on surf and Midori).
+</section><section id="post5">
+<h5>Pavel Kiselev at <a href="#post5">Fri, 19 May 2017 13:20:49 -0700</a></h5>
+@Duncaen no, rebuild did nothing at all. I find that in most cases apps that are affected by stack problem are usually fixed without need for rebuilding them (e.g. file managers crashing when thumbnailing certain files stops immidiately after reinstalling `musl`).
+P.S. (offtop) oh my god this thing build for 3 goddamn hours! And I wondered what Suckless people meant by "replacing WebKit with something sensible".
+</section><section id="post6">
+<h5>svenper at <a href="#post6">Sat, 20 May 2017 12:58:09 -0700</a></h5>
+@E100Beta rebuilding `musl` with a larger stack size has no effect for me, even after rebooting. Did you do anything else?
+```
+$ ps xc | grep -e surf -e WebKit
+ 5999 ?        Ssl    0:07 surf
+ 6016 ?        Sl     0:10 WebKitNetworkPr
+ 6019 ?        Sl     0:59 WebKitWebProces
+$ cat /proc/{5999,6016,6019}/limits | grep stack
+Max stack size            8388608              unlimited            bytes
+Max stack size            8388608              unlimited            bytes
+Max stack size            8388608              unlimited            bytes
+```
+</section><section id="post7">
+<h5>Pavel Kiselev at <a href="#post7">Sat, 20 May 2017 13:10:43 -0700</a></h5>
+@svenper Only _some_ javascript starts working after rebuilding `musl`. **A lot** of it is still non-functional, sadly (like, I now can actually log into vk.com (which is the most complex sites in terms of javascript I frequently visit, so I test on it first of all), but some buttons that trigger background content loading or displaying some previously hidden parts of the page are still not working). I can't tell exactly what functionality is fixed by it exactly, I'm not too experienced in js :(
+</section><section id="post8">
+<h5>bitshark at <a href="#post8">Fri, 23 Feb 2018 21:01:51 +0000 (UTC)</a></h5>
+I'm having the same problem with x86_64 musl libc , using typecatcher (a python GTK based client for downloading Google fonts).   It works fine within an lxc container with the same kernel on Ubuntu 16, but with Void Linux musl x86_64 I'm getting the following error:
+"Message: console message: undefined @0: RangeError: Maximum call stack size exceeded."
+I'll try rebuilding musl with the larger stack size and see if that has any effect.
+</section><section id="post9">
+<h5>bitshark at <a href="#post9">Fri, 23 Feb 2018 21:21:23 +0000 (UTC)</a></h5>
+Update:  I tried the LD_PRELOAD trick with no effect.   (compiled file found here https://gist.githubusercontent.com/davidwindell/13a09511117fdd1523b9f31c0bb23dd5/raw/560df4b8ad682d6494dfb85cee2df7b42f63cde2/stack-fix.c ) into a shared object with gcc -shared -fPIC /lib/stack-fix.c -o /lib/stack-fix.so.
+LD_PRELOAD=/lib/stack-fix.so python3
+import typecatcher
+typecatcher.main()
+```
+(typecatcher3) [user@dolphin ~]$ LD_PRELOAD=/home/user/stack-fix.so python3
+Python 3.6.4 (default, Dec 19 2017, 18:03:06)
+[GCC 7.2.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; import typecatcher
+/tank/home/user/venv/typecatcher3/lib/python3.6/site-packages/typecatcher_lib/helpers.py:23: PyGIWarning: Gtk was imported without specifying a version first. Use gi.require_version('Gtk', '3.0') before import to ensure that the right version gets loaded.
+  from gi.repository import Gtk, Gio
+/tank/home/user/venv/typecatcher3/lib/python3.6/site-packages/typecatcher/TypeCatcherWindow.py:20: PyGIWarning: WebKit was imported without specifying a version first. Use gi.require_version('WebKit', '3.0') before import to ensure that the right version gets loaded.
+  from gi.repository import WebKit
+t&gt;&gt;&gt; typecatcher.main()
+** Message: console message: undefined @0: RangeError: Maximum call stack size exceeded.
+** Message: console message: undefined @0: RangeError: Maximum call stack size exceeded.
+```
+</section><section id="post10">
+<h5>bitshark at <a href="#post10">Wed, 28 Feb 2018 04:28:15 +0000 (UTC)</a></h5>
+Still working this issue:
+- recompiled musl with the bigstack option (no effect)
+- recompiled musl with the debug symbols so i could see where TypeCatcher was segfaulting...
+- looks like the segfault is in /usr/lib/libjavascriptcoregtk-3.0.so.0.16.19 somewhere  (which is part of the webkitgtk-2.4.11_5  package)
+- i recompiled webkitgtk-2.4.11_5 with an 8MB stack to see if that fixed the issue, but haven't actually tested that fix yet.   will post here if there's any progress.
+</section><section id="post11">
+<h5>nmeum at <a href="#post11">Tue, 05 Jun 2018 00:46:26 -0700</a></h5>
+&gt; i recompiled webkitgtk-2.4.11_5 with an 8MB stack to see if that fixed the issue, but haven't actually tested that fix yet. will post here if there's any progress.
+Any updates on this?
+</section><section id="post12">
+<h5>ds6 at <a href="#post12">Thu, 12 Jul 2018 23:19:42 -0700</a></h5>
+if this is still a problem, the Gentoo patchset works fine for Alpine Linux (after some minor adjustments). it _should_ apply cleanly to 2.20.3, not sure about later versions.
+https://github.com/luakit/luakit/issues/550#issuecomment-404734722
+http://tpaste.us/9KlP
+</section><section id="post13">
+<h5>Jürgen Buchmüller at <a href="#post13">Sat, 14 Jul 2018 10:06:07 -0700</a></h5>
+Thanks @ds6 ! I'll try it locally with an updated `webkit2gtk-2.20.3`.
+I'd be glad to see it fixes the musl problems.
+</section><section id="post14">
+<h5>nmeum at <a href="#post14">Mon, 16 Jul 2018 09:27:22 -0700</a></h5>
+There is also an [upstream issue regarding this problem](https://bugs.webkit.org/show_bug.cgi?id=187485) maybe someone should tell them about the gentoo patch (I don't have an account in their bugzilla instance).
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

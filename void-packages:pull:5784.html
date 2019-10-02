@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] New package: python-gitlab-0.18 (#5784)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] New package: python-gitlab-0.18 (#5784)</h1>
+<section id="post1">
+<h5>Toyam Cox at <a href="#post1">Wed, 22 Feb 2017 06:39:29 -0800</a></h5>
+Vaelatern requested changes on this pull request.
+&gt; @@ -0,0 +1,29 @@
++# Template file for 'python-gitlab'
++pkgname=python-gitlab
++version=0.18
++revision=1
++noarch=yes
++wrksrc="${pkgname}-${version}"
+Totally redundant.
+&gt; +hostmakedepends="python-setuptools python3-setuptools"
++depends="python-requests python-six"
++short_desc="Wrapper for GitLab's API (Python2)"
++maintainer="Joseph LaFreniere &lt;joseph@lafreniere.xyz&gt;"
++homepage="https://github.com/gpocentek/python-gitlab"
++license="GPL-3"
++distfiles="${PYPI_SITE}/p/python-gitlab/python-gitlab-${version}.tar.gz"
++checksum=d60d67c82fedd8c3e4f0bb8b5241bf2df32307c98fdf2f02a94850e21db2d804
++alternatives="gitlab:gitlab:/usr/bin/gitlab2"
++
++python3-gitlab_package() {
++	noarch=yes
++	depends="python3-requests python3-six"
++	pycompile_module="gitlab"
++	short_desc="${short_desc/Python2/Python3}"
++	alternatives="gitlab:gitlab:/usr/bin/gitlab3"
+Can we name the alternatives group something like `python-gitlab`
+</section><section id="post2">
+<h5>Alessio Sergi at <a href="#post2">Fri, 24 Feb 2017 02:10:33 -0800</a></h5>
+asergi commented on this pull request.
+&gt; @@ -0,0 +1,28 @@
++# Template file for 'python-gitlab'
++pkgname=python-gitlab
++version=0.18
++revision=1
++noarch=yes
++build_style=python-module
++pycompile_module="gitlab"
++hostmakedepends="python-setuptools python3-setuptools"
++depends="python-requests python-six"
++short_desc="Wrapper for GitLab's API (Python2)"
++maintainer="Joseph LaFreniere &lt;joseph@lafreniere.xyz&gt;"
++homepage="https://github.com/gpocentek/python-gitlab"
++license="GPL-3"
+`license="LGPL-3"`
+</section><section id="post3">
+<h5>Toyam Cox at <a href="#post3">Sun, 26 Feb 2017 01:42:43 -0800</a></h5>
+Vaelatern requested changes on this pull request.
+&gt; +# Template file for 'python-gitlab'
++pkgname=python-gitlab
++version=0.18
++revision=1
++noarch=yes
++build_style=python-module
++pycompile_module="gitlab"
++hostmakedepends="python-setuptools python3-setuptools"
++depends="python-requests python-six"
++short_desc="Wrapper for GitLab's API (Python2)"
++maintainer="Joseph LaFreniere &lt;joseph@lafreniere.xyz&gt;"
++homepage="https://github.com/gpocentek/python-gitlab"
++license="LGPL-3"
++distfiles="${PYPI_SITE}/p/python-gitlab/python-gitlab-${version}.tar.gz"
++checksum=d60d67c82fedd8c3e4f0bb8b5241bf2df32307c98fdf2f02a94850e21db2d804
++alternatives="python-gitlab:python-gitlab:/usr/bin/gitlab2"
+`${group}:${a}:${b}` where `ln -s ${b} ${a}`
+So `python-gitlab:gitlab:/usr/bin/gitlab2`
+&gt; +hostmakedepends="python-setuptools python3-setuptools"
++depends="python-requests python-six"
++short_desc="Wrapper for GitLab's API (Python2)"
++maintainer="Joseph LaFreniere &lt;joseph@lafreniere.xyz&gt;"
++homepage="https://github.com/gpocentek/python-gitlab"
++license="LGPL-3"
++distfiles="${PYPI_SITE}/p/python-gitlab/python-gitlab-${version}.tar.gz"
++checksum=d60d67c82fedd8c3e4f0bb8b5241bf2df32307c98fdf2f02a94850e21db2d804
++alternatives="python-gitlab:python-gitlab:/usr/bin/gitlab2"
++
++python3-gitlab_package() {
++	noarch=yes
++	depends="python3-requests python3-six"
++	pycompile_module="gitlab"
++	short_desc="${short_desc/Python2/Python3}"
++	alternatives="python-gitlab:python-gitlab:/usr/bin/gitlab3"
+And here
+</section><section id="post4">
+<h5>Toyam Cox at <a href="#post4">Fri, 03 Mar 2017 11:54:12 -0800</a></h5>
+Vaelatern approved this pull request.
+</section><section id="post5">
+<h5>Toyam Cox at <a href="#post5">Fri, 03 Mar 2017 11:54:22 -0800</a></h5>
+Merged #5784.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

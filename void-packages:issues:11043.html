@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] Firefox does not play sound via ALSA
+ (#11043)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] Firefox does not play sound via ALSA
+ (#11043)</h1>
+<section id="post1">
+<h5>wine at <a href="#post1">Sun, 28 Jan 2018 10:00:36 +0000 (UTC)</a></h5>
+It seems to be an upstream bug according to this: https://bugzilla.mozilla.org/show_bug.cgi?id=1430274 (fixed in Firefox 59 ?)
+In the meantime, I found and tested two workarounds:
+* If you want to continue using ALSA without installing PulseAudio, you can whitelist the blocked syscall adding it to `security.sandbox.content.syscall_whitelist` in about:config (in my case `16`)
+* Another way is to use PulseAudio as a simple bridge to ALSA, configuring it as described here: https://wiki.archlinux.org/index.php/PulseAudio/Examples#PulseAudio_as_a_minimal_unintrusive_dumb_pipe_to_ALSA (credits to Max-P who wrote the guide)
+Maybe my sound is safe for another day...
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

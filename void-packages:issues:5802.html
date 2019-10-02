@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] Manual.md: description of
+ `XBPS_BUILDDIR` suggests that `wrksrc` is relative to it, which isn't true.
+ (#5802)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] Manual.md: description of
+ `XBPS_BUILDDIR` suggests that `wrksrc` is relative to it, which isn't true.
+ (#5802)</h1>
+<section id="post1">
+<h5>Jürgen Buchmüller at <a href="#post1">Wed, 22 Feb 2017 13:58:57 -0800</a></h5>
+The later section `Optional variables` describes the fact that `wrksrc` can be set as (just) the name of the extracted package.
+It's perhaps a little unfortunate that setting `wrksrc="foo-1.2.3"` results in it becoming `"/builddir/foo-1.2.3"` later on, but that's how it is and it did not disturb me when I took my first steps with `xbps-src`.
+Many packages do not have to care at all about setting wrksrc because the default is ok.
+Of course, if anyone can find a better description for these facts without making it too complicated for the newbee to understand, he could create a PR with a change request. I would have no idea what to change.
+</section><section id="post2">
+<h5>Alain Kalker at <a href="#post2">Thu, 23 Feb 2017 06:31:56 -0800</a></h5>
+Thanks for the explanation. In this case I wasn't setting `wrksrc`, I needed to get an absolute path to the source directory. Grepping `Manual.md` for `wrksrc`, and the sentence with `${XBPS_BUILDDIR}/${wrksrc}` was one of the first things which came up, so I thought I needed to use that. as the sentence in the issue seemed to suggest. I ended up with `/builddir//builddir/docker-1.13.1` instead...
+</section><section id="post3">
+<h5>Toyam Cox at <a href="#post3">Thu, 23 Feb 2017 07:27:01 -0800</a></h5>
+Issue closed?
+</section><section id="post4">
+<h5>Alain Kalker at <a href="#post4">Thu, 23 Feb 2017 10:52:53 -0800</a></h5>
+Well, the quoted passage is still wrong. Look at the definition of `wrksrc`:
+&gt; - `wrksrc` The directory name where the package sources are extracted, by default
+set to `${pkgname}-${version}`.
+This at least mentions "by default", making it clear that another possibility exists.
+I would be happy with changing:
+&gt; The package `wrksrc` is always stored
+in this directory such as `${XBPS_BUILDDIR}/${wrksrc}`.
+to:
+&gt; A package's sources are always stored
+in a subdirectory beneath this directory.
+because that is the only thing that can be said with some certainty.
+</section><section id="post5">
+<h5>cr6void at <a href="#post5">Thu, 02 Mar 2017 12:02:28 -0800</a></h5>
+Sorry but all of this sounds unclear and confusing for me...
+I spent the whole day trying to build some new packages for Void, but I got a lot of errors because of bad **wrksrc**, always the same kind of messages:
+`/void-packages/common/xbps-src/libexec/xbps-src-doconfigure.sh: line 34: cd: No such file or directory`
+`=&gt; ERROR: cannot access wrksrc directory`
+The line 34 is: cd "$wrksrc"
+So, I understand xbps-src can't cd to the right directory...
+**wrksrc**: The directory name where the package sources are extracted, by default set to ${pkgname}-${version}
+The way I understand it:
+I can choose any name for wrksrc, the name doesn't really matter.
+This wrksrc directory is created, then my tarball is extracted in this wrksrc directory.
+If my tarball consists of one top-level directory, then this top-level directory is extracted in wrksrc.
+The extracted files are located in `/builddir/wrksrc/top-level-directory/*`
+So, in this case, the line 34 sould be: cd "$wrksrc/top-level-directory"
+I understand something is wrong somewhere but I can't find where...
+</section><section id="post6">
+<h5>cr6void at <a href="#post6">Thu, 02 Mar 2017 16:16:51 -0800</a></h5>
+Thank you!! :)
+</section><section id="post7">
+<h5>cr6void at <a href="#post7">Fri, 03 Mar 2017 19:06:14 -0800</a></h5>
+@Duncaen In fact I was **misleaded** by: `mkdir -p ${wrksrc}` in the **fetch** build_style.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

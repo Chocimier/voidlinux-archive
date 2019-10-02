@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] cups: include various fixes in order to
+ standardize the usage of cups (#7979)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] cups: include various fixes in order to
+ standardize the usage of cups (#7979)</h1>
+<section id="post1">
+<h5>Andrea Brancaleoni at <a href="#post1">Sun, 08 Oct 2017 21:16:51 +0000 (UTC)</a></h5>
+thypon commented on this pull request.
+&gt; @@ -27,6 +27,7 @@ build_options="gssapi"
+ # Package build options
+ system_accounts="cups"
++system_groups="lpadmin"
+I dunno. lpadmin is more or less standard in debian/slackware systems. It is also consistent with the lp and cups group/user.
+Maybe we should discuss a bit more this particular case with the @voidlinux/pkg-committers .
+</section><section id="post2">
+<h5>Michael Aldridge at <a href="#post2">Sun, 08 Oct 2017 21:24:04 +0000 (UTC)</a></h5>
+the-maldridge commented on this pull request.
+&gt; @@ -27,6 +27,7 @@ build_options="gssapi"
+ # Package build options
+ system_accounts="cups"
++system_groups="lpadmin"
+While I agree that many systems use the lpadmin group, it is generally used for legacy reasons from when you were running both lpd and cupsd simultaneously and desired to manage them with the same group.  Since cups can fill the function that lpd once had, and since we have a general policy of not altering the upstream configuration of upstream packages, I would prefer to have cups run as cups:root and be managed by users in the cups group.
+</section><section id="post3">
+<h5>Andrea Brancaleoni at <a href="#post3">Mon, 09 Oct 2017 08:46:52 +0000 (UTC)</a></h5>
+thypon commented on this pull request.
+&gt; @@ -27,6 +27,7 @@ build_options="gssapi"
+ # Package build options
+ system_accounts="cups"
++system_groups="lpadmin"
+@the-maldridge https://github.com/apple/cups/blob/b94f7488e861c3119037efdf08257749fcce06b8/config-scripts/cups-defaults.m4#L236 many system uses lpadmin because cups expects to found that group in its system groups. What instead we have is the root and the sys group that are too generic to represent the lpadmin.
+We are not altering the upstream config, but instead we are forcing lpadmin when lpadmin is not already installed on top of the distro.
+</section><section id="post4">
+<h5>Andrea Brancaleoni at <a href="#post4">Tue, 10 Oct 2017 02:14:45 -0700</a></h5>
+@thypon pushed 1 commit.
+662fcb8  codelite: update to 11.0.
+</section><section id="post5">
+<h5>Andrea Brancaleoni at <a href="#post5">Fri, 13 Oct 2017 15:30:15 +0000 (UTC)</a></h5>
+Merged #7979.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

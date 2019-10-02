@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] openbox: add rounded corners build
+ option, fix homepage &amp; distfiles. (#13779)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] openbox: add rounded corners build
+ option, fix homepage &amp; distfiles. (#13779)</h1>
+<section id="post1">
+<h5>Toyam Cox at <a href="#post1">Mon, 23 Apr 2018 20:31:22 -0700</a></h5>
+Unless another @voidlinux/pkg-committers wants to accept such things, I think we did with freetype (?) and it caused no end of trouble.
+</section><section id="post2">
+<h5>Toyam Cox at <a href="#post2">Mon, 23 Apr 2018 20:31:55 -0700</a></h5>
+Vaelatern commented on this pull request.
+&gt; @@ -16,14 +16,24 @@ conf_files="
+ short_desc="Standards compliant, fast, light-weight, extensible window manager"
+ maintainer="Juan RP &lt;xtraeme@voidlinux.eu&gt;"
+ license="GPL-2"
+-homepage="http://www.openbox.org"
+-distfiles="http://icculus.org/openbox/releases/$pkgname-$version.tar.gz"
+-checksum=8b4ac0760018c77c0044fab06a4f0c510ba87eae934d9983b10878483bde7ef7
++homepage="http://openbox.org/wiki/Main_Page"
+Let them redirect it. No reason to do this.
+</section><section id="post3">
+<h5>Toyam Cox at <a href="#post3">Tue, 24 Apr 2018 03:32:15 +0000 (UTC)</a></h5>
+Vaelatern commented on this pull request.
+&gt; @@ -37,6 +47,7 @@ post_install() {
+ }
+ openbox-devel_package() {
+ 	depends="${makedepends} libopenbox&gt;=${version}_${revision}"
++	short_desc="Openbox development files"
+:+1:
+</section><section id="post4">
+<h5>cr6git at <a href="#post4">Tue, 24 Apr 2018 05:38:01 +0000 (UTC)</a></h5>
+cr6git commented on this pull request.
+&gt; @@ -16,14 +16,24 @@ conf_files="
+ short_desc="Standards compliant, fast, light-weight, extensible window manager"
+ maintainer="Juan RP &lt;xtraeme@voidlinux.eu&gt;"
+ license="GPL-2"
+-homepage="http://www.openbox.org"
+-distfiles="http://icculus.org/openbox/releases/$pkgname-$version.tar.gz"
+-checksum=8b4ac0760018c77c0044fab06a4f0c510ba87eae934d9983b10878483bde7ef7
++homepage="http://openbox.org/wiki/Main_Page"
+OK.
+</section><section id="post5">
+<h5>cr6git at <a href="#post5">Tue, 24 Apr 2018 05:38:50 +0000 (UTC)</a></h5>
+cr6git commented on this pull request.
+&gt; @@ -16,14 +16,24 @@ conf_files="
+ short_desc="Standards compliant, fast, light-weight, extensible window manager"
+ maintainer="Juan RP &lt;xtraeme@voidlinux.eu&gt;"
+ license="GPL-2"
+-homepage="http://www.openbox.org"
+-distfiles="http://icculus.org/openbox/releases/$pkgname-$version.tar.gz"
+-checksum=8b4ac0760018c77c0044fab06a4f0c510ba87eae934d9983b10878483bde7ef7
++homepage="http://openbox.org/wiki/Main_Page"
+OK!
+</section><section id="post6">
+<h5>cr6git at <a href="#post6">Mon, 23 Apr 2018 22:49:07 -0700</a></h5>
+@Vaelatern I will never go against you. I removed rounded corners stuff.
+</section><section id="post7">
+<h5>Toyam Cox at <a href="#post7">Tue, 24 Apr 2018 16:49:54 +0000 (UTC)</a></h5>
+Merged #13779.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

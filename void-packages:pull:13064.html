@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] Manual.md: document Transitional
+ packages (#13064)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] Manual.md: document Transitional
+ packages (#13064)</h1>
+<section id="post1">
+<h5>Enno Boland at <a href="#post1">Fri, 30 Mar 2018 04:19:01 -0700</a></h5>
+@voidlinux/pkg-committers I like this approach. comments?
+</section><section id="post2">
+<h5>Michael Gehring at <a href="#post2">Fri, 30 Mar 2018 04:45:58 -0700</a></h5>
+ebfe commented on this pull request.
+&gt; @@ -1227,6 +1228,16 @@ The following variables influence how Haskell packages are built:
+ - `make_build_args`: This is passed as-is to `stack build ...`, so
+   you can add your `--flag ...` parameters there.
++&lt;a id="pkgs_transitional"&gt;&lt;/a&gt;
++### Transitional packages
++
++Transitional packages are used to move users into a new package. It is commonly
++used when upstream changes it's name and Void Linux changes the package name to
++reflect such change. A transitive package must be an empty subpackage of the
+s/transitive/transitional/
+</section><section id="post3">
+<h5>Michael Gehring at <a href="#post3">Fri, 30 Mar 2018 04:46:25 -0700</a></h5>
+ebfe commented on this pull request.
+&gt; @@ -1227,6 +1228,16 @@ The following variables influence how Haskell packages are built:
+ - `make_build_args`: This is passed as-is to `stack build ...`, so
+   you can add your `--flag ...` parameters there.
++&lt;a id="pkgs_transitional"&gt;&lt;/a&gt;
++### Transitional packages
++
++Transitional packages are used to move users into a new package. It is commonly
++used when upstream changes it's name and Void Linux changes the package name to
++reflect such change. A transitive package must be an empty subpackage of the
++package of the new main package, on the subpackage, it must have `noarch=yes`,
++`short_desc+"= - transitional package"` and
++`depends="${pkgname}-${version}_${revision}"`
+s/pkgname/sourcepkg/
+</section><section id="post4">
+<h5>maxice8 at <a href="#post4">Fri, 30 Mar 2018 11:47:00 +0000 (UTC)</a></h5>
+Thanks for catching, will fix when I get home in about 1 hour
+On Fri, Mar 30, 2018, 08:46 Michael Gehring &lt;notifications@github.com&gt;
+wrote:
+&gt; *@ebfe* commented on this pull request.
+&gt; ------------------------------
+&gt;
+&gt; In Manual.md
+&gt; &lt;https://github.com/voidlinux/void-packages/pull/13064#discussion_r178277=
+684&gt;
+&gt; :
+&gt;
+&gt; &gt; @@ -1227,6 +1228,16 @@ The following variables influence how Haskell pa=
+ckages are built:
+&gt;  - `make_build_args`: This is passed as-is to `stack build ...`, so
+&gt;    you can add your `--flag ...` parameters there.
+&gt;
+&gt; +&lt;a id=3D"pkgs_transitional"&gt;&lt;/a&gt;
+&gt; +### Transitional packages
+&gt; +
+&gt; +Transitional packages are used to move users into a new package. It is c=
+ommonly
+&gt; +used when upstream changes it's name and Void Linux changes the package =
+name to
+&gt; +reflect such change. A transitive package must be an empty subpackage of=
+ the
+&gt;
+&gt; s/transitive/transitional/
+&gt;
+&gt; =E2=80=94
+&gt; You are receiving this because you authored the thread.
+&gt; Reply to this email directly, view it on GitHub
+&gt; &lt;https://github.com/voidlinux/void-packages/pull/13064#pullrequestreview-=
+108315846&gt;,
+&gt; or mute the thread
+&gt; &lt;https://github.com/notifications/unsubscribe-auth/AdUHTfOZJGEwYbn14JLj32=
+V-Mg5PzemWks5tjhr3gaJpZM4TBhdw&gt;
+&gt; .
+&gt;
+--=20
+You are receiving this because you are on a team that was mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/13064#issuecomment-377508300=
+</section><section id="post5">
+<h5>maxice8 at <a href="#post5">Fri, 30 Mar 2018 11:47:41 +0000 (UTC)</a></h5>
+Will fix whenever I get home eta 1h
+On Fri, Mar 30, 2018, 08:46 Michael Gehring &lt;notifications@github.com&gt;
+wrote:
+&gt; *@ebfe* commented on this pull request.
+&gt; ------------------------------
+&gt;
+&gt; In Manual.md
+&gt; &lt;https://github.com/voidlinux/void-packages/pull/13064#discussion_r178277=
+728&gt;
+&gt; :
+&gt;
+&gt; &gt; @@ -1227,6 +1228,16 @@ The following variables influence how Haskell pa=
+ckages are built:
+&gt;  - `make_build_args`: This is passed as-is to `stack build ...`, so
+&gt;    you can add your `--flag ...` parameters there.
+&gt;
+&gt; +&lt;a id=3D"pkgs_transitional"&gt;&lt;/a&gt;
+&gt; +### Transitional packages
+&gt; +
+&gt; +Transitional packages are used to move users into a new package. It is c=
+ommonly
+&gt; +used when upstream changes it's name and Void Linux changes the package =
+name to
+&gt; +reflect such change. A transitive package must be an empty subpackage of=
+ the
+&gt; +package of the new main package, on the subpackage, it must have `noarch=
+=3Dyes`,
+&gt; +`short_desc+"=3D - transitional package"` and
+&gt; +`depends=3D"${pkgname}-${version}_${revision}"`
+&gt;
+&gt; s/pkgname/sourcepkg/
+&gt;
+&gt; =E2=80=94
+&gt; You are receiving this because you authored the thread.
+&gt; Reply to this email directly, view it on GitHub
+&gt; &lt;https://github.com/voidlinux/void-packages/pull/13064#pullrequestreview-=
+108315906&gt;,
+&gt; or mute the thread
+&gt; &lt;https://github.com/notifications/unsubscribe-auth/AdUHTd-3SL40twkza1j6kx=
+hJCxjE5j90ks5tjhsRgaJpZM4TBhdw&gt;
+&gt; .
+&gt;
+--=20
+You are receiving this because you are on a team that was mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/13064#issuecomment-377508403=
+</section><section id="post6">
+<h5>Michael Gehring at <a href="#post6">Fri, 30 Mar 2018 11:51:43 +0000 (UTC)</a></h5>
+Maybe it would be good to indentify/explain why these are needed at all. Why doesn't replaces=(/provides=) work? Also see #11804.
+These transitional packages have the problem that you never know when they can be safely removed, so i'm not sure if they should be encouraged.
+</section><section id="post7">
+<h5>newbluemoon at <a href="#post7">Fri, 30 Mar 2018 04:51:56 -0700</a></h5>
+newbluemoon commented on this pull request.
+&gt; @@ -1227,6 +1228,16 @@ The following variables influence how Haskell pa=
+ckages are built:
+ - `make_build_args`: This is passed as-is to `stack build ...`, so
+   you can add your `--flag ...` parameters there.
+ =
++&lt;a id=3D"pkgs_transitional"&gt;&lt;/a&gt;
++### Transitional packages
++
++Transitional packages are used to move users into a new package. It is c=
+ommonly
++used when upstream changes it's name and Void Linux changes the package =
+name to
+I think it must be =E2=80=9Cits name=E2=80=9D.
+-- =
+You are receiving this because you are on a team that was mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/13064#pullrequestreview-1=
+08316626=
+</section><section id="post8">
+<h5>maxice8 at <a href="#post8">Fri, 30 Mar 2018 11:55:06 +0000 (UTC)</a></h5>
+As far as I can tell  replaces provides doesn't update people with the old
+package
+On Fri, Mar 30, 2018, 08:51 Michael Gehring &lt;notifications@github.com&gt;
+wrote:
+&gt; Maybe it would be good to indentify/explain why these are needed at all.
+&gt; Why doesn't replaces=3D(/provides=3D) work? Also see #11804
+&gt; &lt;https://github.com/voidlinux/void-packages/issues/11804&gt;.
+&gt;
+&gt; These transitional packages have the problem that you never know when they
+&gt; can be safely removed, so i'm not sure if they should be encouraged.
+&gt;
+&gt; =E2=80=94
+&gt; You are receiving this because you authored the thread.
+&gt; Reply to this email directly, view it on GitHub
+&gt; &lt;https://github.com/voidlinux/void-packages/pull/13064#issuecomment-37750=
+8940&gt;,
+&gt; or mute the thread
+&gt; &lt;https://github.com/notifications/unsubscribe-auth/AdUHTcCuCrGQuVLpSK0IJ9=
+n25Y08kZV-ks5tjhxQgaJpZM4TBhdw&gt;
+&gt; .
+&gt;
+--=20
+You are receiving this because you are on a team that was mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/13064#issuecomment-377509371=
+</section><section id="post9">
+<h5>newbluemoon at <a href="#post9">Fri, 30 Mar 2018 04:57:08 -0700</a></h5>
+newbluemoon commented on this pull request.
+&gt; @@ -1227,6 +1228,16 @@ The following variables influence how Haskell pa=
+ckages are built:
+ - `make_build_args`: This is passed as-is to `stack build ...`, so
+   you can add your `--flag ...` parameters there.
+ =
++&lt;a id=3D"pkgs_transitional"&gt;&lt;/a&gt;
++### Transitional packages
++
++Transitional packages are used to move users into a new package. It is c=
+ommonly
++used when upstream changes it's name and Void Linux changes the package =
+name to
++reflect such change. A transitive package must be an empty subpackage of=
+ the
++package of the new main package, on the subpackage, it must have `noarch=
+=3Dyes`, =
+Is there a =E2=80=9Cpackage=E2=80=9D too much? And maybe split into two s=
+entences for better readability?
+-- =
+You are receiving this because you are on a team that was mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/13064#pullrequestreview-1=
+08317289=
+</section><section id="post10">
+<h5>Michael Gehring at <a href="#post10">Fri, 30 Mar 2018 12:34:06 +0000 (UTC)</a></h5>
+&gt; As far as I can tell replaces provides doesn't update people with the old package
+But that's exactly what replaces is for. replaces=oldname&gt;=0 and revbumping all revdeps so they refer to the new name should take care of that. As far as i understand it the only reason to use transitional packages is to avoid the revbump of the revdeps. But all in all replaces should be the "default" rename strategy as it also takes care of removing the old package from the system and doesn't clobber the repo with dummy packages.
+</section><section id="post11">
+<h5>maxice8 at <a href="#post11">Fri, 30 Mar 2018 12:37:51 +0000 (UTC)</a></h5>
+oh, i wasn't aware of that (no docs), would be really good if this knowledge was added to the docs.
+</section><section id="post12">
+<h5>maxice8 at <a href="#post12">Fri, 30 Mar 2018 12:59:15 +0000 (UTC)</a></h5>
+@ebfe using replaces= also require changes to the package that is going to be removed ?
+</section><section id="post13">
+<h5>Michael Gehring at <a href="#post13">Fri, 30 Mar 2018 13:04:44 +0000 (UTC)</a></h5>
+&gt; If nothing pulls in a package into the transaction it would never be considered for replaces=.
+If that's the case then maybe that should be fixed instead of adding transitional packages.
+</section><section id="post14">
+<h5>Michael Gehring at <a href="#post14">Fri, 30 Mar 2018 13:14:40 +0000 (UTC)</a></h5>
+&gt; &gt; If nothing pulls in a package into the transaction it would never be considered for replaces=.
+&gt;
+&gt; If that's the case then maybe that should be fixed instead of adding transitional packages.
+Which of course isn't trivial to do since it's used in combination with
+provides for virtual packages which relies on this
+behaviour. And is at the same time broken by it ((releated bug
+https://github.com/voidlinux/xbps/issues/257). Which leads us back to #11804.
+</section><section id="post15">
+<h5>Jürgen Buchmüller at <a href="#post15">Fri, 30 Mar 2018 15:13:07 +0000 (UTC)</a></h5>
+pullmoll commented on this pull request.
+&gt; @@ -1227,6 +1228,16 @@ The following variables influence how Haskell packages are built:
+ - `make_build_args`: This is passed as-is to `stack build ...`, so
+   you can add your `--flag ...` parameters there.
++&lt;a id="pkgs_transitional"&gt;&lt;/a&gt;
++### Transitional packages
++
++Transitional packages are used to move users into a new package. It is commonly
++used when upstream changes it's name and Void Linux changes the name to reflect
+s/it's/its/
+</section><section id="post16">
+<h5>maxice8 at <a href="#post16">Fri, 30 Mar 2018 08:17:26 -0700</a></h5>
+maxice8 commented on this pull request.
+&gt; @@ -1227,6 +1228,16 @@ The following variables influence how Haskell packages are built:
+ - `make_build_args`: This is passed as-is to `stack build ...`, so
+   you can add your `--flag ...` parameters there.
++&lt;a id="pkgs_transitional"&gt;&lt;/a&gt;
++### Transitional packages
++
++Transitional packages are used to move users into a new package. It is commonly
++used when upstream changes it's name and Void Linux changes the name to reflect
+fixed,, thanks
+</section><section id="post17">
+<h5>maxice8 at <a href="#post17">Fri, 30 Mar 2018 16:56:39 +0000 (UTC)</a></h5>
+soooo, what is the current plan ? document replaces= / provides= and make Transitional packages documentation just explain how to use those to make a transitional package ?
+</section><section id="post18">
+<h5>Michael Gehring at <a href="#post18">Fri, 30 Mar 2018 10:14:46 -0700</a></h5>
+I think it became clear that renaming packages isn't a 'triviality' so I propose:
+```markdown
+# Renaming packages
+Don't do it unless you know what you are doing.
+```
+until replaces/provides semantics are clear and implemented in a sane way in xbps. (only half joking)
+</section><section id="post19">
+<h5>maxice8 at <a href="#post19">Fri, 30 Mar 2018 10:50:29 -0700</a></h5>
+&gt; # Renaming packages
+&gt;
+&gt; Don't do it unless you know what you are doing.
+Nobody does.
+I'll shelf this until xbps people sort it out.
+</section><section id="post20">
+<h5>maxice8 at <a href="#post20">Mon, 23 Apr 2018 09:26:42 +0000 (UTC)</a></h5>
+Closed #13064.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

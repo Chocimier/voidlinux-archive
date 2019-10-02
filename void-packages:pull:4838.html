@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>[voidlinux/void-packages] New package:
+ lightdm-gtk-greeter-settings-1.2.1 (#4838)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>[voidlinux/void-packages] New package:
+ lightdm-gtk-greeter-settings-1.2.1 (#4838)</h1>
+<section id="post1">
+<h5>Julien Marconnet at <a href="#post1">Mon, 26 Sep 2016 05:49:44 -0700</a></h5>
+I accidentally deleted my previous commit, so I recreated a new.
+@Duncaen all changes are done, except for done_build(), because without him the sofware is build in the `build3.4` folder instead of `build`. Which cause an error during do_install step.
+You can view, comment on, or merge this pull request online at:
+  https://github.com/voidlinux/void-packages/pull/4838
+-- Commit Summary --
+  * New package: lightdm-gtk-greeter-settings-1.2.1
+-- File Changes --
+    A srcpkgs/lightdm-gtk-greeter-settings/template (20)
+-- Patch Links --
+https://github.com/voidlinux/void-packages/pull/4838.patch
+https://github.com/voidlinux/void-packages/pull/4838.diff
+</section><section id="post2">
+<h5>Enno Boland at <a href="#post2">Sun, 09 Oct 2016 01:29:51 -0700</a></h5>
+Gottox requested changes on this pull request.
+&gt; +build_style=python-module
++python_versions="3.4"
++pycompile_version="3.4"
++pycompile_module="lightdm_gtk_greeter_settings"
++hostmakedepends="python3.4-distutils-extra intltool"
++depends="lightdm-gtk3-greeter python3.4-gobject"
++short_desc="Settings editor for LightDM GTK+ Greeter"
++maintainer="Julien Marconnet &lt;julienm99@gmail.com&gt;"
++license="GPL-3"
++homepage="https://launchpad.net/lightdm-gtk-greeter-settings"
++distfiles="https://launchpad.net/${pkgname}/${version%.*}/${version}/+download/${pkgname}-${version}.tar.gz"
++checksum=ab91027b56ca0e0c98a38169acc453c08801bc4937dc1a53bd6e98b7aaceea96
++
++do_build() {
++	python3 setup.py build
++}
+do_build can be removed
+</section><section id="post3">
+<h5>Julien Marconnet at <a href="#post3">Mon, 10 Oct 2016 03:06:36 -0700</a></h5>
+Alventoor commented on this pull request.
+&gt; +build_style=python-module
++python_versions="3.4"
++pycompile_version="3.4"
++pycompile_module="lightdm_gtk_greeter_settings"
++hostmakedepends="python3.4-distutils-extra intltool"
++depends="lightdm-gtk3-greeter python3.4-gobject"
++short_desc="Settings editor for LightDM GTK+ Greeter"
++maintainer="Julien Marconnet &lt;julienm99@gmail.com&gt;"
++license="GPL-3"
++homepage="https://launchpad.net/lightdm-gtk-greeter-settings"
++distfiles="https://launchpad.net/${pkgname}/${version%.*}/${version}/+download/${pkgname}-${version}.tar.gz"
++checksum=ab91027b56ca0e0c98a38169acc453c08801bc4937dc1a53bd6e98b7aaceea96
++
++do_build() {
++	python3 setup.py build
++}
+When I remove do_build(), I get the following error message :` ERROR: lightdm-gtk-greeter-settings-1.2.1_1: failed to run do_install() at line 49.`.
+This was because without do_build the software is build in the `build3.4` folder. Or, during do_install step lightdm-gtk-greeter-settings creates the `build3.4` folder, what appears to conflict.
+I searched, but I couldn't find a solution for removing do_build.
+</section><section id="post4">
+<h5>Enno Boland at <a href="#post4">Mon, 17 Oct 2016 13:03:47 -0700</a></h5>
+Gottox commented on this pull request.
+&gt; +build_style=python-module
++python_versions="3.4"
++pycompile_version="3.4"
++pycompile_module="lightdm_gtk_greeter_settings"
++hostmakedepends="python3.4-distutils-extra intltool"
++depends="lightdm-gtk3-greeter python3.4-gobject"
++short_desc="Settings editor for LightDM GTK+ Greeter"
++maintainer="Julien Marconnet &lt;julienm99@gmail.com&gt;"
++license="GPL-3"
++homepage="https://launchpad.net/lightdm-gtk-greeter-settings"
++distfiles="https://launchpad.net/${pkgname}/${version%.*}/${version}/+download/${pkgname}-${version}.tar.gz"
++checksum=ab91027b56ca0e0c98a38169acc453c08801bc4937dc1a53bd6e98b7aaceea96
++
++do_build() {
++	python3 setup.py build
++}
+That means the buildsystem is somewhat broken. Unfortunately using do_build directly breaks various features of xpbs. @asergi Do you have an idea how to fix this?
+</section><section id="post5">
+<h5>Alessio Sergi at <a href="#post5">Thu, 20 Oct 2016 05:17:03 -0700</a></h5>
+asergi commented on this pull request.
+&gt; +build_style=python-module
++python_versions="3.4"
++pycompile_version="3.4"
++pycompile_module="lightdm_gtk_greeter_settings"
++hostmakedepends="python3.4-distutils-extra intltool"
++depends="lightdm-gtk3-greeter python3.4-gobject"
++short_desc="Settings editor for LightDM GTK+ Greeter"
++maintainer="Julien Marconnet &lt;julienm99@gmail.com&gt;"
++license="GPL-3"
++homepage="https://launchpad.net/lightdm-gtk-greeter-settings"
++distfiles="https://launchpad.net/${pkgname}/${version%.*}/${version}/+download/${pkgname}-${version}.tar.gz"
++checksum=ab91027b56ca0e0c98a38169acc453c08801bc4937dc1a53bd6e98b7aaceea96
++
++do_build() {
++	python3 setup.py build
++}
+The only thing I can think of without too much hassle is to just skip the build phase:
+```
+do_build() {
+    :
+}
+```
+</section><section id="post6">
+<h5>Alessio Sergi at <a href="#post6">Thu, 20 Oct 2016 05:20:19 -0700</a></h5>
+asergi requested changes on this pull request.
+&gt; @@ -0,0 +1,20 @@
++# Template file for 'lightdm-gtk-greeter-settings'
++pkgname=lightdm-gtk-greeter-settings
++version=1.2.1
++revision=1
++build_style=python-module
+`build_style=python3-module`
+&gt; @@ -0,0 +1,20 @@
++# Template file for 'lightdm-gtk-greeter-settings'
++pkgname=lightdm-gtk-greeter-settings
++version=1.2.1
++revision=1
++build_style=python-module
++python_versions="3.4"
++pycompile_version="3.4"
+You can remove both `python_versions` and `pycompile_version`. They are no longer needed.
+&gt; @@ -0,0 +1,20 @@
++# Template file for 'lightdm-gtk-greeter-settings'
++pkgname=lightdm-gtk-greeter-settings
++version=1.2.1
++revision=1
++build_style=python-module
++python_versions="3.4"
++pycompile_version="3.4"
++pycompile_module="lightdm_gtk_greeter_settings"
++hostmakedepends="python3.4-distutils-extra intltool"
++depends="lightdm-gtk3-greeter python3.4-gobject"
+We switched to `python3-*` packages in the meantime, so: `'s/python3\.4/python3/g'`.
+</section><section id="post7">
+<h5>Enno Boland at <a href="#post7">Thu, 20 Oct 2016 05:21:56 -0700</a></h5>
+Gottox commented on this pull request.
+&gt; +build_style=python-module
++python_versions="3.4"
++pycompile_version="3.4"
++pycompile_module="lightdm_gtk_greeter_settings"
++hostmakedepends="python3.4-distutils-extra intltool"
++depends="lightdm-gtk3-greeter python3.4-gobject"
++short_desc="Settings editor for LightDM GTK+ Greeter"
++maintainer="Julien Marconnet &lt;julienm99@gmail.com&gt;"
++license="GPL-3"
++homepage="https://launchpad.net/lightdm-gtk-greeter-settings"
++distfiles="https://launchpad.net/${pkgname}/${version%.*}/${version}/+download/${pkgname}-${version}.tar.gz"
++checksum=ab91027b56ca0e0c98a38169acc453c08801bc4937dc1a53bd6e98b7aaceea96
++
++do_build() {
++	python3 setup.py build
++}
+@asergi Could we fix this by globaly changing the build directory name?
+</section><section id="post8">
+<h5>Alessio Sergi at <a href="#post8">Thu, 20 Oct 2016 05:44:22 -0700</a></h5>
+asergi commented on this pull request.
+&gt; +build_style=python-module
++python_versions="3.4"
++pycompile_version="3.4"
++pycompile_module="lightdm_gtk_greeter_settings"
++hostmakedepends="python3.4-distutils-extra intltool"
++depends="lightdm-gtk3-greeter python3.4-gobject"
++short_desc="Settings editor for LightDM GTK+ Greeter"
++maintainer="Julien Marconnet &lt;julienm99@gmail.com&gt;"
++license="GPL-3"
++homepage="https://launchpad.net/lightdm-gtk-greeter-settings"
++distfiles="https://launchpad.net/${pkgname}/${version%.*}/${version}/+download/${pkgname}-${version}.tar.gz"
++checksum=ab91027b56ca0e0c98a38169acc453c08801bc4937dc1a53bd6e98b7aaceea96
++
++do_build() {
++	python3 setup.py build
++}
+This `setup.py` is weird because it creates files at build time in a directory outside the classical `build-X.Y`.
+I wouldn't lose too much time at it. Skipping the `do_build()` is fine, imo.
+</section><section id="post9">
+<h5>Julien Marconnet at <a href="#post9">Thu, 20 Oct 2016 06:31:58 -0700</a></h5>
+Thanks for your help @Gottox and @asergi , it works.
+</section><section id="post10">
+<h5>Alessio Sergi at <a href="#post10">Thu, 20 Oct 2016 10:13:00 -0700</a></h5>
+asergi approved this pull request.
+</section><section id="post11">
+<h5>Alessio Sergi at <a href="#post11">Thu, 20 Oct 2016 10:14:33 -0700</a></h5>
+Merged #4838.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

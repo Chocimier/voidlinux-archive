@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] qemu: add smartcard support (#5973)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] qemu: add smartcard support (#5973)</h1>
+<section id="post1">
+<h5>Michael Gehring at <a href="#post1">Sun, 12 Mar 2017 12:16:21 -0700</a></h5>
+ebfe requested changes on this pull request.
+Adding libcacard should be a separate commit.
+</section><section id="post2">
+<h5>Sir-Boops at <a href="#post2">Sun, 12 Mar 2017 12:31:26 -0700</a></h5>
+Sir-Boops commented on this pull request.
+&gt; @@ -19,7 +19,7 @@ makedepends="libpng-devel libjpeg-turbo-devel pixman-devel snappy-devel
+  libbluetooth-devel libssh2-devel libusb-devel pulseaudio-devel libnfs-devel
+  $(vopt_if sdl SDL-devel) $(vopt_if sdl2 SDL2-devel) $(vopt_if gtk gtk+-devel)
+  $(vopt_if spice spice-devel) $(vopt_if virgl virglrenderer-devel)
+- $(vopt_if opengl 'libepoxy-devel libdrm-devel MesaLib-devel')"
++ $(vopt_if opengl 'libepoxy-devel libdrm-devel MesaLib-devel') libcacard-devel"
+No, we really don't need it as a default option, i only added it as one as i wasn't aware some don't want it. I'll remove it from the default build options.
+</section><section id="post3">
+<h5>Sir-Boops at <a href="#post3">Sun, 12 Mar 2017 13:10:08 -0700</a></h5>
+Put adding libcacard into it's own commit
+</section><section id="post4">
+<h5>Enno Boland at <a href="#post4">Sun, 12 Mar 2017 15:41:50 -0700</a></h5>
+Gottox approved this pull request.
+</section><section id="post5">
+<h5>Jürgen Buchmüller at <a href="#post5">Sun, 12 Mar 2017 15:50:19 -0700</a></h5>
+For consistency please use `New package: libcacard-2.5.2` as the first commit message.
+</section><section id="post6">
+<h5>Michael Gehring at <a href="#post6">Mon, 13 Mar 2017 01:04:47 -0700</a></h5>
+ebfe commented on this pull request.
+&gt; @@ -0,0 +1,24 @@
++# Template file for 'libcacard'
++pkgname=libcacard
++version=2.5.2
++revision=1
++build_style=gnu-configure
++hostmakedepends="pkg-config"
++makedepends="nss-devel glib-devel pcsclite-devel"
++short_desc="A library to privide emulation of smart cards to a virtual card reader"
+typo
+</section><section id="post7">
+<h5>Michael Gehring at <a href="#post7">Mon, 13 Mar 2017 01:05:11 -0700</a></h5>
+ebfe approved this pull request.
+</section><section id="post8">
+<h5>Toyam Cox at <a href="#post8">Wed, 15 Mar 2017 11:29:09 -0700</a></h5>
+Merged #5973.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

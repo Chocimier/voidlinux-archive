@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] Astroid (#4751)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] Astroid (#4751)</h1>
+<section id="post1">
+<h5>Michael Gehring at <a href="#post1">Tue, 13 Sep 2016 01:09:27 -0700</a></h5>
+Instead of forking and messing up versioning (version=99) you could just add a patch.
+</section><section id="post2">
+<h5>"M. Dietrich" at <a href="#post2">Sun, 18 Sep 2016 12:59:49 -0700</a></h5>
+the describtion was changes,
+the commits where squashed,
+a patch was used to depend on an upstream version.
+</section><section id="post3">
+<h5>Enno Boland at <a href="#post3">Sun, 09 Oct 2016 01:25:18 -0700</a></h5>
+Gottox requested changes on this pull request.
+&gt; +pkgname="astroid"
++version="0.6"
++revision="1"
++build_style="scons"
++short_desc="Graphical lightweight and fast email client for notmuch"
++maintainer="M. Dietrich &lt;mdt@pyneo.org&gt;"
++license="GPL-3"
++homepage="https://github.com/astroidmail/astroid"
++distfiles="https://github.com/astroidmail/astroid/archive/v${version}.tar.gz"
++checksum="b91e846bb009b7770a5161ce323c6ac729592ce12e3ed697f9b435b587dd31b4"
++depends="libnotmuch webkitgtk boost libsass libpeas notmuch gtkmm"
++makedepends="gcc-c++ git pkg-config scons gobject-introspection boost-devel gmime-devel gtkmm-devel libnotmuch-devel libpeas-devel libsass-devel webkitgtk-devel"
++
++do_configure() {
++	true
++}
+remove this noop function.
+&gt; +distfiles="https://github.com/astroidmail/astroid/archive/v${version}.tar.gz"
++checksum="b91e846bb009b7770a5161ce323c6ac729592ce12e3ed697f9b435b587dd31b4"
++depends="libnotmuch webkitgtk boost libsass libpeas notmuch gtkmm"
++makedepends="gcc-c++ git pkg-config scons gobject-introspection boost-devel gmime-devel gtkmm-devel libnotmuch-devel libpeas-devel libsass-devel webkitgtk-devel"
++
++do_configure() {
++	true
++}
++
++do_build() {
++	scons --release=${version} --install-sandbox=${DESTDIR} --prefix=/usr
++}
++
++do_install() {
++	scons --release=${version} --install-sandbox=${DESTDIR} --prefix=/usr install
++}
+Can't find any patch in this commit.
+&gt; @@ -0,0 +1,25 @@
++# Template file for 'astroid'
++pkgname="astroid"
++version="0.6"
++revision="1"
++build_style="scons"
++short_desc="Graphical lightweight and fast email client for notmuch"
++maintainer="M. Dietrich &lt;mdt@pyneo.org&gt;"
++license="GPL-3"
++homepage="https://github.com/astroidmail/astroid"
++distfiles="https://github.com/astroidmail/astroid/archive/v${version}.tar.gz"
++checksum="b91e846bb009b7770a5161ce323c6ac729592ce12e3ed697f9b435b587dd31b4"
++depends="libnotmuch webkitgtk boost libsass libpeas notmuch gtkmm"
++makedepends="gcc-c++ git pkg-config scons gobject-introspection boost-devel gmime-devel gtkmm-devel libnotmuch-devel libpeas-devel libsass-devel webkitgtk-devel"
+* gcc-c++ can be remove
+* Is git needed to build?
+* gobject-introspection, pkg-config, and scons need to go to hostmakedepends
+&gt; @@ -0,0 +1,25 @@
++# Template file for 'astroid'
++pkgname="astroid"
++version="0.6"
++revision="1"
++build_style="scons"
++short_desc="Graphical lightweight and fast email client for notmuch"
++maintainer="M. Dietrich &lt;mdt@pyneo.org&gt;"
++license="GPL-3"
++homepage="https://github.com/astroidmail/astroid"
++distfiles="https://github.com/astroidmail/astroid/archive/v${version}.tar.gz"
++checksum="b91e846bb009b7770a5161ce323c6ac729592ce12e3ed697f9b435b587dd31b4"
++depends="libnotmuch webkitgtk boost libsass libpeas notmuch gtkmm"
+Sorry for the long delay. :)
+depends are automaticly detected. This can be removed.
+</section><section id="post4">
+<h5>Michael Aldridge at <a href="#post4">Fri, 23 Jun 2017 17:01:07 -0700</a></h5>
+@emdete Is this PR still active?
+</section><section id="post5">
+<h5>Toyam Cox at <a href="#post5">Sun, 24 Sep 2017 07:41:17 +0000 (UTC)</a></h5>
+3 months. @emdete shall this remain open or be closed?
+</section><section id="post6">
+<h5>Alessio Sergi at <a href="#post6">Wed, 17 Jan 2018 17:14:55 +0000 (UTC)</a></h5>
+No response. Closed.
+</section><section id="post7">
+<h5>Alessio Sergi at <a href="#post7">Wed, 17 Jan 2018 17:14:55 +0000 (UTC)</a></h5>
+Closed #4751.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

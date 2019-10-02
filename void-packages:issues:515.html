@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] Package request: Telegram Desktop
+ client (#515)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] Package request: Telegram Desktop
+ client (#515)</h1>
+<section id="post1">
+<h5>silvernode at <a href="#post1">Mon, 06 Feb 2017 06:51:01 -0800</a></h5>
+Looks like tdesktop has tagged releases now thanks to you @Duncaen
+</section><section id="post2">
+<h5>Conor Randall at <a href="#post2">Wed, 31 May 2017 04:43:57 -0700</a></h5>
+@silvernode does that mean this can be packaged now?
+</section><section id="post3">
+<h5>Conor Randall at <a href="#post3">Thu, 01 Jun 2017 01:39:49 -0700</a></h5>
+@Duncaen the "slightly patcched" is referring to the version of LGPL that qt uses,not the qt itself
+</section><section id="post4">
+<h5>Ekaterina Vaartis at <a href="#post4">Sat, 10 Jun 2017 06:54:27 -0700</a></h5>
+What about the way telegram deals with dependencies? It seems to ignore system-wide ones and only use those in `../Libraries`, including big things like Qt
+</section><section id="post5">
+<h5>Ekaterina Vaartis at <a href="#post5">Sat, 10 Jun 2017 07:24:18 -0700</a></h5>
+Should we use their binaries or build from source? Note, that if we are going to build from source we should also create templates for the following packages:
+`appindicator unity dee libxcb-image libxcb-keysyms libxcb-icccm libxcb-render-util libxcb-util libxcb-sync libxcb-xfixes libxcb-randr libx11-xcb breakpad` and patched Qt
+Also note, that for musl libc, crash reporting must be disabled, because breakpad is mostly glibc-oriented
+</section><section id="post6">
+<h5>Toyam Cox at <a href="#post6">Wed, 14 Jun 2017 02:16:11 -0700</a></h5>
+libappindicator is now in the repo!
+So that's one down.
+</section><section id="post7">
+<h5>maxice8 at <a href="#post7">Tue, 24 Apr 2018 17:11:17 +0000 (UTC)</a></h5>
+telegram-desktop is in the repos.
+</section><section id="post8">
+<h5>silvernode at <a href="#post8">Wed, 25 Apr 2018 07:26:55 +0000 (UTC)</a></h5>
+Yeah this needs to be closed, one less backlog item
+</section><section id="post9">
+<h5>Jürgen Buchmüller at <a href="#post9">Wed, 25 Apr 2018 00:37:09 -0700</a></h5>
+Closed #515.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

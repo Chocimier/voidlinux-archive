@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] dotherside: fixing shared library
+ availability in standard package (#6221)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] dotherside: fixing shared library
+ availability in standard package (#6221)</h1>
+<section id="post1">
+<h5>Gangsta Cat at <a href="#post1">Sun, 23 Apr 2017 00:15:15 -0700</a></h5>
+@filcuc seems to have fixed `DOtherSide` upstream, the patch isn't necessary anymore and the standard package now works as it is.
+The standard package now installs the following files:
+- libDOtherSide.so.0.6.3
+- libDOtherSide.so.0.6 symbolic link to libDOtherSide.so.0.6.3
+`nimqml` has been patched to use libDOtherSide.so.0.6 on Linux.
+The cross compilation still need to be fixed though, certainly in another pull request, if someone else have an idea on how to fix it.
+CC @Duncaen.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

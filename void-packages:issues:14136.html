@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] [RFC] Changelog field (#14136)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] [RFC] Changelog field (#14136)</h1>
+<section id="post1">
+<h5>Leah Neukirchen at <a href="#post1">Sat, 05 May 2018 13:46:50 +0000 (UTC)</a></h5>
+We need to roll new static tarballs for 0.52 anyway, no?
+And yes, it should be any URL.
+</section><section id="post2">
+<h5>maxice8 at <a href="#post2">Sat, 05 May 2018 20:30:12 +0000 (UTC)</a></h5>
+Another thing to define, preference for changelog from master branch that might include changes not in the package or (if available) for the most recent version packaged using $version ?
+</section><section id="post3">
+<h5>Jürgen Buchmüller at <a href="#post3">Sun, 06 May 2018 11:35:49 +0000 (UTC)</a></h5>
+I agree: plaintext should be preferred and not mandatory for obvious reasons.
+For xbps-0.52 itself it seems some packages end up in `&lt;arch&gt;-stagedata`. It happened for the update of `qtcreator-4.6.1` and I don't see a possible reason in `xbps-create(1)`.  I think the how and why should be documented, no?
+</section><section id="post4">
+<h5>maxice8 at <a href="#post4">Sun, 06 May 2018 19:50:46 +0000 (UTC)</a></h5>
+are debian changelogs ok ? for `xapps` they are the only option for plaintext logs and are available on the main repo under debian/changelog.
+or should it be pointed to the github release page of xapps.
+</section><section id="post5">
+<h5>Leah Neukirchen at <a href="#post5">Sun, 06 May 2018 20:03:24 +0000 (UTC)</a></h5>
+`debian/changelog` is ok if it's written by upstream.
+</section><section id="post6">
+<h5>maxice8 at <a href="#post6">Mon, 07 May 2018 19:15:27 +0000 (UTC)</a></h5>
+Is there a specific place where changelog= should go ?
+</section><section id="post7">
+<h5>Leah Neukirchen at <a href="#post7">Tue, 08 May 2018 04:17:13 -0700</a></h5>
+The existing `_changelog` are directly below `homepage`.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

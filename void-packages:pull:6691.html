@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] new package: osbuddy (#6691)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] new package: osbuddy (#6691)</h1>
+<section id="post1">
+<h5>Toyam Cox at <a href="#post1">Mon, 12 Jun 2017 09:25:11 -0700</a></h5>
+And this PR adds a lot of artifacts to the repo that surely can be downloaded from elsewhere.
+</section><section id="post2">
+<h5>Conor Randall at <a href="#post2">Mon, 12 Jun 2017 09:41:57 -0700</a></h5>
+Its all from the package over at the AUR, which has had no licensing problems and has now become endorsed by the project on their home page.
+The artifacts could be taken from the aur if that is better?
+</section><section id="post3">
+<h5>Toyam Cox at <a href="#post3">Mon, 12 Jun 2017 11:00:18 -0700</a></h5>
+The license still makes me nervous, and is unclear.
+</section><section id="post4">
+<h5>Jasu at <a href="#post4">Mon, 12 Jun 2017 11:01:55 -0700</a></h5>
+ibrokemypie, take a look at HikariKnight's Runescape client for Unix. It's GNU licensed and supports both, Runescape 3 and Old School Runescape.
+</section><section id="post5">
+<h5>Toyam Cox at <a href="#post5">Mon, 12 Jun 2017 11:47:50 -0700</a></h5>
+@ibrokemypie so where does the AUR license these other files for redistribution?
+</section><section id="post6">
+<h5>Jasu at <a href="#post6">Mon, 12 Jun 2017 12:15:55 -0700</a></h5>
+@Vaelatern AUR lists the license as "custom" and downloads the .jar directly from OSBuddy's website. OSBuddy is not open source software and they offer a premium model that has a monthly cost. It's an unofficial, third party client for the game. However, most players prefer OSBuddy as it offers multiple features the official client does not have.
+I've used the client I linked but I'm not very familiar with the technical side. It's made by a Runescape moderator and is completely open-source and somehow adjusts the official Runescape client to work on Linux.
+Again, I'm not completely sure how Runescape or the clients work on a technical level but I guess they act like a browser, connecting to the Runescape server, downloading necessary files and running the game.
+</section><section id="post7">
+<h5>Conor Randall at <a href="#post7">Mon, 12 Jun 2017 15:06:17 -0700</a></h5>
+I still think having OSBuddy packaged would be a good thing, the more the merrier, so I will contact them and ask permission to redistribute in binary form through XBPS
+</section><section id="post8">
+<h5>Jasu at <a href="#post8">Tue, 13 Jun 2017 01:30:51 -0700</a></h5>
+@ibrokemypie, I don't know but it's packaged for other distributions. It seems to be the most ["official"](https://support.runescape.com/hc/en-gb/articles/206659489-Linux-Native-Clients) Linux client for Runescape.
+If OSBuddy is to be packaged, remember to mark it for the non-free repository as it's closed source software.
+</section><section id="post9">
+<h5>Conor Randall at <a href="#post9">Tue, 13 Jun 2017 21:02:00 -0700</a></h5>
+@all going to just leave this until developers get back and update when/if they do. In the mean time, going to do rsu-client since we need a bit of runescape in whatever wrapping :)
+</section><section id="post10">
+<h5>Michael Aldridge at <a href="#post10">Sun, 18 Jun 2017 01:44:13 -0700</a></h5>
+@ibrokemypie At this time, the official stance is that the license is iffy at best.  If no other maintainer has comments on this in the next 2 days, I'd suggest closing this PR given that we really aren't comfortable merging this at this time.
+</section><section id="post11">
+<h5>Toyam Cox at <a href="#post11">Tue, 20 Jun 2017 08:44:56 -0700</a></h5>
+Closed #6691.
+</section><section id="post12">
+<h5>Toyam Cox at <a href="#post12">Tue, 20 Jun 2017 08:44:57 -0700</a></h5>
+License is iffy, there are too many random artifacts, and it's nonfree anyway.
+</section><section id="post13">
+<h5>Bradley Haggerty at <a href="#post13">Wed, 05 Jul 2017 22:47:02 +0000 (UTC)</a></h5>
+I understand why this was not merged, but can we see a package made for the client mentioned by @Jazqa? It looks like it should be fine. I just found this thread while searching how I can play OSRS on Void.
+</section><section id="post14">
+<h5>Conor Randall at <a href="#post14">Thu, 06 Jul 2017 04:53:43 +0000 (UTC)</a></h5>
+@Soundtoxin just need to clean this one up
+https://github.com/voidlinux/void-packages/pull/6725
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

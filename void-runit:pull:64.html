@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-runit] core-services/01-static-devnodes.sh:
+ Honour modprobe blacklists (#64)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-runit] core-services/01-static-devnodes.sh:
+ Honour modprobe blacklists (#64)</h1>
+<section id="post1">
+<h5>Enno Boland at <a href="#post1">Mon, 18 Sep 2017 12:31:32 +0000 (UTC)</a></h5>
+I think the problem with this is, that it isn't supported by busybox modprobe. @chneukirchen @Duncaen what do you think?
+</section><section id="post2">
+<h5>Daniel Néri at <a href="#post2">Mon, 18 Sep 2017 13:04:51 +0000 (UTC)</a></h5>
+Thanks for your comment!
+AFAICT, busybox has no "kmod" command applet, so this script wouldn't work anyway?
+</section><section id="post3">
+<h5>Daniel Néri at <a href="#post3">Fri, 10 Nov 2017 07:40:41 +0000 (UTC)</a></h5>
+Any feedback on my previous comment? Do we need to worry about Busybox support here?
+</section><section id="post4">
+<h5>Michael Aldridge at <a href="#post4">Fri, 10 Nov 2017 07:44:21 +0000 (UTC)</a></h5>
+Ideally we don't want to lose support for something that works already.  That being said its been a few years since I tried to bring up a system on busybox so I can't vouch that it works at the moment.
+Assuming that this script already doesn't run on a busybox system, I have no other issues.
+</section><section id="post5">
+<h5>Daniel Néri at <a href="#post5">Mon, 13 Nov 2017 07:46:42 +0000 (UTC)</a></h5>
+I note that Busybox modprobe actually does accept "-b" even when the blacklist feature is disabled, as in Void's package.
+</section><section id="post6">
+<h5>Daniel Néri at <a href="#post6">Fri, 19 Jan 2018 16:31:11 -0800</a></h5>
+Summing up:
+- Busybox has no `kmod` applet, so `kmod static-nodes` is unlikely to yield useful output there.
+- Busybox `modprobe` accepts `-b`, even when the blacklist feature is disabled.
+Any other reason why this can't be merged?
+Thanks!
+</section><section id="post7">
+<h5>Daniel Néri at <a href="#post7">Wed, 13 Jun 2018 07:01:34 -0700</a></h5>
+How about finally merging this one?
+Cheers!
+</section><section id="post8">
+<h5>Enno Boland at <a href="#post8">Wed, 13 Jun 2018 07:07:29 -0700</a></h5>
+Ah, get this in for now. If we ever support busybox, there may be other things to consider too.
+</section><section id="post9">
+<h5>Enno Boland at <a href="#post9">Wed, 13 Jun 2018 07:07:30 -0700</a></h5>
+Merged #64.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

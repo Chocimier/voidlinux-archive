@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] xbps-src: portability fixes (#6499)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] xbps-src: portability fixes (#6499)</h1>
+<section id="post1">
+<h5>Enno Boland at <a href="#post1">Thu, 25 May 2017 04:52:34 -0700</a></h5>
+Gottox commented on this pull request.
+&gt; @@ -415,7 +415,7 @@ XBPS_OPTIONS=
+ XBPS_OPTSTRING="a:CEfgGhH:Ij:Lm:No:r:tV"
+ # Preprocess arguments in order to allow options before and after XBPS_TARGET.
+-eval set -- $(getopt -- "$XBPS_OPTSTRING" "$@");
++eval set -- $(getopt "$XBPS_OPTSTRING" "$@");
+What does this fix?
+</section><section id="post2">
+<h5>Enno Boland at <a href="#post2">Thu, 25 May 2017 07:28:52 -0700</a></h5>
+Gottox commented on this pull request.
+&gt; @@ -415,7 +415,7 @@ XBPS_OPTIONS=
+ XBPS_OPTSTRING="a:CEfgGhH:Ij:Lm:No:r:tV"
+ # Preprocess arguments in order to allow options before and after XBPS_TARGET.
+-eval set -- $(getopt -- "$XBPS_OPTSTRING" "$@");
++eval set -- $(getopt "$XBPS_OPTSTRING" "$@");
+ok, thx :)
+</section><section id="post3">
+<h5>Toyam Cox at <a href="#post3">Fri, 26 May 2017 13:27:08 -0700</a></h5>
+:+1:
+</section><section id="post4">
+<h5>Enno Boland at <a href="#post4">Wed, 31 May 2017 04:48:53 -0700</a></h5>
+Merged #6499.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

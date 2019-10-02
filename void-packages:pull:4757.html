@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] libvpx: update to 1.6.0. (soname bump)
+ (#4757)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] libvpx: update to 1.6.0. (soname bump)
+ (#4757)</h1>
+<section id="post1">
+<h5>Michael Gehring at <a href="#post1">Tue, 13 Sep 2016 13:07:21 -0700</a></h5>
+Unfortunately that's the new normal for travis builds. I never could reproduce locally. Currently running test builds locally. @duncaen managed to get a coredump but that wasn't really enlightening on whats happening.
+</section><section id="post2">
+<h5>Jürgen Buchmüller at <a href="#post2">Tue, 13 Sep 2016 13:12:51 -0700</a></h5>
+Hmm.. the travis-ci builds use proot while locally I use uchroot.
+Another difference is the xbps-static being used AFAICT.
+</section><section id="post3">
+<h5>Jürgen Buchmüller at <a href="#post3">Tue, 13 Sep 2016 13:14:32 -0700</a></h5>
+Yup, it's the `XBPS_CHROOT_CMD=proot` which causes the segfault. Confirmed locally.
+</section><section id="post4">
+<h5>Jürgen Buchmüller at <a href="#post4">Tue, 13 Sep 2016 13:26:19 -0700</a></h5>
+The `proot-x86_64` which `common/travis/prepare.sh` downloads is version 5.1.0 (`strings proot-x86_64`), same a our proot pkg. No update since Dec, 18 2014.
+Perhaps we can create a `xbps-uchroot-x86_64` static executable and use that instead of proot?
+</section><section id="post5">
+<h5>Michael Gehring at <a href="#post5">Tue, 13 Sep 2016 13:29:08 -0700</a></h5>
+&gt; Perhaps we can create a `xbps-uchroot-x86_64` static executable and use that instead of proot?
+Not sure if the kernel used on travis has the required options enabled.
+</section><section id="post6">
+<h5>Jürgen Buchmüller at <a href="#post6">Tue, 13 Sep 2016 13:32:53 -0700</a></h5>
+True. There are some [PRs pending for proot](https://github.com/proot-me/PRoot/pulls) and specifically https://github.com/proot-me/PRoot/pull/91 looks like it would fix a bug that could cause such problems.
+</section><section id="post7">
+<h5>Jürgen Buchmüller at <a href="#post7">Tue, 13 Sep 2016 13:54:17 -0700</a></h5>
+Are the kernel config options accessible for a user somehow? Then we could print info about the (non-)existance of `CONFIG_NAMESPACES, CONFIG_IPC_NS, CONFIG_PID_NS, CONFIG_UTS_NS` in setup.sh or even decide whether or not to use xbps-uchroot.
+</section><section id="post8">
+<h5>Michael Gehring at <a href="#post8">Tue, 13 Sep 2016 13:56:57 -0700</a></h5>
+&gt; Are the kernel config options accessible for a user somehow?
+Maybe zcat /proc/config.gz works? But that depends on the kernel config
+;)
+</section><section id="post9">
+<h5>Jürgen Buchmüller at <a href="#post9">Tue, 13 Sep 2016 13:58:41 -0700</a></h5>
+Yeah, or `cat /boot/config-$(uname -r)` .. even less probable :)
+</section><section id="post10">
+<h5>Jürgen Buchmüller at <a href="#post10">Tue, 13 Sep 2016 14:09:17 -0700</a></h5>
+Let's wait for @xtraeme to pop up again and see if he knows what and how to do :)
+</section><section id="post11">
+<h5>Jürgen Buchmüller at <a href="#post11">Tue, 13 Sep 2016 15:20:16 -0700</a></h5>
+This PR lgtm and I didn't mean to wait for Juan to merge this :)
+</section><section id="post12">
+<h5>Michael Gehring at <a href="#post12">Tue, 13 Sep 2016 16:17:28 -0700</a></h5>
+Build tested everything on x86_64.
+</section><section id="post13">
+<h5>Michael Gehring at <a href="#post13">Sat, 17 Sep 2016 16:57:46 -0700</a></h5>
+Merged #4757.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

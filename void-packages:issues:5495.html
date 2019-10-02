@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] chromium for arm: cross-build fails
+ (#5495)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] chromium for arm: cross-build fails
+ (#5495)</h1>
+<section id="post1">
+<h5>Charles Lehner at <a href="#post1">Mon, 09 Jan 2017 16:15:24 -0800</a></h5>
+@Duncaen I'm interested in helping make it work. Do you have any pointers on what needs to be done to fix it?
+</section><section id="post2">
+<h5>Charles Lehner at <a href="#post2">Mon, 09 Jan 2017 16:34:32 -0800</a></h5>
+@Duncaen thanks. I will try some more and see if I can make progress on it.
+</section><section id="post3">
+<h5>Charles Lehner at <a href="#post3">Mon, 09 Jan 2017 20:31:34 -0800</a></h5>
+I got it to use the correct toolchain binaries and start compiling:
+```diff
+diff --git a/srcpkgs/chromium/template b/srcpkgs/chromium/template
+index e7e74ad5f7..261808c5e2 100644
+--- a/srcpkgs/chromium/template
++++ b/srcpkgs/chromium/template
+@@ -10,7 +10,6 @@ license="BSD"
+ distfiles="https://commondatastorage.googleapis.com/chromium-browser-official/${pkgname}-${version}.tar.xz"
+ checksum=e81bd3140d9c84dfee04d9a94686dfe6a20ae79475d84f17154c5536dcb81a58
+-only_for_archs="i686 x86_64 x86_64-musl"
+ lib32disabled=yes
+ nodebug=yes
+ nopie=yes  # contains tools that are not PIE, enables PIE itself
+@@ -43,6 +42,9 @@ post_extract() {
+                ;;
+        esac
++       sed -i "s/ *toolprefix = .*\"$/toolprefix = \"${XBPS_CROSS_TRIPLET}-\"" \
++        -i build/toolchain/linux/BUILD.gn
++
+        # Use the file at run time instead of effectively compiling it in
+        sed 's|//third_party/usb_ids/usb.ids|/usr/share/hwdata/usb.ids|g' \
+                -i device/usb/BUILD.gn
+```
+Now it fails with a conflicting declaration error:
+```
+...
+[1706/25021] CXX obj/components/crash/content/app/app_non_mac_win/breakpad_linux.o
+FAILED: obj/components/crash/content/app/app_non_mac_win/breakpad_linux.o
+armv7l-linux-musleabihf-g++ -MMD -MF obj/components/crash/content/app/app_non_mac_win/breakpad_linux.o.d -DCRASH_IMPLEMENTATION -DV8_DEPRECATION_WARNINGS -DENA
+BLE_MDNS=1 -DENABLE_NOTIFICATIONS -DENABLE_PEPPER_CDMS -DENABLE_PLUGINS=1 -DENABLE_PDF=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 -DENABLE_PRINT_PREVIEW=1
+ -DENABLE_SPELLCHECK=1 -DUSE_UDEV -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_PANGO=1 -DUSE_CAIRO=1 -DUSE_CLIPBOARD_AURAX11=1 -DUSE_DEFAULT_RENDER_THEME
+=1 -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 -DUSE_X11=1 -DNO_TCMALLOC -DDISABLE_NACL -DENABLE_EXTENSIONS=1 -DENABLE_TASK_MANAGER=1 -DENABLE_THEMES=1 -DENABLE_CAPTIVE_POR
+TAL_DETECTION=1 -DENABLE_SESSION_SERVICE=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_SERVICE_DISCOVERY=1 -DUSE_PROPRIETARY_CODECS -DENABLE_HANGOUT_SERVICES_EXTENSIO
+N=1 -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL -DCHROMIUM_BUILD -DENABLE_MEDIA_ROUTER=1 -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LA
+RGEFILE64_SOURCE -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D_FORTIFY_SOURCE=2 -DNDEBUG -DNVALGRIND -DDYNAMIC_ANNOTATIONS_ENABLED=0 -DV8_USE_EXTERNAL_STA
+RTUP_DATA -I../.. -Igen -I/usr/armv7l-linux-musleabihf/usr/include/glib-2.0 -I/usr/armv7l-linux-musleabihf/usr/lib/glib-2.0/include -Igen/shim_headers/libevent
+_shim -I../../breakpad/src -fno-strict-aliasing --param=ssp-buffer-size=4 -fstack-protector -funwind-tables -fPIC -pipe -pthread -march=armv7-a -mfloat-abi=har
+d -mthumb -mtune=generic-armv7-a -mfpu=neon -Wall -Wno-psabi -Wno-unused-local-typedefs -Wno-maybe-uninitialized -Wno-missing-field-initializers -Wno-unused-pa
+rameter -O2 -fno-ident -fdata-sections -ffunction-sections -g0 -fvisibility=hidden -fno-threadsafe-statics -fvisibility-inlines-hidden -std=gnu++11 -fno-delete
+-null-pointer-checks -Wno-narrowing -fno-rtti -fno-exceptions -c ../../components/crash/content/app/breakpad_linux.cc -o obj/components/crash/content/app/app_n
+on_mac_win/breakpad_linux.o
+In file included from ../../breakpad/src/common/memory.h:50:0,
+                 from ../../breakpad/src/client/linux/dump_writer_common/thread_info.h:37,
+                 from ../../breakpad/src/client/linux/minidump_writer/linux_dumper.h:51,
+                 from ../../breakpad/src/client/linux/minidump_writer/minidump_writer.h:41,
+                 from ../../breakpad/src/client/linux/handler/exception_handler.h:42,
+                 from ../../components/crash/content/app/breakpad_linux.cc:44:
+../../third_party/lss/linux_syscall_support.h: In function 'int sys_fstat(int, kernel_stat64*)':
+../../third_party/lss/linux_syscall_support.h:1808:28: error: conflicting declaration of C function 'int sys_fstat(int, kernel_stat64*)'
+     #define LSS_NAME(name) sys_##name
+                            ^
+../../third_party/lss/linux_syscall_support.h:2562:12: note: in expansion of macro 'LSS_NAME'
+       type LSS_NAME(name)(type1 arg1, type2 arg2) {                           \
+            ^~~~~~~~
+../../third_party/lss/linux_syscall_support.h:3877:16: note: in expansion of macro '_syscall2'
+     LSS_INLINE _syscall2(int, fstat64,             int, f,
+                ^~~~~~~~~
+../../third_party/lss/linux_syscall_support.h:1808:28: note: previous declaration 'int sys_fstat(int, kernel_stat*)'
+     #define LSS_NAME(name) sys_##name
+                            ^
+../../third_party/lss/linux_syscall_support.h:2562:12: note: in expansion of macro 'LSS_NAME'
+       type LSS_NAME(name)(type1 arg1, type2 arg2) {                           \
+            ^~~~~~~~
+../../third_party/lss/linux_syscall_support.h:3370:14: note: in expansion of macro '_syscall2'
+   LSS_INLINE _syscall2(int,     fstat,           int,         f,
+              ^~~~~~~~~
+../../third_party/lss/linux_syscall_support.h: In function 'int sys_stat(const char*, kernel_stat64*)':
+../../third_party/lss/linux_syscall_support.h:1808:28: error: conflicting declaration of C function 'int sys_stat(const char*, kernel_stat64*)'
+     #define LSS_NAME(name) sys_##name
+                            ^
+../../third_party/lss/linux_syscall_support.h:2562:12: note: in expansion of macro 'LSS_NAME'
+       type LSS_NAME(name)(type1 arg1, type2 arg2) {                           \
+            ^~~~~~~~
+../../third_party/lss/linux_syscall_support.h:3913:16: note: in expansion of macro '_syscall2'
+     LSS_INLINE _syscall2(int, stat64,              const char *, p,
+                ^~~~~~~~~
+../../third_party/lss/linux_syscall_support.h:1808:28: note: previous declaration 'int sys_stat(const char*, kernel_stat*)'
+     #define LSS_NAME(name) sys_##name
+                            ^
+../../third_party/lss/linux_syscall_support.h:2562:12: note: in expansion of macro 'LSS_NAME'
+       type LSS_NAME(name)(type1 arg1, type2 arg2) {                           \
+            ^~~~~~~~
+../../third_party/lss/linux_syscall_support.h:3519:16: note: in expansion of macro '_syscall2'
+     LSS_INLINE _syscall2(int,     stat,            const char*, f,
+                ^~~~~~~~~
+../../third_party/lss/linux_syscall_support.h: In function 'int sys_fstatat(int, const char*, kernel_stat64*, int)':
+../../third_party/lss/linux_syscall_support.h:2546:39: error: '__NR_fstatat' was not declared in this scope
+                                 : "i"(__NR_##name) , ## args                  \
+                                       ^
+../../third_party/lss/linux_syscall_support.h:2577:9: note: in expansion of macro 'LSS_BODY'
+         LSS_BODY(type, name, "r"(__r0), "r"(__r1), "r"(__r2), "r"(__r3));     \
+         ^~~~~~~~
+../../third_party/lss/linux_syscall_support.h:4206:16: note: in expansion of macro '_syscall4'
+     LSS_INLINE _syscall4(int,   fstatat64,        int,   d,
+                ^~~~~~~~~
+ninja: build stopped: subcommand failed.
+=&gt; ERROR: chromium-55.0.2883.87_1: failed to run do_build() at line 206.
+```
+</section><section id="post4">
+<h5>Charles Lehner at <a href="#post4">Thu, 12 Jan 2017 14:48:27 -0800</a></h5>
+&gt; I think the problem here is, that `fstat` is the same as `fstat64` in
+&gt; musl, same problem for other syscalls with 64-suffix.
+&gt; Should be fixed by removing one of them from chromiums macros.
+Adding `#undef fstat64`, etc (as done in patches for llvm and rust), to
+linux_syscall_support.h (via musl-fixes.patch) fixed that build error.
+Now the build continues...  I'm compiling it natively now, as I am in a
+power-constrained environment, so this may take a while.
+I'm pushing my progress so far to branch `chromium-arm` of my github
+fork of void-packages. I'll make a PR if I get it working, or comment
+here if I need help again.
+</section><section id="post5">
+<h5>Charles Lehner at <a href="#post5">Thu, 12 Jan 2017 17:14:45 -0800</a></h5>
+Back to cross-compiling; linking fails:
+ ```
+[307/23106] LINK ./chrome_sandbox
+FAILED: chrome_sandbox
+armv7l-linux-musleabihf-g++ -fPIC -Wl,-z,noexecstack -Wl,-z,now -Wl,-z,relro -Wl,-z,defs -Wl,--no-as-needed -lpthread -Wl,--as-needed -fuse-ld=gold -B/usr/armv7l-linux-musleabihf/usr/bin/ld.gold -Wl,--icf=all -pthread -Wl,-O1 -Wl,--gc-sections -Wl,-rpath-link=. -Wl,--disable-new-dtags -o "./chrome_sandbox" -Wl,--start-group @"./chrome_sandbox.rsp"  -Wl,--end-group  -ldl -lrt
+collect2: fatal error: cannot find 'ld'
+compilation terminated.
+```
+@Duncaen I guess this is what you were referring to about linking with gold not working. It is looking for `/usr/armv7l-linux-musleabihf/usr/bin/ld.gold` but there is no file there. There is a `ld` though. Is gold supposed be built as part of the chromium build process, or provided by something in hostmakedepends?
+</section><section id="post6">
+<h5>Charles Lehner at <a href="#post6">Thu, 12 Jan 2017 18:55:24 -0800</a></h5>
+Using `use_gold=3Dfalse` in the post-bootstrap conf got the build to procee=
+d past `LINK ./chrome_sandbox`.
+Now it fails trying to use clang for some reason. Probably some additional =
+file has to be changed to use the right toolchain.
+```
+[7446/23215] CXX clang_x86_v8_arm/obj/third_party/icu/icui18n/affixpatternp=
+arser.o
+FAILED: clang_x86_v8_arm/obj/third_party/icu/icui18n/affixpatternparser.o
+../../third_party/llvm-build/Release+Asserts/bin/clang++ -MMD -MF clang_x86=
+_v8_arm/obj/third_party/icu/icui18n/affixpatternparser.o.d -DU_I18N_IMPLEME=
+NTATION -DV8_DEPRECATION_WARNINGS -DENABLE_MDNS=3D1 -DENABLE_NOTIFICATIONS =
+-DENABLE_PEPPER_CDMS -DENABLE_PLUGINS=3D1 -DENABLE_PDF=3D1 -DENABLE_PRINTIN=
+G=3D1 -DENABLE_BASIC_PRINTING=3D1 -DENABLE_PRINT_PREVIEW=3D1 -DENABLE_SPELL=
+CHECK=3D1 -DUSE_UDEV -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=3D1 -DUSE_P=
+ANGO=3D1 -DUSE_CAIRO=3D1 -DUSE_CLIPBOARD_AURAX11=3D1 -DUSE_DEFAULT_RENDER_T=
+HEME=3D1 -DUSE_GLIB=3D1 -DUSE_NSS_CERTS=3D1 -DUSE_X11=3D1 -DNO_TCMALLOC -DD=
+ISABLE_NACL -DENABLE_EXTENSIONS=3D1 -DENABLE_TASK_MANAGER=3D1 -DENABLE_THEM=
+ES=3D1 -DENABLE_CAPTIVE_PORTAL_DETECTION=3D1 -DENABLE_SESSION_SERVICE=3D1 -=
+DENABLE_SUPERVISED_USERS=3D1 -DENABLE_SERVICE_DISCOVERY=3D1 -DUSE_PROPRIETA=
+RY_CODECS -DENABLE_HANGOUT_SERVICES_EXTENSION=3D1 -DFULL_SAFE_BROWSING -DSA=
+FE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL -DCHROMIUM_BUILD -DENABLE_MEDIA_RO=
+UTER=3D1 -DCR_CLANG_REVISION=3D282487-1 -D_FILE_OFFSET_BITS=3D64 -D_LARGEFI=
+LE_SOURCE -D_LARGEFILE64_SOURCE -DNDEBUG -DNVALGRIND -DDYNAMIC_ANNOTATIONS_=
+ENABLED=3D0 -DHAVE_DLOPEN=3D0 -DUCONFIG_ONLY_HTML_CONVERSION=3D1 -DU_CHARSE=
+T_IS_UTF8=3D1 -DU_USING_ICU_NAMESPACE=3D0 -DU_ENABLE_DYLOAD=3D0 -DU_NOEXCEP=
+T=3D -DU_STATIC_IMPLEMENTATION -DICU_UTIL_DATA_IMPL=3DICU_UTIL_DATA_FILE -I=
+../.. -Iclang_x86_v8_arm/gen -I../../third_party/icu/source/common -I../../=
+third_party/icu/source/i18n -Wno-deprecated-declarations -fno-strict-aliasi=
+ng --param=3Dssp-buffer-size=3D4 -fstack-protector -funwind-tables -fPIC -p=
+ipe -B/usr/armv7l-linux-musleabihf/usr/bin -fcolor-diagnostics -fdebug-pref=
+ix-map=3D/builddir/chromium-55.0.2883.87=3D. -pthread -m32 -msse2 -mfpmath=
+=3Dsse -mmmx -momit-leaf-frame-pointer -mstack-alignment=3D16 -mstackrealig=
+n -O2 -fno-ident -fdata-sections -ffunction-sections -g0 -fvisibility=3Dhid=
+den -Xclang -load -Xclang ../../third_party/llvm-build/Release+Asserts/lib/=
+libFindBadConstructs.so -Xclang -add-plugin -Xclang find-bad-constructs -Xc=
+lang -plugin-arg-find-bad-constructs -Xclang check-ipc -Wheader-hygiene -Ws=
+tring-conversion -Wall -Wno-unused-variable -Wno-missing-field-initializers=
+ -Wno-unused-parameter -Wno-c++11-narrowing -Wno-covered-switch-default -Wn=
+o-deprecated-register -Wno-unneeded-internal-declaration -Wno-inconsistent-=
+missing-override -Wno-shift-negative-value -Wno-undefined-var-template -Wno=
+-nonportable-include-path -Wno-address-of-packed-member -Wno-deprecated-dec=
+larations -Wno-unused-function -Wno-deprecated-declarations -Wno-logical-op=
+-parentheses -Wno-tautological-compare -Wno-switch -Wno-parentheses -Wno-un=
+used-function -fno-threadsafe-statics -fvisibility-inlines-hidden -std=3Dgn=
+u++11 -fno-delete-null-pointer-checks -fno-exceptions -frtti -Wno-deprecate=
+d -c ../../third_party/icu/source/i18n/affixpatternparser.cpp -o clang_x86_=
+v8_arm/obj/third_party/icu/icui18n/affixpatternparser.o
+/bin/sh: ../../third_party/llvm-build/Release+Asserts/bin/clang++: No such =
+file or directory
+```
+--=20
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/5495#issuecomment-2723481=
+90=
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

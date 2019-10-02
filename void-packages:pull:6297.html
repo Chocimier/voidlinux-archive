@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] linux3.18: update to 3.18.51 + fixed
+ dotconfig files. (#6297)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] linux3.18: update to 3.18.51 + fixed
+ dotconfig files. (#6297)</h1>
+<section id="post1">
+<h5>cr6-git at <a href="#post1">Tue, 02 May 2017 13:36:03 -0700</a></h5>
+@cr6-git pushed 1 commit.
+b26efd1  linux3.18: revert i386-dotconfig changes
+</section><section id="post2">
+<h5>cr6-git at <a href="#post2">Tue, 02 May 2017 13:37:02 -0700</a></h5>
+@cr6-git pushed 1 commit.
+07b4d0f  linux3.18: revert x86_64-dotconfig changes
+</section><section id="post3">
+<h5>cr6-git at <a href="#post3">Tue, 02 May 2017 13:52:17 -0700</a></h5>
+Done.
+</section><section id="post4">
+<h5>cr6-git at <a href="#post4">Tue, 02 May 2017 15:44:44 -0700</a></h5>
+Rebase ? hmm.. not sure how to do that...
+You mean, I should create a new branch to make a new PR ?
+</section><section id="post5">
+<h5>cr6-git at <a href="#post5">Fri, 05 May 2017 04:36:55 -0700</a></h5>
+`$ git rebase -i https://github.com/voidlinux/void-packages.git master
+fatal: Needed a single revision
+invalid upstream https://github.com/voidlinux/void-packages.git`
+</section><section id="post6">
+<h5>Enno Boland at <a href="#post6">Fri, 05 May 2017 04:38:12 -0700</a></h5>
+```
+git fetch https://github.com/voidlinux/void-packages.git
+git rebase -i FETCH_HEAD
+```
+</section><section id="post7">
+<h5>cr6-git at <a href="#post7">Fri, 05 May 2017 04:48:03 -0700</a></h5>
+`$ git rebase -i FETCH_HEAD`
+`Cannot rebase: You have unstaged changes.`
+`Please commit or stash them.`
+</section><section id="post8">
+<h5>Enno Boland at <a href="#post8">Fri, 05 May 2017 04:49:07 -0700</a></h5>
+* before rebasing: ```git stash```
+* after rebasing: ```git stash pop```
+</section><section id="post9">
+<h5>cr6-git at <a href="#post9">Fri, 05 May 2017 05:13:39 -0700</a></h5>
+`$ git rebase -i FETCH_HEAD`
+`noop`
+`# Rebase de8474bd1b..de8474bd1b onto de8474bd1b (1 command)`
+`#`
+`# Commands:`
+`# p, pick = use commit`
+`# r, reword = use commit, but edit the commit message`
+`# e, edit = use commit, but stop for amending`
+`# s, squash = use commit, but meld into previous commit`
+`# f, fixup = like "squash", but discard this commit's log message`
+`# x, exec = run command (the rest of the line) using shell`
+`# d, drop = remove commit`
+`#`
+`# These lines can be re-ordered; they are executed from top to bottom.`
+`#`
+`# If you remove a line here THAT COMMIT WILL BE LOST.`
+`#`
+`# However, if you remove everything, the rebase will be aborted.`
+`#`
+`# Note that empty commits are commented out`
+I don't know what to do here...
+</section><section id="post10">
+<h5>cr6-git at <a href="#post10">Fri, 05 May 2017 06:06:25 -0700</a></h5>
+I feel like I'm dancing in the dark...
+I should buy the "Complete git Manual for Beginner".
+</section><section id="post11">
+<h5>cr6-git at <a href="#post11">Fri, 05 May 2017 11:52:37 -0700</a></h5>
+Closed #6297.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

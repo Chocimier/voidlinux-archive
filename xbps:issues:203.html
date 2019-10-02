@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/xbps] xbps-uchroot: tries to interpret options in
+ cmdargs as its own (#203)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/xbps] xbps-uchroot: tries to interpret options in
+ cmdargs as its own (#203)</h1>
+<section id="post1">
+<h5>Alain Kalker at <a href="#post1">Sat, 24 Sep 2016 17:23:44 -0700</a></h5>
+@Duncaen Thanks for the tip. Would it be possible to add this to the usage message?
+Something line:
+```
+Usage: xbps-uchroot [-b src:dest] [-O -t -o &lt;opts&gt;] &lt;dir&gt; [--] &lt;cmd&gt; [&lt;cmdargs&gt;]
+```
+This could be of some help to people not used to this convention. For instance, Arch Linux's `arch-chroot` does *not* support `--` to separate command and cmdargs from its own options.
+</section><section id="post2">
+<h5>Alain Kalker at <a href="#post2">Sat, 24 Sep 2016 17:48:07 -0700</a></h5>
+Ah, thanks again. Maintaining tools which could be linked to either musl libc and glibc must be quite a challenge :smile:
+</section><section id="post3">
+<h5>Juan RP at <a href="#post3">Wed, 25 Oct 2017 00:14:42 -0700</a></h5>
+Closed #203 via #207.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

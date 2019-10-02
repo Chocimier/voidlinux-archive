@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] proposal: use shfmt for all shell files
+ (#4746)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] proposal: use shfmt for all shell files
+ (#4746)</h1>
+<section id="post1">
+<h5>Daniel Martí at <a href="#post1">Sun, 11 Sep 2016 11:15:34 -0700</a></h5>
+&gt; This is currently ignoring all template files correct? these also have bash in them, but don't have a hashbang
+Ah, correct. The command would probably be `shfmt -l -w . srcpkgs/*/template` then. The diffs I posted should still work OK as an example of the changes.
+&gt; Personally I don't like the pipe symbol | and logic operators &amp;&amp;, || being moved to the next line.
+I initially thought the same. Even more, the `\` can be ignored as these tokens accept a newline after:
+```sh
+foo &amp;&amp;
+    bar
+```
+I went with this format because it's simpler to see what commands are chained together and how. If the `&amp;&amp;` is at the beginning of the line, one can quickly see it which might not be the case if the lines are long or complex.
+This is also mentioned in the Google shell style: https://google.github.io/styleguide/shell.xml#Pipelines
+&gt; I think the spaces around `|` in case statements are confusing.
+I'm not sure about this one. I've spaced `;;` in single-line case statements for the same reason that `&amp;&amp;` and others are spaced. In this case, sometimes switch cases can become complex:
+```sh
+case $a in
+    b|c) foo ;;
+    *"some long string"*|"some other long string") bar ;;
+esac
+```
+This is a very silly example, but from experience I prefer to always space cases to ease readability in complex ones and to stay consistent in the rest.
+Closing note, though - I've tried to keep as little options as possible to avoid a case such as the amount of options that `indent` has; see `man indent`. On the other hand, I've had people raise the `\\n &amp;&amp;` vs `&amp;&amp; \\n` before, so I'm open to adding an option for it if you guys have a strong feeling about it.
+</section><section id="post2">
+<h5>Jürgen Buchmüller at <a href="#post2">Sun, 11 Sep 2016 12:02:30 -0700</a></h5>
+This is not some kind of strong feeling but a matter of the status quo in existing scripts.
+Of course we could all adhere to a new style. The question is, if the majority wants to do that.
+</section><section id="post3">
+<h5>Daniel Martí at <a href="#post3">Sun, 11 Sep 2016 12:05:08 -0700</a></h5>
+&gt; my comment was about the OR patterns in case statements, it could be read as "b " or " c".
+Hadn't thought about that, but I've never had that problem myself. What do you think about complex glob/match examples as in the one I gave above?
+I'm in favour of spacing when in doubt, so I'm still somewhat in favour of the current format.
+&gt; The question is, if the majority wants to do that.
+Perhaps we should wait on the opinion of more contributors then?
+</section><section id="post4">
+<h5>Michael Gehring at <a href="#post4">Sun, 11 Sep 2016 12:48:03 -0700</a></h5>
+I think this would be useful if it also applies to the templates, though i'm unsure if we ever agree/come to conclusion about style :)
+</section><section id="post5">
+<h5>Toyam Cox at <a href="#post5">Sun, 11 Sep 2016 17:18:04 -0700</a></h5>
+If we pick up a style that doesn't make anybody's gut walk out of the room, that can be the style going forward and nobody will mind too much.
+</section><section id="post6">
+<h5>Daniel Martí at <a href="#post6">Mon, 12 Sep 2016 04:00:41 -0700</a></h5>
+Agreed - the style itself is secondary, what matters is being consistent.
+</section><section id="post7">
+<h5>Daniel Martí at <a href="#post7">Tue, 20 Sep 2016 08:05:46 -0700</a></h5>
+Updated diffs, running `shfmt -l -w . srcpkgs/*/template` to also do all templates.
+`git diff` - https://clbin.com/bKP2J
+`git diff -w` - https://clbin.com/ZiDEP
+Incremental runs (after the first run, not writing to files in disk) take about 0.8s on my machine.
+To ease testing and perhaps its use in CI, I've released the first version and uploaded binaries:
+https://github.com/mvdan/sh/releases/tag/v0.1.0
+</section><section id="post8">
+<h5>Michael Gehring at <a href="#post8">Tue, 20 Sep 2016 08:28:28 -0700</a></h5>
+2d2cbe9d18cd9a9c0eedf048f52d2a270ae19eb0
+</section><section id="post9">
+<h5>Daniel Martí at <a href="#post9">Tue, 20 Sep 2016 08:30:46 -0700</a></h5>
+Oh, that was fast. Maybe if CI could run void directly it would be easier to have it set up?
+</section><section id="post10">
+<h5>Daniel Martí at <a href="#post10">Fri, 28 Oct 2016 16:10:58 -0700</a></h5>
+Bump. Would it be an easier process if I did a pull request running the tool on a set of helper scripts, excluding `srcpkgs` for now? That should keep the diff small and not incur as many merge conflicts.
+</section><section id="post11">
+<h5>Daniel Martí at <a href="#post11">Tue, 16 May 2017 11:52:54 -0700</a></h5>
+Closed #4746.
+</section><section id="post12">
+<h5>Daniel Martí at <a href="#post12">Tue, 16 May 2017 11:52:54 -0700</a></h5>
+I'm going to close this, as there doesn't seem to be enough interest.
+@pullmoll @ebfe @Duncaen @Vaelatern in case you're interested, the upcoming 2.0 release keeps `&amp;&amp;`, `||` and `|` symbols in the same line without a backslash. There will be a new flag to get back the old, google-style behaviour.
+If anyone wants to try to move this forward I'll be happy to help with any bugs or questions. Thanks!
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

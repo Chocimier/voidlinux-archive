@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] libcaca: update source and add x11
+ driver. (#4327)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] libcaca: update source and add x11
+ driver. (#4327)</h1>
+<section id="post1">
+<h5>Enno Boland at <a href="#post1">Tue, 14 Jun 2016 23:17:47 -0700</a></h5>
+&gt;  homepage="http://caca.zoy.org/wiki/libcaca"
+&gt;  license="WTFPL"
+&gt;  distfiles="https://github.com/cacalabs/libcaca/archive/v${version}.tar.gz"
+&gt;  checksum=7ed29a00cc7f017424d8b2994f001f137ed5bc4441987b711d78c6734fdf3493
+&gt;
+&gt; +# package build options
+&gt; +build_options="x11"
+&gt; +desc_option_x11="Enable x11 driver"
+This line can be removed, as @Duncaen stated, there's a global descrition defined.
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4327/files/adab26b664d6f0865d726420499f09c617e94bc7..60254931036378fdc78a9b9020858f320002b98a#r67105280
+</section><section id="post2">
+<h5>alxf at <a href="#post2">Tue, 14 Jun 2016 23:29:20 -0700</a></h5>
+@alxf pushed 1 commit.
+d22120f  Remove useless desc build option.
+---
+You are receiving this because you are subscribed to this thread.
+View it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4327/files/60254931036378fdc78a9b9020858f320002b98a..d22120f0bbf30491b6a3e851f2cce7791bc38d36
+</section><section id="post3">
+<h5>Enno Boland at <a href="#post3">Wed, 15 Jun 2016 05:58:01 -0700</a></h5>
+This is actually a new release:
+```
+diff libcaca-0.99.beta19 old -upr | wc -l
+3472
+```
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4327#issuecomment-226179019
+</section><section id="post4">
+<h5>alxf at <a href="#post4">Wed, 15 Jun 2016 06:43:14 -0700</a></h5>
+@Gottox
+That why i wanted to update the original source url, i'm not sure how you prefer to handle this diff, i can see with the project owner to make a new tag, and at this point only update source url with the real new release ?
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4327#issuecomment-226190815
+</section><section id="post5">
+<h5>Toyam Cox at <a href="#post5">Wed, 15 Jun 2016 15:07:45 -0700</a></h5>
+Since we don't have epochs yet I don't think we have a clean way to deal with a new release without a new number. Upstream making a new tag would be best.
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4327#issuecomment-226334712
+</section><section id="post6">
+<h5>Enno Boland at <a href="#post6">Wed, 15 Jun 2016 21:40:28 -0700</a></h5>
+Merged #4327.
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4327#event-694146923
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

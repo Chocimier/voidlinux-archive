@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] Trouble with Helvatica font in
+ xorg-fonts package (#6523)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] Trouble with Helvatica font in
+ xorg-fonts package (#6523)</h1>
+<section id="post1">
+<h5>direwolfie at <a href="#post1">Wed, 31 May 2017 14:53:52 -0700</a></h5>
+Big thanks for the suggestion! :)
+Can you please advise, will I run into trouble if I remove the xorg-fonts?
+</section><section id="post2">
+<h5>Stefan Mühlinghaus at <a href="#post2">Thu, 01 Jun 2017 03:08:25 -0700</a></h5>
+If you manually installd `xorg-fonts` there should be no problem. Just make sure that you have at least some font installed that xorg can use.
+If `xorg-fonts` was installed as a dependency for the `xorg` metapackage, removing it will be a little more tricky. You may need to mark `xorg`'s other dependencies as "manually installed" and then remove both `xorg-fonts` and `xorg`:
+`xbps-pkgdb -m manual xorg-server xorg-apps xorg-input-drivers xorg-video-drivers`
+`xbps-remove -R xorg-fonts xorg`
+</section><section id="post3">
+<h5>direwolfie at <a href="#post3">Thu, 01 Jun 2017 10:47:36 -0700</a></h5>
+&gt; xbps-pkgdb -m manual xorg-server xorg-apps xorg-input-drivers xorg-video-drivers
+&gt; xbps-remove -R xorg-fonts xorg
+I installed it manually, but this is very interesting.
+Will probably come in handy in the future. Thank you! :)
+</section><section id="post4">
+<h5>direwolfie at <a href="#post4">Thu, 01 Jun 2017 10:49:04 -0700</a></h5>
+Closed #6523.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

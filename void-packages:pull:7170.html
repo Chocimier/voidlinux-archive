@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] base-files: Use IPv6 privacy extensions
+ by default (#7170)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] base-files: Use IPv6 privacy extensions
+ by default (#7170)</h1>
+<section id="post1">
+<h5>Michael Gehring at <a href="#post1">Fri, 28 Jul 2017 14:44:27 +0000 (UTC)</a></h5>
+Can we put these things in a `conf_file`? #6840 etc.
+</section><section id="post2">
+<h5>Michael Aldridge at <a href="#post2">Fri, 28 Jul 2017 15:54:41 +0000 (UTC)</a></h5>
+This will break my network.  I would like to see the sysctl loading issue fixed before this is merged so it is possible to override back to what I had before.
+</section><section id="post3">
+<h5>cr6git at <a href="#post3">Sat, 29 Jul 2017 18:51:08 +0000 (UTC)</a></h5>
+This is not already set by dhcpcd ?
+```
+# /etc/dhcpcd.conf
+# Generate Stable Private IPv6 Addresses instead of hardware based ones
+slaac private
+```
+</section><section id="post4">
+<h5>cr6git at <a href="#post4">Mon, 31 Jul 2017 06:32:56 +0000 (UTC)</a></h5>
+In fact [RFC4941](https://tools.ietf.org/html/rfc4941) and [RFC7217](https://tools.ietf.org/html/rfc7217) are directly related.
+</section><section id="post5">
+<h5>lemmi at <a href="#post5">Wed, 30 Aug 2017 20:14:33 -0700</a></h5>
+I'm just going to mention that I had a lot of trouble using privacy extensions on networks with changing prefixes (as it is common for Germany).
+Essentially what happens:
+- On a prefix change, new temporary addresses will be generated for an interface. These are the newest addresses, so they will be used.
+- Old addresses are kept for a while for open connections.
+- After an address runs out of its lifetime, a new address is generated.
+- If that happens to be an address of the old prefix, this one will be the default address and now.
+- bam
+</section><section id="post6">
+<h5>lemmi at <a href="#post6">Sun, 10 Sep 2017 22:39:37 +0000 (UTC)</a></h5>
+@voidlinux/pkg-committers can we close this?
+</section><section id="post7">
+<h5>Michael Aldridge at <a href="#post7">Sun, 10 Sep 2017 23:27:58 +0000 (UTC)</a></h5>
+Closed #7170.
+</section><section id="post8">
+<h5>Michael Aldridge at <a href="#post8">Sun, 10 Sep 2017 23:28:10 +0000 (UTC)</a></h5>
+Working as intended.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

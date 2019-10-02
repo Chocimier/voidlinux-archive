@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] New package: variety-0.6.0 (#4476)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] New package: variety-0.6.0 (#4476)</h1>
+<section id="post1">
+<h5>Diogo Leal at <a href="#post1">Sat, 16 Jul 2016 07:28:52 -0700</a></h5>
+&gt; +version=0.6.0
+&gt; +revision=1
+&gt; +wrksrc="variety"
+&gt; +hostmakedepends="python-distutils-extra intltool"
+&gt; +depends="desktop-file-utils gtk+3 ImageMagick libnotify python-BeautifulSoup4
+&gt; +	python-cairo python-configobj python-dbus exiv2 python-gobject python-httplib2
+&gt; +	python-Pillow python-lxml python-curl webkitgtk"
+&gt; +short_desc="Changes the wallpaper on a regular interval"
+&gt; +maintainer="Diogo Leal &lt;diogo@diogoleal.com&gt;"
+&gt; +license="GPL-3"
+&gt; +homepage="https://launchpad.net/variety/"
+&gt; +distfiles="https://launchpad.net/variety/trunk/${version}/+download/variety_${version}.tar.gz"
+&gt; +checksum=f3760ac546073bb68f840f5eafffaf6a265e5be39aaa36462ff74547fe0594d0
+&gt; +
+&gt; +do_install() {
+&gt; +	python setup.py install --root="${DESTDIR}"
+When I use python-module, this error occurs:
+```
+=&gt; variety-0.6.0_1: running do_install ...
+ERROR: Python module varietyslideshow not found
+ERROR: Python module configobj not found
+ERROR: Python module configobj not found
+ERROR: Python module helpers not found
+ERROR: Python module varietyconfig not found
+ERROR: Python module bs4 not found
+ERROR: Python module helpers not found
+ERROR: Python module IVarietyPlugin not found
+ERROR: Python module PIL not found
+ERROR: Python module helpers not found
+ERROR: Python module varietyconfig not found
+ERROR: Python module varietyslideshow not found
+ERROR: Python module bs4 not found
+ERROR: Python module pyexiv2 not found
+ERROR: Python module DominantColors not found
+ERROR: Python module bs4 not found
+ERROR: Python module pyexiv2 not found
+ERROR: Python module DominantColors not found
+ERROR: Python module configobj not found
+ERROR: Python module dbus not found
+ERROR: Python module dbus.service not found
+ERROR: Python module dbus.glib not found
+ERROR: Python module IPlugin not found
+ERROR: Python module DominantColors not found
+ERROR: Python module configobj not found
+ERROR: Python module configobj not found
+ERROR: Python module helpers not found
+ERROR: Python module PIL not found
+ERROR: Python module lxml not found
+ERROR: Python module helpers not found
+ERROR: Python module Util not found
+ERROR: Python module cairo not found
+ERROR: Python module PIL not found
+ERROR: Python module bs4 not found
+ERROR: Python module PIL not found
+ERROR: Python module pycurl not found
+ERROR: Python module Util not found
+ERROR: Python module varietyslideshow not found
+ERROR: Python module DominantColors not found
+ERROR: Python module dbus not found
+ERROR: Python module dbus.service not found
+ERROR: Python module dbus.glib not found
+ERROR: Python module PIL not found
+ERROR: Python module varietyconfig not found
+ERROR: Python module Builder not found
+ERROR: Python module pycurl not found
+ERROR: Python module PIL not found
+ERROR: Python module varietyconfig not found
+ERROR: Python module Builder not found
+ERROR: Python module configobj not found
+ERROR: Python module IVarietyPlugin not found
+ERROR: Python module cairo not found
+ERROR: Python module PIL not found
+ERROR: Python module helpers not found
+ERROR: Python module varietyslideshow not found
+ERROR: Python module lxml not found
+ERROR: Python module PIL not found
+Traceback (most recent call last):
+  File "setup.py", line 87, in &lt;module&gt;
+    cmdclass={'install': InstallAndUpdateDataDirectory}
+  File "/usr/lib/python2.7/site-packages/DistUtilsExtra/auto.py", line 100, in setup
+    distutils.core.setup(**attrs)
+  File "/usr/lib/python2.7/distutils/core.py", line 111, in setup
+    _setup_distribution = dist = klass(attrs)
+  File "/usr/lib/python2.7/distutils/dist.py", line 259, in __init__
+    getattr(self.metadata, "set_" + key)(val)
+  File "/usr/lib/python2.7/distutils/dist.py", line 1230, in set_provides
+    distutils.versionpredicate.split_provision(v)
+  File "/usr/lib/python2.7/distutils/versionpredicate.py", line 160, in split_provision
+    raise ValueError("illegal provides specification: %r" % value)
+ValueError: illegal provides specification: 'build-2.7.lib.jumble'
+=&gt; ERROR: variety-0.6.0_1: failed to run do_install() at line 49.
+```
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4476/files/50f6e6ceea96a36565cfb6015a467923d35c72d4#r71066733
+</section><section id="post2">
+<h5>Toyam Cox at <a href="#post2">Sat, 16 Jul 2016 18:23:58 -0700</a></h5>
+&gt; +version=0.6.0
+&gt; +revision=1
+&gt; +wrksrc="variety"
+&gt; +hostmakedepends="python-distutils-extra intltool"
+&gt; +depends="desktop-file-utils gtk+3 ImageMagick libnotify python-BeautifulSoup4
+&gt; +	python-cairo python-configobj python-dbus exiv2 python-gobject python-httplib2
+&gt; +	python-Pillow python-lxml python-curl webkitgtk"
+&gt; +short_desc="Changes the wallpaper on a regular interval"
+&gt; +maintainer="Diogo Leal &lt;diogo@diogoleal.com&gt;"
+&gt; +license="GPL-3"
+&gt; +homepage="https://launchpad.net/variety/"
+&gt; +distfiles="https://launchpad.net/variety/trunk/${version}/+download/variety_${version}.tar.gz"
+&gt; +checksum=f3760ac546073bb68f840f5eafffaf6a265e5be39aaa36462ff74547fe0594d0
+&gt; +
+&gt; +do_install() {
+&gt; +	python setup.py install --root="${DESTDIR}"
+Perhaps you should hostmakedepends on `python-setuptools` and try again?
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4476/files/50f6e6ceea96a36565cfb6015a467923d35c72d4#r71074292
+</section><section id="post3">
+<h5>Diogo Leal at <a href="#post3">Sun, 17 Jul 2016 11:42:00 -0700</a></h5>
+even adding:
+```
+build_style=python-module
+pycompile_module="variety"
+hostmakedepends="python-setuptools python-distutils-extra intltool"
+depends="desktop-file-utils gtk+3 ImageMagick libnotify python-BeautifulSoup4
+        python-cairo python-configobj python-dbus exiv2 python-gobject python-httplib2
+        python-Pillow python-lxml python-curl webkitgtk"
+```
+Thoses errors occurs:
+```
+msgfmt po/ru.po -o build/mo/ru/LC_MESSAGES/variety.mo
+intltool-merge -d po variety.desktop.in build/share/applications/variety.desktop
+Merging translations into build/share/applications/variety.desktop.
+running build_icons
+running build_help
+WARNING: the following files are not recognized by DistUtilsExtra.auto:
+  Variety.iml
+=&gt; variety-0.6.0_1: running pre-install hook: 00-lib32 ...
+=&gt; variety-0.6.0_1: running pre-install hook: 02-script-wrapper ...
+=&gt; variety-0.6.0_1: running do_install ...
+ERROR: Python module varietyslideshow not found
+ERROR: Python module configobj not found
+ERROR: Python module configobj not found
+ERROR: Python module helpers not found
+ERROR: Python module varietyconfig not found
+ERROR: Python module bs4 not found
+ERROR: Python module helpers not found
+ERROR: Python module IVarietyPlugin not found
+ERROR: Python module PIL not found
+ERROR: Python module helpers not found
+ERROR: Python module varietyconfig not found
+ERROR: Python module varietyslideshow not found
+ERROR: Python module bs4 not found
+ERROR: Python module pyexiv2 not found
+ERROR: Python module DominantColors not found
+ERROR: Python module bs4 not found
+ERROR: Python module pyexiv2 not found
+ERROR: Python module DominantColors not found
+ERROR: Python module configobj not found
+ERROR: Python module dbus not found
+ERROR: Python module dbus.service not found
+ERROR: Python module dbus.glib not found
+ERROR: Python module IPlugin not found
+ERROR: Python module DominantColors not found
+ERROR: Python module configobj not found
+ERROR: Python module configobj not found
+ERROR: Python module helpers not found
+ERROR: Python module PIL not found
+ERROR: Python module lxml not found
+ERROR: Python module helpers not found
+ERROR: Python module Util not found
+ERROR: Python module cairo not found
+ERROR: Python module PIL not found
+ERROR: Python module bs4 not found
+ERROR: Python module PIL not found
+ERROR: Python module pycurl not found
+ERROR: Python module Util not found
+ERROR: Python module varietyslideshow not found
+ERROR: Python module DominantColors not found
+ERROR: Python module dbus not found
+ERROR: Python module dbus.service not found
+ERROR: Python module dbus.glib not found
+ERROR: Python module PIL not found
+ERROR: Python module varietyconfig not found
+ERROR: Python module Builder not found
+ERROR: Python module pycurl not found
+ERROR: Python module PIL not found
+ERROR: Python module varietyconfig not found
+ERROR: Python module Builder not found
+ERROR: Python module configobj not found
+ERROR: Python module IVarietyPlugin not found
+ERROR: Python module cairo not found
+ERROR: Python module PIL not found
+ERROR: Python module helpers not found
+ERROR: Python module varietyslideshow not found
+ERROR: Python module lxml not found
+ERROR: Python module PIL not found
+Traceback (most recent call last):
+  File "setup.py", line 87, in &lt;module&gt;
+    cmdclass={'install': InstallAndUpdateDataDirectory}
+  File "/usr/lib/python2.7/site-packages/DistUtilsExtra/auto.py", line 100, in setup
+    distutils.core.setup(**attrs)
+  File "/usr/lib/python2.7/distutils/core.py", line 111, in setup
+    _setup_distribution = dist = klass(attrs)
+  File "/usr/lib/python2.7/distutils/dist.py", line 259, in __init__
+    getattr(self.metadata, "set_" + key)(val)
+  File "/usr/lib/python2.7/distutils/dist.py", line 1230, in set_provides
+    distutils.versionpredicate.split_provision(v)
+  File "/usr/lib/python2.7/distutils/versionpredicate.py", line 160, in split_provision
+    raise ValueError("illegal provides specification: %r" % value)
+ValueError: illegal provides specification: 'build-2.7.lib.jumble'
+=&gt; ERROR: variety-0.6.0_1: failed to run do_install() at line 49.
+```
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4476#issuecomment-233196958
+</section><section id="post4">
+<h5>Toyam Cox at <a href="#post4">Sun, 17 Jul 2016 18:44:44 -0700</a></h5>
+&gt; +version=0.6.0
+&gt; +revision=1
+&gt; +wrksrc="variety"
+&gt; +hostmakedepends="python-distutils-extra intltool"
+&gt; +depends="desktop-file-utils gtk+3 ImageMagick libnotify python-BeautifulSoup4
+&gt; +	python-cairo python-configobj python-dbus exiv2 python-gobject python-httplib2
+&gt; +	python-Pillow python-lxml python-curl webkitgtk"
+&gt; +short_desc="Changes the wallpaper on a regular interval"
+&gt; +maintainer="Diogo Leal &lt;diogo@diogoleal.com&gt;"
+&gt; +license="GPL-3"
+&gt; +homepage="https://launchpad.net/variety/"
+&gt; +distfiles="https://launchpad.net/variety/trunk/${version}/+download/variety_${version}.tar.gz"
+&gt; +checksum=f3760ac546073bb68f840f5eafffaf6a265e5be39aaa36462ff74547fe0594d0
+&gt; +
+&gt; +do_install() {
+&gt; +	python setup.py install --root="${DESTDIR}"
+```
+noarch=yes
+build_style=python-module
+pycompile_module='variety'
+do_build() {
+	:
+}
+```
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4476/files/50f6e6ceea96a36565cfb6015a467923d35c72d4#r71094636
+</section><section id="post5">
+<h5>Toyam Cox at <a href="#post5">Sun, 17 Jul 2016 18:44:57 -0700</a></h5>
+&gt; +version=0.6.0
+&gt; +revision=1
+&gt; +wrksrc="variety"
+&gt; +hostmakedepends="python-distutils-extra intltool"
+&gt; +depends="desktop-file-utils gtk+3 ImageMagick libnotify python-BeautifulSoup4
+&gt; +	python-cairo python-configobj python-dbus exiv2 python-gobject python-httplib2
+&gt; +	python-Pillow python-lxml python-curl webkitgtk"
+&gt; +short_desc="Changes the wallpaper on a regular interval"
+&gt; +maintainer="Diogo Leal &lt;diogo@diogoleal.com&gt;"
+&gt; +license="GPL-3"
+&gt; +homepage="https://launchpad.net/variety/"
+&gt; +distfiles="https://launchpad.net/variety/trunk/${version}/+download/variety_${version}.tar.gz"
+&gt; +checksum=f3760ac546073bb68f840f5eafffaf6a265e5be39aaa36462ff74547fe0594d0
+&gt; +
+&gt; +do_install() {
+&gt; +	python setup.py install --root="${DESTDIR}"
+And delete the `do_install()`
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4476/files/50f6e6ceea96a36565cfb6015a467923d35c72d4#r71094643
+</section><section id="post6">
+<h5>Diogo Leal at <a href="#post6">Sun, 17 Jul 2016 19:27:55 -0700</a></h5>
+&gt; +version=0.6.0
+&gt; +revision=1
+&gt; +wrksrc="variety"
+&gt; +hostmakedepends="python-distutils-extra intltool"
+&gt; +depends="desktop-file-utils gtk+3 ImageMagick libnotify python-BeautifulSoup4
+&gt; +	python-cairo python-configobj python-dbus exiv2 python-gobject python-httplib2
+&gt; +	python-Pillow python-lxml python-curl webkitgtk"
+&gt; +short_desc="Changes the wallpaper on a regular interval"
+&gt; +maintainer="Diogo Leal &lt;diogo@diogoleal.com&gt;"
+&gt; +license="GPL-3"
+&gt; +homepage="https://launchpad.net/variety/"
+&gt; +distfiles="https://launchpad.net/variety/trunk/${version}/+download/variety_${version}.tar.gz"
+&gt; +checksum=f3760ac546073bb68f840f5eafffaf6a265e5be39aaa36462ff74547fe0594d0
+&gt; +
+&gt; +do_install() {
+&gt; +	python setup.py install --root="${DESTDIR}"
+done and it's OK, but I don't understand the ":" in function do_build().
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4476/files/50f6e6ceea96a36565cfb6015a467923d35c72d4#r71095818
+</section><section id="post7">
+<h5>Toyam Cox at <a href="#post7">Mon, 18 Jul 2016 04:54:21 -0700</a></h5>
+&gt; +version=0.6.0
+&gt; +revision=1
+&gt; +wrksrc="variety"
+&gt; +hostmakedepends="python-distutils-extra intltool"
+&gt; +depends="desktop-file-utils gtk+3 ImageMagick libnotify python-BeautifulSoup4
+&gt; +	python-cairo python-configobj python-dbus exiv2 python-gobject python-httplib2
+&gt; +	python-Pillow python-lxml python-curl webkitgtk"
+&gt; +short_desc="Changes the wallpaper on a regular interval"
+&gt; +maintainer="Diogo Leal &lt;diogo@diogoleal.com&gt;"
+&gt; +license="GPL-3"
+&gt; +homepage="https://launchpad.net/variety/"
+&gt; +distfiles="https://launchpad.net/variety/trunk/${version}/+download/variety_${version}.tar.gz"
+&gt; +checksum=f3760ac546073bb68f840f5eafffaf6a265e5be39aaa36462ff74547fe0594d0
+&gt; +
+&gt; +do_install() {
+&gt; +	python setup.py install --root="${DESTDIR}"
+It's a `noop`
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4476/files/50f6e6ceea96a36565cfb6015a467923d35c72d4#r71134788
+</section><section id="post8">
+<h5>Toyam Cox at <a href="#post8">Mon, 18 Jul 2016 04:55:15 -0700</a></h5>
+Merged #4476.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4476#event-725981368
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

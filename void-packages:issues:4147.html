@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] RFC: increase musl libc's
+ DEFAULT_STACK_SIZE (#4147)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] RFC: increase musl libc's
+ DEFAULT_STACK_SIZE (#4147)</h1>
+<section id="post1">
+<h5>Michael Gehring at <a href="#post1">Wed, 11 Jan 2017 09:32:50 -0800</a></h5>
+5d65448221af12296f7ef2339ced92771bb465b4
+</section><section id="post2">
+<h5>Paul Tötterman at <a href="#post2">Thu, 13 Jul 2017 11:22:14 +0000 (UTC)</a></h5>
+Another library: https://github.com/esnme/ultrajson/issues/254#issuecomment-315025672
+</section><section id="post3">
+<h5>deed02392 at <a href="#post3">Sat, 22 Jul 2017 21:13:41 +0000 (UTC)</a></h5>
+@richfelker can you give reference to how the current size of 80K was chosen? It seems to be causing a multitude of issues in lots of programs. When you say programs should request larger stack sizes when necessary, do you mean literally setting the stack size at runtime?
+</section><section id="post4">
+<h5>Justine Tunney at <a href="#post4">Mon, 09 Apr 2018 15:08:07 +0000 (UTC)</a></h5>
+For what it's worth, Google's systems were designed to use a 64kb stack and tcmalloc.
+</section><section id="post5">
+<h5>richfelker at <a href="#post5">Mon, 09 Apr 2018 15:20:15 +0000 (UTC)</a></h5>
+@deed02392, sorry I missed the previous request for comment. I don't think I have good records of exactly how, but basically what happened is that it was observed that various programs (git I remember especially) were crashing due to stack overflow in threads, and upon investigation of the code causing the crash, we found either buffers of size 64k or smaller (64k in git), or huge buffers like 1M+. Increasing to the latter was not deemed remotely acceptable, and increasing to something in between did not seem like it would help noticeably more applications (but would increase resource usage and decrease limit on number of threads that could be created at default stack size). 80k was chosen to leave room for signal handling or calling libc functions with mildly large stack requirements (like printf with float, or when llvm hoists the code such that it always uses as much stack as when printing floats).
+</section><section id="post6">
+<h5>daurnimator at <a href="#post6">Sat, 28 Apr 2018 01:39:45 -0700</a></h5>
+&gt; When you say programs should request larger stack sizes when necessary, do you mean literally setting the stack size at runtime?
+I recall there was a discussion that a minimum bound should be the maximum theorectical size of a UDP packet, i.e. 65,507 bytes. That way you can call `recv` with a stack allocated buffer and then copy the actual size (usually after parsing) to some heap-allocated buffer: this may make use of various libc functions, so another minimum bound is size of startup code + size of udp buffer + size of libc functions + some extra stack frames. As it happened, ~80k fit this criteria (among others).
+</section><section id="post7">
+<h5>Jürgen Buchmüller at <a href="#post7">Thu, 14 Jun 2018 04:22:10 -0700</a></h5>
+Closed #4147.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] gst-plugins-bad1: needs to update
+ common/shlibs (#9642)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] gst-plugins-bad1: needs to update
+ common/shlibs (#9642)</h1>
+<section id="post1">
+<h5>cr6git at <a href="#post1">Wed, 29 Nov 2017 21:31:24 +0000 (UTC)</a></h5>
+ok... I was very surprised because this is the first time I see such error...
+I'm trying to create a new package for [pulseeffects](https://github.com/wwmm/pulseeffects) and it needs to link to gstreamer to work.
+In fact `pulseeffects` needs `GstInsertBin` to get built (see [comment](https://github.com/wwmm/pulseeffects/issues/22#issuecomment-347897269)) , so I must modify the template to add `gobject-introspection`.
+I hope it's ok ?
+</section><section id="post2">
+<h5>cr6git at <a href="#post2">Thu, 30 Nov 2017 06:46:53 +0000 (UTC)</a></h5>
+Closed #9642.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

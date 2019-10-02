@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] New package: etckeeper-1.18.5 (#4744)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] New package: etckeeper-1.18.5 (#4744)</h1>
+<section id="post1">
+<h5>Diogo Leal at <a href="#post1">Fri, 16 Sep 2016 19:08:36 -0700</a></h5>
+diogoleal commented on this pull request.
+&gt; @@ -0,0 +1,20 @@
++# Template file for 'etckeeper'
++pkgname=etckeeper
++version=1.18.5
++revision=1
++depends="git"
++conf_files="/etc/etckeeper/etckeeper.conf"
++short_desc="Store /etc in git"
++maintainer="Diogo Leal &lt;diogo@diogoleal.com&gt;"
++license="GPL-2"
++homepage="https://etckeeper.branchable.com"
++distfiles="https://github.com/joeyh/etckeeper/archive/${version}.tar.gz"
++checksum=a4ddb313037c6861efbc24a55ed8e66cd98591e190aedf2657c8a1071f821889
++
++do_install() {
+I found it easier to do so than to run multiple seds to adjust the Makefile.
+But if you prefer, I can adjust the Makefile. As you wish.
+</section><section id="post2">
+<h5>Diogo Leal at <a href="#post2">Fri, 16 Sep 2016 19:09:39 -0700</a></h5>
+diogoleal commented on this pull request.
+&gt; @@ -0,0 +1,20 @@
++# Template file for 'etckeeper'
++pkgname=etckeeper
++version=1.18.5
++revision=1
++depends="git"
++conf_files="/etc/etckeeper/etckeeper.conf"
++short_desc="Store /etc in git"
+changed.
+</section><section id="post3">
+<h5>Gerardo Di Iorio at <a href="#post3">Sat, 04 Feb 2017 06:35:20 -0800</a></h5>
+Hi
+i have update etckeeper to 1.18.6
+https://github.com/arete/void-packages/commit/8e6810fe5198071d65af0c1d4f4c57bdbd3c0ea8
+Regards
+</section><section id="post4">
+<h5>Toyam Cox at <a href="#post4">Sun, 26 Feb 2017 01:48:13 -0800</a></h5>
+`noarch=yes`
+</section><section id="post5">
+<h5>espositom221 at <a href="#post5">Thu, 09 Mar 2017 03:45:27 -0800</a></h5>
+@diogoleal can update the pull request?
+i have need this package fr y server.
+thanks!
+</section><section id="post6">
+<h5>Gerardo Di Iorio at <a href="#post6">Wed, 05 Apr 2017 22:18:06 -0700</a></h5>
+hi @diogoleal i have update o 1.18.6
+https://github.com/arete/void-packages/commit/99ad7c2916bf23c0d2c52cc202d3860a33ed1e75
+regards
+</section><section id="post7">
+<h5>Diogo Leal at <a href="#post7">Thu, 13 Apr 2017 04:39:20 -0700</a></h5>
+Closed #4744.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

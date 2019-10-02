@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] New package: compute-1.0.4 (#4029)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] New package: compute-1.0.4 (#4029)</h1>
+<section id="post1">
+<h5>oliver-cfc at <a href="#post1">Thu, 14 Apr 2016 15:26:44 -0700</a></h5>
+&gt; @@ -0,0 +1,13 @@
+&gt; +# Template file for 'compute'
+&gt; +pkgname=3D"compute"
+&gt; +version=3D"1.0.4"
+&gt; +revision=3D1
+&gt; +build_style=3Dgnu-configure
+&gt; +short_desc=3D"A command-line program that performs simple calculations=
+ on input files"
+&gt; +maintainer=3D"oliver &lt;ohemming@gmail.com&gt;"
+&gt; +license=3D"GPL-3"
+&gt; +homepage=3D"http://compute.teamerlich.org/"
+&gt; +makedepends=3D"gperf perl"
+&gt; +only_for_archs=3D"i686 x86_64 x86_64-musl"
+Point taken on the makedepends versus hostmakedepends... makes sense.
+The reason the only_for_archs was that Travis gave an error on the armv*
+parts and I don't have a way, that I know of, to test it.
+On Thu, Apr 14, 2016 at 4:44 PM, Toyam Cox &lt;notifications@github.com&gt; wro=
+te:
+&gt; In srcpkgs/compute/template
+&gt; &lt;https://github.com/voidlinux/void-packages/pull/4029#discussion_r59788=
+351&gt;
+&gt; :
+&gt;
+&gt; &gt; @@ -0,0 +1,13 @@
+&gt; &gt; +# Template file for 'compute'
+&gt; &gt; +pkgname=3D"compute"
+&gt; &gt; +version=3D"1.0.4"
+&gt; &gt; +revision=3D1
+&gt; &gt; +build_style=3Dgnu-configure
+&gt; &gt; +short_desc=3D"A command-line program that performs simple calculatio=
+ns on input files"
+&gt; &gt; +maintainer=3D"oliver &lt;ohemming@gmail.com&gt;"
+&gt; &gt; +license=3D"GPL-3"
+&gt; &gt; +homepage=3D"http://compute.teamerlich.org/"
+&gt; &gt; +makedepends=3D"gperf perl"
+&gt; &gt; +only_for_archs=3D"i686 x86_64 x86_64-musl"
+&gt;
+&gt; For what reason?
+&gt;
+&gt; =E2=80=94
+&gt; You are receiving this because you authored the thread.
+&gt; Reply to this email directly or view it on GitHub
+&gt; &lt;https://github.com/voidlinux/void-packages/pull/4029/files/2c4cda23730=
+c64708e03c540ac55c3e20d065bd9#r59788351&gt;
+&gt;
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4029/files/2c4cda23730c64=
+708e03c540ac55c3e20d065bd9#r59802566=
+</section><section id="post2">
+<h5>oliver-cfc at <a href="#post2">Thu, 14 Apr 2016 15:43:19 -0700</a></h5>
+&gt; @@ -0,0 +1,13 @@
+&gt; +# Template file for 'compute'
+&gt; +pkgname=3D"compute"
+&gt; +version=3D"1.0.4"
+&gt; +revision=3D1
+&gt; +build_style=3Dgnu-configure
+&gt; +short_desc=3D"A command-line program that performs simple calculations=
+ on input files"
+&gt; +maintainer=3D"oliver &lt;ohemming@gmail.com&gt;"
+&gt; +license=3D"GPL-3"
+&gt; +homepage=3D"http://compute.teamerlich.org/"
+&gt; +makedepends=3D"gperf perl"
+&gt; +only_for_archs=3D"i686 x86_64 x86_64-musl"
+I looked at the failed builds (didn't realise it was clickable) and I see=
+the armv ones failed with:
+/usr/bin/perl: bad interpreter: No such file or directory
+(https://travis-ci.org/voidlinux/void-packages/jobs/122935455)
+Would this be resolved by swapping the makedepends line for
+hostmakedepends?  I do see perl is built for armv.
+-makedepends=3D"gperf perl"
++hostmakedepends=3D"gperf perl"
+Do repeated builds on Travis cause you guys tons of unnecessary email?  I=
+don't mind trial/error to get this right but not if you're getting notifi=
+ed
+all the time.
+On Thu, Apr 14, 2016 at 5:22 PM, Duncan Overbruck &lt;notifications@github.c=
+om&gt;
+wrote:
+&gt; In srcpkgs/compute/template
+&gt; &lt;https://github.com/voidlinux/void-packages/pull/4029#discussion_r59794=
+294&gt;
+&gt; :
+&gt;
+&gt; &gt; @@ -0,0 +1,13 @@
+&gt; &gt; +# Template file for 'compute'
+&gt; &gt; +pkgname=3D"compute"
+&gt; &gt; +version=3D"1.0.4"
+&gt; &gt; +revision=3D1
+&gt; &gt; +build_style=3Dgnu-configure
+&gt; &gt; +short_desc=3D"A command-line program that performs simple calculatio=
+ns on input files"
+&gt; &gt; +maintainer=3D"oliver &lt;ohemming@gmail.com&gt;"
+&gt; &gt; +license=3D"GPL-3"
+&gt; &gt; +homepage=3D"http://compute.teamerlich.org/"
+&gt; &gt; +makedepends=3D"gperf perl"
+&gt; &gt; +only_for_archs=3D"i686 x86_64 x86_64-musl"
+&gt;
+&gt; Use nocross=3Dyes instead.
+&gt;
+&gt; =E2=80=94
+&gt; You are receiving this because you authored the thread.
+&gt; Reply to this email directly or view it on GitHub
+&gt; &lt;https://github.com/voidlinux/void-packages/pull/4029/files/2c4cda23730=
+c64708e03c540ac55c3e20d065bd9#r59794294&gt;
+&gt;
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4029/files/2c4cda23730c64=
+708e03c540ac55c3e20d065bd9#r59804374=
+</section><section id="post3">
+<h5>Toyam Cox at <a href="#post3">Thu, 14 Apr 2016 17:47:04 -0700</a></h5>
+&gt; @@ -0,0 +1,13 @@
+&gt; +# Template file for 'compute'
+&gt; +pkgname="compute"
+&gt; +version="1.0.4"
+&gt; +revision=1
+&gt; +build_style=gnu-configure
+&gt; +short_desc="A command-line program that performs simple calculations on input files"
+&gt; +maintainer="oliver &lt;ohemming@gmail.com&gt;"
+&gt; +license="GPL-3"
+&gt; +homepage="http://compute.teamerlich.org/"
+&gt; +makedepends="gperf perl"
+&gt; +only_for_archs="i686 x86_64 x86_64-musl"
+Probably. Remove the line entirely for now and just use the hostmakedepends as possible.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4029/files/2c4cda23730c64708e03c540ac55c3e20d065bd9#r59814362
+</section><section id="post4">
+<h5>Toyam Cox at <a href="#post4">Thu, 14 Apr 2016 17:47:54 -0700</a></h5>
+&gt; @@ -0,0 +1,19 @@
+&gt; +# Template file for 'compute'
+&gt; +pkgname="compute"
+&gt; +version="1.0.4"
+&gt; +revision=4
+&gt; +build_style=gnu-configure
+&gt; +short_desc="A command-line program that performs simple calculations on input files"
+&gt; +maintainer="oliver &lt;ohemming@gmail.com&gt;"
+&gt; +license="GPL-3"
+&gt; +homepage="http://compute.teamerlich.org/"
+&gt; +hostmakedepends="gperf perl"
+&gt; +distfiles="https://github.com/agordon/compute/releases/download/v${version}/${pkgname}-${version}.tar.gz"
+&gt; +checksum="cd0d09b2d7526fef34eb3f09e5b9d36e1346b093028fe981ef400ac065c7abbb"
+&gt; +
+&gt; +pre_configure() {
+&gt; +if [ "$CROSS_BUILD" ]; then
+Please indent the contents of the function by an additional level.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4029/files/1c6e4177a21c2842e7a0f093d5f64285122c9e4a#r59814413
+</section><section id="post5">
+<h5>Toyam Cox at <a href="#post5">Thu, 14 Apr 2016 17:49:06 -0700</a></h5>
+&gt; +pkgname="compute"
+&gt; +version="1.0.4"
+&gt; +revision=4
+&gt; +build_style=gnu-configure
+&gt; +short_desc="A command-line program that performs simple calculations on input files"
+&gt; +maintainer="oliver &lt;ohemming@gmail.com&gt;"
+&gt; +license="GPL-3"
+&gt; +homepage="http://compute.teamerlich.org/"
+&gt; +hostmakedepends="gperf perl"
+&gt; +distfiles="https://github.com/agordon/compute/releases/download/v${version}/${pkgname}-${version}.tar.gz"
+&gt; +checksum="cd0d09b2d7526fef34eb3f09e5b9d36e1346b093028fe981ef400ac065c7abbb"
+&gt; +
+&gt; +pre_configure() {
+&gt; +if [ "$CROSS_BUILD" ]; then
+&gt; +	# disable generating a man page with help2man while cross compiling.
+&gt; +	sed -i '/^man_MANS = compute.1$/d' Makefile.in
+Reasoning? help2man is available on cross...
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4029/files/1c6e4177a21c2842e7a0f093d5f64285122c9e4a#r59814498
+</section><section id="post6">
+<h5>oliver-cfc at <a href="#post6">Thu, 14 Apr 2016 17:54:33 -0700</a></h5>
+&gt; +pkgname=3D"compute"
+&gt; +version=3D"1.0.4"
+&gt; +revision=3D4
+&gt; +build_style=3Dgnu-configure
+&gt; +short_desc=3D"A command-line program that performs simple calculations o=
+n input files"
+&gt; +maintainer=3D"oliver &lt;ohemming@gmail.com&gt;"
+&gt; +license=3D"GPL-3"
+&gt; +homepage=3D"http://compute.teamerlich.org/"
+&gt; +hostmakedepends=3D"gperf perl"
+&gt; +distfiles=3D"https://github.com/agordon/compute/releases/download/v${ver=
+sion}/${pkgname}-${version}.tar.gz"
+&gt; +checksum=3D"cd0d09b2d7526fef34eb3f09e5b9d36e1346b093028fe981ef400ac065c7=
+abbb"
+&gt; +
+&gt; +pre_configure() {
+&gt; +if [ "$CROSS_BUILD" ]; then
+&gt; +	# disable generating a man page with help2man while cross compiling.
+&gt; +	sed -i '/^man_MANS =3D compute.1$/d' Makefile.in
+Travis gave the error below before I added the function.  I took a look at
+some other template files and found the nodm one did something similar.
+arm-linux-gnueabihf-gcc -std=3Dgnu99 -Wall -Wextra -Wformat-security
+-Wswitch-enum -Wswitch-default -Wformat-nonliteral -Wunused-parameter
+-Wfloat-equal -Werror
+-specs=3D/void-packages/common/environment/configure/gccspecs/hardened-cc1
+ -fstack-protector-strong -D_FORTIFY_SOURCE=3D2  -O2 -pipe -march=3Darmv6
+-mfpu=3Dvfp -mfloat-abi=3Dhard   -I/usr/arm-linux-gnueabihf/usr/include
+-specs=3D/void-packages/common/environment/configure/gccspecs/hardened-ld
+-Wl,-z,relro -Wl,-z,now -Wl,--as-needed -Wl,-z,relro
+-L/usr/arm-linux-gnueabihf/usr/lib -o compute
+src/compute-text-options.o src/compute-utils.o
+src/compute-text-lines.o src/compute-column-headers.o
+src/compute-field-ops.o src/compute-compute.o ./lib/libcompute.a -lm
+-lm        -lm -lm
+PATH=3D'/builddir/compute-1.0.4:'$PATH \
+   /builddir/compute-1.0.4/man/help2man --include=3D./man/compute.x
+compute -o compute.1-t
+help2man: can't get `--help' info from compute
+Try `--no-discard-stderr' if option outputs to stderr
+Makefile:3092: recipe for target 'compute.1' failed
+make[2]: *** [compute.1] Error 127
+make[2]: Leaving directory '/builddir/compute-1.0.4'
+Makefile:2438: recipe for target 'all-recursive' failed
+make[1]: *** [all-recursive] Error 1
+make[1]: Leaving directory '/builddir/compute-1.0.4'
+Makefile:1839: recipe for target 'all' failed
+make: *** [all] Error 2
+ [1m [31m=3D&gt; ERROR: compute-1.0.4_2: failed to run do_build() at line 13.
+ [m
+travis_time:end:17f2477b:start=3D1460676816017973292,finish=3D1460676877238=
+648361,duration=3D61220675069
+ [0K
+On Thu, Apr 14, 2016 at 8:49 PM, Toyam Cox &lt;notifications@github.com&gt; wrote:
+&gt; In srcpkgs/compute/template
+&gt; &lt;https://github.com/voidlinux/void-packages/pull/4029#discussion_r5981449=
+8&gt;
+&gt; :
+&gt;
+&gt; &gt; +pkgname=3D"compute"
+&gt; &gt; +version=3D"1.0.4"
+&gt; &gt; +revision=3D4
+&gt; &gt; +build_style=3Dgnu-configure
+&gt; &gt; +short_desc=3D"A command-line program that performs simple calculations=
+ on input files"
+&gt; &gt; +maintainer=3D"oliver &lt;ohemming@gmail.com&gt;"
+&gt; &gt; +license=3D"GPL-3"
+&gt; &gt; +homepage=3D"http://compute.teamerlich.org/"
+&gt; &gt; +hostmakedepends=3D"gperf perl"
+&gt; &gt; +distfiles=3D"https://github.com/agordon/compute/releases/download/v${v=
+ersion}/${pkgname}-${version}.tar.gz"
+&gt; &gt; +checksum=3D"cd0d09b2d7526fef34eb3f09e5b9d36e1346b093028fe981ef400ac065=
+c7abbb"
+&gt; &gt; +
+&gt; &gt; +pre_configure() {
+&gt; &gt; +if [ "$CROSS_BUILD" ]; then
+&gt; &gt; +	# disable generating a man page with help2man while cross compiling.
+&gt; &gt; +	sed -i '/^man_MANS =3D compute.1$/d' Makefile.in
+&gt;
+&gt; Reasoning? help2man is available on cross...
+&gt;
+&gt; =E2=80=94
+&gt; You are receiving this because you authored the thread.
+&gt; Reply to this email directly or view it on GitHub
+&gt; &lt;https://github.com/voidlinux/void-packages/pull/4029/files/1c6e4177a21c2=
+842e7a0f093d5f64285122c9e4a#r59814498&gt;
+&gt;
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4029/files/1c6e4177a21c2842=
+e7a0f093d5f64285122c9e4a#r59814853=
+</section><section id="post7">
+<h5>Toyam Cox at <a href="#post7">Thu, 14 Apr 2016 17:58:21 -0700</a></h5>
+&gt; +pkgname="compute"
+&gt; +version="1.0.4"
+&gt; +revision=4
+&gt; +build_style=gnu-configure
+&gt; +short_desc="A command-line program that performs simple calculations on input files"
+&gt; +maintainer="oliver &lt;ohemming@gmail.com&gt;"
+&gt; +license="GPL-3"
+&gt; +homepage="http://compute.teamerlich.org/"
+&gt; +hostmakedepends="gperf perl"
+&gt; +distfiles="https://github.com/agordon/compute/releases/download/v${version}/${pkgname}-${version}.tar.gz"
+&gt; +checksum="cd0d09b2d7526fef34eb3f09e5b9d36e1346b093028fe981ef400ac065c7abbb"
+&gt; +
+&gt; +pre_configure() {
+&gt; +if [ "$CROSS_BUILD" ]; then
+&gt; +	# disable generating a man page with help2man while cross compiling.
+&gt; +	sed -i '/^man_MANS = compute.1$/d' Makefile.in
+Probably it comes with help2man bundled instead of using the system wide version. Can you try to change the lines to use a system-wide help2man instead?
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4029/files/1c6e4177a21c2842e7a0f093d5f64285122c9e4a#r59815107
+</section><section id="post8">
+<h5>Michael Gehring at <a href="#post8">Thu, 14 Apr 2016 21:57:22 -0700</a></h5>
+&gt; +pkgname="compute"
+&gt; +version="1.0.4"
+&gt; +revision=4
+&gt; +build_style=gnu-configure
+&gt; +short_desc="A command-line program that performs simple calculations on input files"
+&gt; +maintainer="oliver &lt;ohemming@gmail.com&gt;"
+&gt; +license="GPL-3"
+&gt; +homepage="http://compute.teamerlich.org/"
+&gt; +hostmakedepends="gperf perl"
+&gt; +distfiles="https://github.com/agordon/compute/releases/download/v${version}/${pkgname}-${version}.tar.gz"
+&gt; +checksum="cd0d09b2d7526fef34eb3f09e5b9d36e1346b093028fe981ef400ac065c7abbb"
+&gt; +
+&gt; +pre_configure() {
+&gt; +if [ "$CROSS_BUILD" ]; then
+&gt; +	# disable generating a man page with help2man while cross compiling.
+&gt; +	sed -i '/^man_MANS = compute.1$/d' Makefile.in
+help2man builds man pages from --help output. Switching to the system-wide version won't change this.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4029/files/1c6e4177a21c2842e7a0f093d5f64285122c9e4a#r59827092
+</section><section id="post9">
+<h5>Toyam Cox at <a href="#post9">Thu, 14 Apr 2016 23:39:15 -0700</a></h5>
+&gt; +pkgname="compute"
+&gt; +version="1.0.4"
+&gt; +revision=4
+&gt; +build_style=gnu-configure
+&gt; +short_desc="A command-line program that performs simple calculations on input files"
+&gt; +maintainer="oliver &lt;ohemming@gmail.com&gt;"
+&gt; +license="GPL-3"
+&gt; +homepage="http://compute.teamerlich.org/"
+&gt; +hostmakedepends="gperf perl"
+&gt; +distfiles="https://github.com/agordon/compute/releases/download/v${version}/${pkgname}-${version}.tar.gz"
+&gt; +checksum="cd0d09b2d7526fef34eb3f09e5b9d36e1346b093028fe981ef400ac065c7abbb"
+&gt; +
+&gt; +pre_configure() {
+&gt; +if [ "$CROSS_BUILD" ]; then
+&gt; +	# disable generating a man page with help2man while cross compiling.
+&gt; +	sed -i '/^man_MANS = compute.1$/d' Makefile.in
+Can we make manpages anyway?
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4029/files/1c6e4177a21c2842e7a0f093d5f64285122c9e4a#r59832294
+</section><section id="post10">
+<h5>Juan RP at <a href="#post10">Thu, 14 Apr 2016 23:40:14 -0700</a></h5>
+&gt; +pkgname="compute"
+&gt; +version="1.0.4"
+&gt; +revision=4
+&gt; +build_style=gnu-configure
+&gt; +short_desc="A command-line program that performs simple calculations on input files"
+&gt; +maintainer="oliver &lt;ohemming@gmail.com&gt;"
+&gt; +license="GPL-3"
+&gt; +homepage="http://compute.teamerlich.org/"
+&gt; +hostmakedepends="gperf perl"
+&gt; +distfiles="https://github.com/agordon/compute/releases/download/v${version}/${pkgname}-${version}.tar.gz"
+&gt; +checksum="cd0d09b2d7526fef34eb3f09e5b9d36e1346b093028fe981ef400ac065c7abbb"
+&gt; +
+&gt; +pre_configure() {
+&gt; +if [ "$CROSS_BUILD" ]; then
+&gt; +	# disable generating a man page with help2man while cross compiling.
+&gt; +	sed -i '/^man_MANS = compute.1$/d' Makefile.in
+The proper way to provide man-pages while cross compiling is building natively for the host and moving them to another directory, take a look at coreutils.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4029/files/1c6e4177a21c2842e7a0f093d5f64285122c9e4a#r59832354
+</section><section id="post11">
+<h5>oliver-cfc at <a href="#post11">Fri, 15 Apr 2016 12:43:31 -0700</a></h5>
+&gt; +pkgname=3D"compute"
+&gt; +version=3D"1.0.4"
+&gt; +revision=3D4
+&gt; +build_style=3Dgnu-configure
+&gt; +short_desc=3D"A command-line program that performs simple calculations=
+ on input files"
+&gt; +maintainer=3D"oliver &lt;ohemming@gmail.com&gt;"
+&gt; +license=3D"GPL-3"
+&gt; +homepage=3D"http://compute.teamerlich.org/"
+&gt; +hostmakedepends=3D"gperf perl"
+&gt; +distfiles=3D"https://github.com/agordon/compute/releases/download/v${v=
+ersion}/${pkgname}-${version}.tar.gz"
+&gt; +checksum=3D"cd0d09b2d7526fef34eb3f09e5b9d36e1346b093028fe981ef400ac065=
+c7abbb"
+&gt; +
+&gt; +pre_configure() {
+&gt; +if [ "$CROSS_BUILD" ]; then
+&gt; +	# disable generating a man page with help2man while cross compiling.
+&gt; +	sed -i '/^man_MANS =3D compute.1$/d' Makefile.in
+It looks like the man page is provided as part of the source tar file.
+[oliver@fonddulac src-builds]$ tar ztvf
+./hostdir/sources/compute-1.0.4/compute-1.0.4.tar.gz compute-1.0.4/comput=
+e.1
+-rw-r--r-- 0/0            4660 2014-04-11 19:44 compute-1.0.4/compute.1
+When I build the package locally on x86_64 and install, I have a file wit=
+h
+the same name and size
+[oliver@fonddulac src-builds]$ xbps-query -f compute | grep 1$
+/usr/share/man/man1/compute.1
+[oliver@fonddulac src-builds]$ ls -l /usr/share/man/man1/compute.1
+-rw-r--r-- 1 root root 4660 Apr 13 20:06 /usr/share/man/man1/compute.1
+The only difference is the date in the man page (not sure if that is
+important)
+The source one is:
+.TH COMPUTE "1" "April 2014" "compute (compute) 1.0.4" "User Commands"
+The compiled version is:
+.TH COMPUTE "1" "April 2016" "compute (compute) 1.0.4" "User Commands"
+I modified the template so it now looks like this (outside of the main
+part.)  Basically, I'm just copying the file over
+pre_configure() {
+        if [ "$CROSS_BUILD" ]; then
+                # disable generating a man page with help2man while cross=
+compiling.
+                sed -i '/^man_MANS =3D compute.1$/d' Makefile.in
+        fi
+}
+do_install() {
+        make DESTDIR=3D${DESTDIR} install
+        if [ "$CROSS_BUILD" ]; then
+                mkdir -p ${DESTDIR}/usr/share/man/man1
+                mv ${wrksrc}/${pkgname}.1 ${DESTDIR}/usr/share/man/man1/
+        fi
+}
+It builds both x86 and armv the same:
+[oliver@fonddulac src-builds]$ tar Jtvf ./hostdir/binpkgs/compute*arm*
+-rw-r--r-- root/root       971 1969-12-31 19:00 ./props.plist
+-rw-r--r-- root/root      2545 1969-12-31 19:00 ./files.plist
+-rw-r--r-- 0/0            4660 2016-04-15 14:58
+./usr/share/man/man1/compute.1
+-rw-r--r-- 0/0            7930 2016-04-15 14:58
+./usr/share/compute/examples/readme.md
+-rw-r--r-- 0/0         1026495 2016-04-15 14:58
+./usr/share/compute/examples/genes.txt
+-rw-r--r-- 0/0            1818 2016-04-15 14:58
+./usr/share/compute/examples/scores_h.txt
+-rw-r--r-- 0/0         1026624 2016-04-15 14:58
+./usr/share/compute/examples/genes_h.txt
+-rw-r--r-- 0/0            1801 2016-04-15 14:58
+./usr/share/compute/examples/scores.txt
+-rwxr-xr-x 0/0           47040 2016-04-15 14:58 ./usr/bin/compute
+[oliver@fonddulac src-builds]$ tar Jtvf ./hostdir/binpkgs/compute*86*
+-rw-r--r-- root/root       931 1969-12-31 19:00 ./props.plist
+-rw-r--r-- root/root      2545 1969-12-31 19:00 ./files.plist
+-rw-r--r-- 0/0            4660 2016-04-15 14:58
+./usr/share/man/man1/compute.1
+-rw-r--r-- 0/0            7930 2016-04-15 14:58
+./usr/share/compute/examples/readme.md
+-rw-r--r-- 0/0         1026495 2016-04-15 14:58
+./usr/share/compute/examples/genes.txt
+-rw-r--r-- 0/0            1818 2016-04-15 14:58
+./usr/share/compute/examples/scores_h.txt
+-rw-r--r-- 0/0         1026624 2016-04-15 14:58
+./usr/share/compute/examples/genes_h.txt
+-rw-r--r-- 0/0            1801 2016-04-15 14:58
+./usr/share/compute/examples/scores.txt
+-rwxr-xr-x 0/0           51920 2016-04-15 14:58 ./usr/bin/compute
+Any thoughts on this method?
+On Fri, Apr 15, 2016 at 2:40 AM, Juan RP &lt;notifications@github.com&gt; wrote=
+:
+&gt; In srcpkgs/compute/template
+&gt; &lt;https://github.com/voidlinux/void-packages/pull/4029#discussion_r59832=
+354&gt;
+&gt; :
+&gt;
+&gt; &gt; +pkgname=3D"compute"
+&gt; &gt; +version=3D"1.0.4"
+&gt; &gt; +revision=3D4
+&gt; &gt; +build_style=3Dgnu-configure
+&gt; &gt; +short_desc=3D"A command-line program that performs simple calculatio=
+ns on input files"
+&gt; &gt; +maintainer=3D"oliver &lt;ohemming@gmail.com&gt;"
+&gt; &gt; +license=3D"GPL-3"
+&gt; &gt; +homepage=3D"http://compute.teamerlich.org/"
+&gt; &gt; +hostmakedepends=3D"gperf perl"
+&gt; &gt; +distfiles=3D"https://github.com/agordon/compute/releases/download/v$=
+{version}/${pkgname}-${version}.tar.gz"
+&gt; &gt; +checksum=3D"cd0d09b2d7526fef34eb3f09e5b9d36e1346b093028fe981ef400ac0=
+65c7abbb"
+&gt; &gt; +
+&gt; &gt; +pre_configure() {
+&gt; &gt; +if [ "$CROSS_BUILD" ]; then
+&gt; &gt; +	# disable generating a man page with help2man while cross compiling=
+.
+&gt; &gt; +	sed -i '/^man_MANS =3D compute.1$/d' Makefile.in
+&gt;
+&gt; The proper way to provide man-pages while cross compiling is building
+&gt; natively for the host and moving them to another directory, take a look=
+ at
+&gt; coreutils.
+&gt;
+&gt; =E2=80=94
+&gt; You are receiving this because you authored the thread.
+&gt; Reply to this email directly or view it on GitHub
+&gt; &lt;https://github.com/voidlinux/void-packages/pull/4029/files/1c6e4177a21=
+c2842e7a0f093d5f64285122c9e4a#r59832354&gt;
+&gt;
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4029/files/1c6e4177a21c28=
+42e7a0f093d5f64285122c9e4a#r59930457=
+</section><section id="post12">
+<h5>Toyam Cox at <a href="#post12">Fri, 15 Apr 2016 12:45:01 -0700</a></h5>
+&gt; +pkgname="compute"
+&gt; +version="1.0.4"
+&gt; +revision=4
+&gt; +build_style=gnu-configure
+&gt; +short_desc="A command-line program that performs simple calculations on input files"
+&gt; +maintainer="oliver &lt;ohemming@gmail.com&gt;"
+&gt; +license="GPL-3"
+&gt; +homepage="http://compute.teamerlich.org/"
+&gt; +hostmakedepends="gperf perl"
+&gt; +distfiles="https://github.com/agordon/compute/releases/download/v${version}/${pkgname}-${version}.tar.gz"
+&gt; +checksum="cd0d09b2d7526fef34eb3f09e5b9d36e1346b093028fe981ef400ac065c7abbb"
+&gt; +
+&gt; +pre_configure() {
+&gt; +if [ "$CROSS_BUILD" ]; then
+&gt; +	# disable generating a man page with help2man while cross compiling.
+&gt; +	sed -i '/^man_MANS = compute.1$/d' Makefile.in
+If they already provide a manpage, and help2man is only really used to update the date, then by all means just vman the man page.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4029/files/1c6e4177a21c2842e7a0f093d5f64285122c9e4a#r59930640
+</section><section id="post13">
+<h5>oliver-cfc at <a href="#post13">Fri, 15 Apr 2016 13:06:03 -0700</a></h5>
+&gt; +pkgname=3D"compute"
+&gt; +version=3D"1.0.4"
+&gt; +revision=3D4
+&gt; +build_style=3Dgnu-configure
+&gt; +short_desc=3D"A command-line program that performs simple calculations=
+ on input files"
+&gt; +maintainer=3D"oliver &lt;ohemming@gmail.com&gt;"
+&gt; +license=3D"GPL-3"
+&gt; +homepage=3D"http://compute.teamerlich.org/"
+&gt; +hostmakedepends=3D"gperf perl"
+&gt; +distfiles=3D"https://github.com/agordon/compute/releases/download/v${v=
+ersion}/${pkgname}-${version}.tar.gz"
+&gt; +checksum=3D"cd0d09b2d7526fef34eb3f09e5b9d36e1346b093028fe981ef400ac065=
+c7abbb"
+&gt; +
+&gt; +pre_configure() {
+&gt; +if [ "$CROSS_BUILD" ]; then
+&gt; +	# disable generating a man page with help2man while cross compiling.
+&gt; +	sed -i '/^man_MANS =3D compute.1$/d' Makefile.in
+Thanks... any concerns with these two functions?
+pre_configure() {
+        if [ "$CROSS_BUILD" ]; then
+                # disable updating the man page with help2man while cross=
+compiling.
+                sed -i '/^man_MANS =3D compute.1$/d' Makefile.in
+        fi
+}
+do_install() {
+        make DESTDIR=3D${DESTDIR} install
+        if [ "$CROSS_BUILD" ]; then
+                vman ${wrksrc}/${pkgname}.1
+        fi
+}
+On Fri, Apr 15, 2016 at 3:45 PM, Toyam Cox &lt;notifications@github.com&gt; wro=
+te:
+&gt; In srcpkgs/compute/template
+&gt; &lt;https://github.com/voidlinux/void-packages/pull/4029#discussion_r59930=
+640&gt;
+&gt; :
+&gt;
+&gt; &gt; +pkgname=3D"compute"
+&gt; &gt; +version=3D"1.0.4"
+&gt; &gt; +revision=3D4
+&gt; &gt; +build_style=3Dgnu-configure
+&gt; &gt; +short_desc=3D"A command-line program that performs simple calculatio=
+ns on input files"
+&gt; &gt; +maintainer=3D"oliver &lt;ohemming@gmail.com&gt;"
+&gt; &gt; +license=3D"GPL-3"
+&gt; &gt; +homepage=3D"http://compute.teamerlich.org/"
+&gt; &gt; +hostmakedepends=3D"gperf perl"
+&gt; &gt; +distfiles=3D"https://github.com/agordon/compute/releases/download/v$=
+{version}/${pkgname}-${version}.tar.gz"
+&gt; &gt; +checksum=3D"cd0d09b2d7526fef34eb3f09e5b9d36e1346b093028fe981ef400ac0=
+65c7abbb"
+&gt; &gt; +
+&gt; &gt; +pre_configure() {
+&gt; &gt; +if [ "$CROSS_BUILD" ]; then
+&gt; &gt; +	# disable generating a man page with help2man while cross compiling=
+.
+&gt; &gt; +	sed -i '/^man_MANS =3D compute.1$/d' Makefile.in
+&gt;
+&gt; If they already provide a manpage, and help2man is only really used to
+&gt; update the date, then by all means just vman the man page.
+&gt;
+&gt; =E2=80=94
+&gt; You are receiving this because you authored the thread.
+&gt; Reply to this email directly or view it on GitHub
+&gt; &lt;https://github.com/voidlinux/void-packages/pull/4029/files/1c6e4177a21=
+c2842e7a0f093d5f64285122c9e4a#r59930640&gt;
+&gt;
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4029/files/1c6e4177a21c28=
+42e7a0f093d5f64285122c9e4a#r59933416=
+</section><section id="post14">
+<h5>Toyam Cox at <a href="#post14">Fri, 15 Apr 2016 13:32:29 -0700</a></h5>
+&gt; +pkgname="compute"
+&gt; +version="1.0.4"
+&gt; +revision=4
+&gt; +build_style=gnu-configure
+&gt; +short_desc="A command-line program that performs simple calculations on input files"
+&gt; +maintainer="oliver &lt;ohemming@gmail.com&gt;"
+&gt; +license="GPL-3"
+&gt; +homepage="http://compute.teamerlich.org/"
+&gt; +hostmakedepends="gperf perl"
+&gt; +distfiles="https://github.com/agordon/compute/releases/download/v${version}/${pkgname}-${version}.tar.gz"
+&gt; +checksum="cd0d09b2d7526fef34eb3f09e5b9d36e1346b093028fe981ef400ac065c7abbb"
+&gt; +
+&gt; +pre_configure() {
+&gt; +if [ "$CROSS_BUILD" ]; then
+&gt; +	# disable generating a man page with help2man while cross compiling.
+&gt; +	sed -i '/^man_MANS = compute.1$/d' Makefile.in
+Yes, please install the manpage in `post_install` instead.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4029/files/1c6e4177a21c2842e7a0f093d5f64285122c9e4a#r59936631
+</section><section id="post15">
+<h5>oliver-cfc at <a href="#post15">Fri, 15 Apr 2016 14:01:35 -0700</a></h5>
+&gt; +pkgname=3D"compute"
+&gt; +version=3D"1.0.4"
+&gt; +revision=3D4
+&gt; +build_style=3Dgnu-configure
+&gt; +short_desc=3D"A command-line program that performs simple calculations o=
+n input files"
+&gt; +maintainer=3D"oliver &lt;ohemming@gmail.com&gt;"
+&gt; +license=3D"GPL-3"
+&gt; +homepage=3D"http://compute.teamerlich.org/"
+&gt; +hostmakedepends=3D"gperf perl"
+&gt; +distfiles=3D"https://github.com/agordon/compute/releases/download/v${ver=
+sion}/${pkgname}-${version}.tar.gz"
+&gt; +checksum=3D"cd0d09b2d7526fef34eb3f09e5b9d36e1346b093028fe981ef400ac065c7=
+abbb"
+&gt; +
+&gt; +pre_configure() {
+&gt; +if [ "$CROSS_BUILD" ]; then
+&gt; +	# disable generating a man page with help2man while cross compiling.
+&gt; +	sed -i '/^man_MANS =3D compute.1$/d' Makefile.in
+Right - lets me get rid of the unneeded make... the functions are now
+pre_configure() {
+        if [ "$CROSS_BUILD" ]; then
+                # disable updating the man page with help2man while cross
+compiling.
+                sed -i '/^man_MANS =3D compute.1$/d' Makefile.in
+        fi
+}
+post_install() {
+        if [ "$CROSS_BUILD" ]; then
+                vman ${wrksrc}/${pkgname}.1
+        fi
+}
+On Fri, Apr 15, 2016 at 4:32 PM, Toyam Cox &lt;notifications@github.com&gt; wrote:
+&gt; In srcpkgs/compute/template
+&gt; &lt;https://github.com/voidlinux/void-packages/pull/4029#discussion_r5993663=
+1&gt;
+&gt; :
+&gt;
+&gt; &gt; +pkgname=3D"compute"
+&gt; &gt; +version=3D"1.0.4"
+&gt; &gt; +revision=3D4
+&gt; &gt; +build_style=3Dgnu-configure
+&gt; &gt; +short_desc=3D"A command-line program that performs simple calculations=
+ on input files"
+&gt; &gt; +maintainer=3D"oliver &lt;ohemming@gmail.com&gt;"
+&gt; &gt; +license=3D"GPL-3"
+&gt; &gt; +homepage=3D"http://compute.teamerlich.org/"
+&gt; &gt; +hostmakedepends=3D"gperf perl"
+&gt; &gt; +distfiles=3D"https://github.com/agordon/compute/releases/download/v${v=
+ersion}/${pkgname}-${version}.tar.gz"
+&gt; &gt; +checksum=3D"cd0d09b2d7526fef34eb3f09e5b9d36e1346b093028fe981ef400ac065=
+c7abbb"
+&gt; &gt; +
+&gt; &gt; +pre_configure() {
+&gt; &gt; +if [ "$CROSS_BUILD" ]; then
+&gt; &gt; +	# disable generating a man page with help2man while cross compiling.
+&gt; &gt; +	sed -i '/^man_MANS =3D compute.1$/d' Makefile.in
+&gt;
+&gt; Yes, please install the manpage in post_install instead.
+&gt;
+&gt; =E2=80=94
+&gt; You are receiving this because you authored the thread.
+&gt; Reply to this email directly or view it on GitHub
+&gt; &lt;https://github.com/voidlinux/void-packages/pull/4029/files/1c6e4177a21c2=
+842e7a0f093d5f64285122c9e4a#r59936631&gt;
+&gt;
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4029/files/1c6e4177a21c2842=
+e7a0f093d5f64285122c9e4a#r59940261=
+</section><section id="post16">
+<h5>Toyam Cox at <a href="#post16">Fri, 15 Apr 2016 15:51:16 -0700</a></h5>
+&gt; +pkgname="compute"
+&gt; +version="1.0.4"
+&gt; +revision=4
+&gt; +build_style=gnu-configure
+&gt; +short_desc="A command-line program that performs simple calculations on input files"
+&gt; +maintainer="oliver &lt;ohemming@gmail.com&gt;"
+&gt; +license="GPL-3"
+&gt; +homepage="http://compute.teamerlich.org/"
+&gt; +hostmakedepends="gperf perl"
+&gt; +distfiles="https://github.com/agordon/compute/releases/download/v${version}/${pkgname}-${version}.tar.gz"
+&gt; +checksum="cd0d09b2d7526fef34eb3f09e5b9d36e1346b093028fe981ef400ac065c7abbb"
+&gt; +
+&gt; +pre_configure() {
+&gt; +if [ "$CROSS_BUILD" ]; then
+&gt; +	# disable generating a man page with help2man while cross compiling.
+&gt; +	sed -i '/^man_MANS = compute.1$/d' Makefile.in
+should be
+`vman compute.1` so no extra vars.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4029/files/1c6e4177a21c2842e7a0f093d5f64285122c9e4a#r59951815
+</section><section id="post17">
+<h5>oliver-cfc at <a href="#post17">Fri, 15 Apr 2016 16:22:20 -0700</a></h5>
+&gt; +pkgname=3D"compute"
+&gt; +version=3D"1.0.4"
+&gt; +revision=3D4
+&gt; +build_style=3Dgnu-configure
+&gt; +short_desc=3D"A command-line program that performs simple calculations o=
+n input files"
+&gt; +maintainer=3D"oliver &lt;ohemming@gmail.com&gt;"
+&gt; +license=3D"GPL-3"
+&gt; +homepage=3D"http://compute.teamerlich.org/"
+&gt; +hostmakedepends=3D"gperf perl"
+&gt; +distfiles=3D"https://github.com/agordon/compute/releases/download/v${ver=
+sion}/${pkgname}-${version}.tar.gz"
+&gt; +checksum=3D"cd0d09b2d7526fef34eb3f09e5b9d36e1346b093028fe981ef400ac065c7=
+abbb"
+&gt; +
+&gt; +pre_configure() {
+&gt; +if [ "$CROSS_BUILD" ]; then
+&gt; +	# disable generating a man page with help2man while cross compiling.
+&gt; +	sed -i '/^man_MANS =3D compute.1$/d' Makefile.in
+Thanks... just committed again.  I appreciate all the time you're putting
+into this for me (and the other members of the team too)
+On Fri, Apr 15, 2016 at 6:51 PM, Toyam Cox &lt;notifications@github.com&gt; wrote:
+&gt; In srcpkgs/compute/template
+&gt; &lt;https://github.com/voidlinux/void-packages/pull/4029#discussion_r5995181=
+5&gt;
+&gt; :
+&gt;
+&gt; &gt; +pkgname=3D"compute"
+&gt; &gt; +version=3D"1.0.4"
+&gt; &gt; +revision=3D4
+&gt; &gt; +build_style=3Dgnu-configure
+&gt; &gt; +short_desc=3D"A command-line program that performs simple calculations=
+ on input files"
+&gt; &gt; +maintainer=3D"oliver &lt;ohemming@gmail.com&gt;"
+&gt; &gt; +license=3D"GPL-3"
+&gt; &gt; +homepage=3D"http://compute.teamerlich.org/"
+&gt; &gt; +hostmakedepends=3D"gperf perl"
+&gt; &gt; +distfiles=3D"https://github.com/agordon/compute/releases/download/v${v=
+ersion}/${pkgname}-${version}.tar.gz"
+&gt; &gt; +checksum=3D"cd0d09b2d7526fef34eb3f09e5b9d36e1346b093028fe981ef400ac065=
+c7abbb"
+&gt; &gt; +
+&gt; &gt; +pre_configure() {
+&gt; &gt; +if [ "$CROSS_BUILD" ]; then
+&gt; &gt; +	# disable generating a man page with help2man while cross compiling.
+&gt; &gt; +	sed -i '/^man_MANS =3D compute.1$/d' Makefile.in
+&gt;
+&gt; should be
+&gt; vman compute.1 so no extra vars.
+&gt;
+&gt; =E2=80=94
+&gt; You are receiving this because you authored the thread.
+&gt; Reply to this email directly or view it on GitHub
+&gt; &lt;https://github.com/voidlinux/void-packages/pull/4029/files/1c6e4177a21c2=
+842e7a0f093d5f64285122c9e4a#r59951815&gt;
+&gt;
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4029/files/1c6e4177a21c2842=
+e7a0f093d5f64285122c9e4a#r59954143=
+</section><section id="post18">
+<h5>Toyam Cox at <a href="#post18">Fri, 15 Apr 2016 17:01:46 -0700</a></h5>
+It's git best practice to put any comments you put in your commit message after a blank line, so
+```
+New package: compute-1.0.4
+&lt;comments&gt;
+```
+Also, instead of both functions, adding the following patch to `srcpkgs/compute/patches/no_help2man_regeneration.patch` works great
+```
+--- Makefile.in		2016-04-15 19:56:08.257716796 -0400
++++ Makefile.in		2016-04-15 19:56:03.663451813 -0400
+@@ -3088,12 +3088,6 @@
+ 	uninstall-local uninstall-man uninstall-man1
+-compute.1: compute
+-	PATH='$(abs_top_builddir)$(PATH_SEPARATOR)'$$PATH \
+-	   $(abs_top_srcdir)/man/help2man --include=$(top_srcdir)/man/compute.x compute -o $@-t
+-	chmod u=rw,go=r $@-t
+-	mv -f $@-t $@
+-
+ # Verify that all source files using _() are listed in po/POTFILES.in.
+ # The idea is to run this before making pretests, as well as official
+ # releases, so that translators will be sure to have all the messages.
+```
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4029#issuecomment-210691705
+</section><section id="post19">
+<h5>oliver-cfc at <a href="#post19">Sat, 16 Apr 2016 17:13:37 -0700</a></h5>
+Thanks!  Can't say I understand how the patch is doing things but it seem=
+s
+a little more graceful than functions.
+On Fri, Apr 15, 2016 at 8:01 PM, Toyam Cox &lt;notifications@github.com&gt; wro=
+te:
+&gt; It's git best practice to put any comments you put in your commit messa=
+ge
+&gt; after a blank line, so
+&gt;
+&gt; New package: compute-1.0.4
+&gt;
+&gt; &lt;comments&gt;
+&gt;
+&gt; Also, instead of both functions, adding the following patch to
+&gt; srcpkgs/compute/patches/no_help2man_regeneration.patch works great
+&gt;
+&gt; --- Makefile.in     2016-04-15 19:56:08.257716796 -0400
+&gt; +++ Makefile.in     2016-04-15 19:56:03.663451813 -0400
+&gt; @@ -3088,12 +3088,6 @@
+&gt;     uninstall-local uninstall-man uninstall-man1
+&gt;
+&gt;
+&gt; -compute.1: compute
+&gt; -   PATH=3D'$(abs_top_builddir)$(PATH_SEPARATOR)'$$PATH \
+&gt; -      $(abs_top_srcdir)/man/help2man --include=3D$(top_srcdir)/man/com=
+pute.x compute -o $@-t
+&gt; -   chmod u=3Drw,go=3Dr $@-t
+&gt; -   mv -f $@-t $@
+&gt; -
+&gt;  # Verify that all source files using _() are listed in po/POTFILES.in.=
+&gt;  # The idea is to run this before making pretests, as well as official
+&gt;  # releases, so that translators will be sure to have all the messages.=
+&gt;
+&gt; =E2=80=94
+&gt; You are receiving this because you authored the thread.
+&gt; Reply to this email directly or view it on GitHub
+&gt; &lt;https://github.com/voidlinux/void-packages/pull/4029#issuecomment-2106=
+91705&gt;
+&gt;
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4029#issuecomment-2109266=
+06=
+</section><section id="post20">
+<h5>Toyam Cox at <a href="#post20">Sat, 16 Apr 2016 21:19:48 -0700</a></h5>
+It allows the file `compute.1` to satisfy the requirement for `compute.1` to be present, rather than using the requirement within the makefile.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4029#issuecomment-210953273
+</section><section id="post21">
+<h5>Toyam Cox at <a href="#post21">Sat, 16 Apr 2016 21:21:31 -0700</a></h5>
+&gt; @@ -0,0 +1,12 @@
+&gt; +# Template file for 'compute'
+&gt; +pkgname="compute"
+&gt; +version="1.0.4"
+&gt; +revision=8
+Revision 1 until it has been committed to the repository.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4029/files/11e9b13174646aca571df15f9b054995cae8959c#r59978092
+</section><section id="post22">
+<h5>Toyam Cox at <a href="#post22">Sun, 17 Apr 2016 11:33:25 -0700</a></h5>
+Merged #4029.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4029#event-630454155
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] New package: fbxkb-0.6 (#5758)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] New package: fbxkb-0.6 (#5758)</h1>
+<section id="post1">
+<h5>Pavel Kiselev at <a href="#post1">Sun, 19 Feb 2017 01:39:17 -0800</a></h5>
+E100Beta commented on this pull request.
+&gt; +
++pkgname="fbxkb"
++version="0.6"
++revision=1
++build_style=configure
++configure_args="--prefix=/usr"
++short_desc="Lightweight X keyboard layout indicator, uses GTK+2"
++maintainer="Pavel Kiselev &lt;kispash@yandex.ru&gt;"
++hostmakedepends="pkg-config xorg-server-devel gtk+-devel"
++makedepends="xorg-server-devel gtk+-devel"
++depends="gtk+"
++license="MIT"
++homepage="http://fbxkb.sourceforge.net/"
++distfiles="${SOURCEFORGE_SITE}/${pkgname}/${pkgname}-${version}.tgz"
++checksum="fcbaf4ed9a70f58ea1316b19da74e2ca8b3fb0e2de5a73c849317589ce840ef2"
++nostrip_files="fbxkb"
+The problem is that i have "non-PIE executable found in PIE build" error. I found this while searching the forums. Would `nopie=yes` be better? Or should I search for a problem in other areas?
+</section><section id="post2">
+<h5>Pavel Kiselev at <a href="#post2">Sun, 19 Feb 2017 03:07:35 -0800</a></h5>
+E100Beta commented on this pull request.
+&gt; +
++pkgname="fbxkb"
++version="0.6"
++revision=1
++build_style=configure
++configure_args="--prefix=/usr"
++short_desc="Lightweight X keyboard layout indicator, uses GTK+2"
++maintainer="Pavel Kiselev &lt;kispash@yandex.ru&gt;"
++hostmakedepends="pkg-config xorg-server-devel gtk+-devel"
++makedepends="xorg-server-devel gtk+-devel"
++depends="gtk+"
++license="MIT"
++homepage="http://fbxkb.sourceforge.net/"
++distfiles="${SOURCEFORGE_SITE}/${pkgname}/${pkgname}-${version}.tgz"
++checksum="fcbaf4ed9a70f58ea1316b19da74e2ca8b3fb0e2de5a73c849317589ce840ef2"
++nostrip_files="fbxkb"
+Sorry, read this one after the push. I understand the problem now, shouldn't be hard to fix.
+</section><section id="post3">
+<h5>Pavel Kiselev at <a href="#post3">Sun, 19 Feb 2017 05:52:28 -0800</a></h5>
+Thank you @Duncaen for helping me make this better!
+The main problem (which prevented building package with PIE) was that `$(LDFLAGS)` were in the wrong place in the `Makefile`.
+The way I do things right now involves patching out variables. I've seen with some other `template`s that editing files with `sed` is a more common practise. Should I do it, too?
+Everything else was fixed as well and package is now fully functional/builds with right compilers/uses Void's build flags.
+</section><section id="post4">
+<h5>Pavel Kiselev at <a href="#post4">Sun, 19 Feb 2017 08:29:32 -0800</a></h5>
+@Duncaen I did some final touches, `sed` is used to override `CC, CFLAGS, LDFLAGS` in `Makefile`s, and the patch is now as I first found it. Removed `configure_args`. Should now be good to go!
+</section><section id="post5">
+<h5>Toyam Cox at <a href="#post5">Sun, 19 Feb 2017 08:56:33 -0800</a></h5>
+Vaelatern commented on this pull request.
+&gt; +distfiles="${SOURCEFORGE_SITE}/${pkgname}/${pkgname}-${version}.tgz"
++checksum="fcbaf4ed9a70f58ea1316b19da74e2ca8b3fb0e2de5a73c849317589ce840ef2"
++
++pre_build() {
++# Substitute compiler,
++# Substitute CFLAGS (original options are subset of void's options),
++# Put LDFLAGS at the end of command (enables PIE)
++	sed -i Makefile* \
++		-e "s;^CC.*=.*$;CC = ${CC};" \
++		-e "s;^CFLAGS.*=.*$;CFLAGS = ${CFLAGS};" \
++		-e "s;^\(.*\).(LDFLAGS)\(.*\)$;\1\2 ${LDFLAGS};"
++}
++
++do_install() {
++	make PREFIX="${DESTDIR}/usr" install
++	vlicense ${wrksrc}/COPYING
+`vlicense COPYING`
+</section><section id="post6">
+<h5>Pavel Kiselev at <a href="#post6">Sun, 19 Feb 2017 09:17:19 -0800</a></h5>
+@Vaelatern Done. Plus, found out that `make PREFIX...` line was no longer needed, so I removed it and changed function to `post_install()`
+</section><section id="post7">
+<h5>Toyam Cox at <a href="#post7">Sun, 26 Feb 2017 01:44:12 -0800</a></h5>
+Merged #5758.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

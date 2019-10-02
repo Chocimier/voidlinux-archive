@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-mklive] Installer Fails on ESXi (#97)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-mklive] Installer Fails on ESXi (#97)</h1>
+<section id="post1">
+<h5>Christopher Cover at <a href="#post1">Sun, 05 Feb 2017 07:48:13 -0800</a></h5>
+Uh, yeah... thank you? If you create a Linux distribution, you are responsible to set it up correctly  (detecting devices, installation scripts, ...).
+</section><section id="post2">
+<h5>Toyam Cox at <a href="#post2">Sun, 05 Feb 2017 09:07:47 -0800</a></h5>
+Instead of
+```
+ip dev link eno167777736 down
+ip dev link eno167777736 name eth0
+ip dev link eth0 up
+```
+I think you want
+```
+ip link dev eno167777736 down
+ip link dev eno167777736 name eth0
+ip link dev eth0 up
+```
+</section><section id="post3">
+<h5>Christopher Cover at <a href="#post3">Sun, 05 Feb 2017 12:14:12 -0800</a></h5>
+omfg... nevermind. all other distress work. forget it.
+</section><section id="post4">
+<h5>Dominik Honnef at <a href="#post4">Sun, 05 Feb 2017 12:46:34 -0800</a></h5>
+Closed #97.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

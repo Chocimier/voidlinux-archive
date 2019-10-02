@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] Add hook to automatically create -devel
+ package. (#12983)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] Add hook to automatically create -devel
+ package. (#12983)</h1>
+<section id="post1">
+<h5>Enno Boland at <a href="#post1">Wed, 28 Mar 2018 08:24:05 +0000 (UTC)</a></h5>
+@voidlinux/pkg-committers any thoughts?
+</section><section id="post2">
+<h5>Toyam Cox at <a href="#post2">Wed, 28 Mar 2018 11:36:04 +0000 (UTC)</a></h5>
+Do we have any way of checking "is it in subpkgs and not defined"? I thought it was assumed to be runnable.
+</section><section id="post3">
+<h5>maxice8 at <a href="#post3">Wed, 28 Mar 2018 11:40:49 +0000 (UTC)</a></h5>
+&gt; Do we have any way of checking "is it in subpkgs and not defined"? I thought it was assumed to be runnable.
+template variables are passed to the hooks so
+```
+if [ -z "${subpackages##* ${pkgname}-devel *}" ]; then
+     return
+fi
+if typeset -F|grep "${pkgname}-devel_package()" ; then
+    return
+fi
+```
+</section><section id="post4">
+<h5>Michael Gehring at <a href="#post4">Wed, 28 Mar 2018 06:30:01 -0700</a></h5>
+&gt; We could use the srcpkgs symlink to check instead.
+You can't since the *-devel_package might be wrapped in an conditional or guarded by a build_option.
+In general a default _package() will be tricky to do since the declaration of the _package() function is used to determine that the subpackage exists at all.
+</section><section id="post5">
+<h5>Leаh Neukirchen at <a href="#post5">Wed, 28 Mar 2018 07:19:19 -0700</a></h5>
+I think it's a good idea in general.
+</section><section id="post6">
+<h5>Toyam Cox at <a href="#post6">Thu, 29 Mar 2018 12:46:21 +0000 (UTC)</a></h5>
+It'd be nice, but we can replace that with tooling.
+</section><section id="post7">
+<h5>maxice8 at <a href="#post7">Mon, 02 Apr 2018 18:40:18 +0000 (UTC)</a></h5>
+&gt; It'd be nice, but we can replace that with tooling.
+i wrote [xgenpkg](https://github.com/maxice8/xtools-devel/blob/master/xgenpkg) `$ xgenpkg --name mainpkg --pkg mainpkg-devel` to deal with automatically generating package definitions but they don't deal with files that are available in one arch and not in another ( read gnome nocross gobject shit ), while hooks would just deal with the files given directly.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

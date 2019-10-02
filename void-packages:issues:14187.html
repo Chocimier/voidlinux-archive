@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] xorg-server: xinit not working with
+ default configuration (#14187)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] xorg-server: xinit not working with
+ default configuration (#14187)</h1>
+<section id="post1">
+<h5>Toyam Cox at <a href="#post1">Mon, 07 May 2018 06:29:30 +0000 (UTC)</a></h5>
+Can one of @voidlinux/pkg-committers confirm this?
+</section><section id="post2">
+<h5>cr6git at <a href="#post2">Mon, 07 May 2018 19:10:16 +0000 (UTC)</a></h5>
+@Vaelatern I confirm: using `xinit` or `startx` as non-root user, I can't launch the X server.
+</section><section id="post3">
+<h5>Toyam Cox at <a href="#post3">Mon, 07 May 2018 22:58:50 -0700</a></h5>
+@Duncaen any ideas?
+</section><section id="post4">
+<h5>Andrea Brancaleoni at <a href="#post4">Mon, 07 May 2018 23:53:54 -0700</a></h5>
+I'm quite sure it is working for me. I will check later today.
+</section><section id="post5">
+<h5>cr6git at <a href="#post5">Tue, 22 May 2018 00:47:56 -0700</a></h5>
+@thypon and what was the result?
+</section><section id="post6">
+<h5>Andrea Brancaleoni at <a href="#post6">Tue, 22 May 2018 01:29:58 -0700</a></h5>
+I forgot to update the thread. Working for me. See https://github.com/thypon/dotconfig for the xinitrc I'm using
+</section><section id="post7">
+<h5>cr6git at <a href="#post7">Fri, 25 May 2018 00:45:45 -0700</a></h5>
+@thypon I don' think @dan-santana 's question was about how to use a custom `.xinitrc`
+</section><section id="post8">
+<h5>Daniel Santana at <a href="#post8">Fri, 25 May 2018 20:20:31 -0700</a></h5>
+Even with a .xinitrc, still have the same issue. This was what I was trying to use at first:
+```
+#!/bin/sh
+exec bspwm
+```
+</section><section id="post9">
+<h5>cr6git at <a href="#post9">Sat, 26 May 2018 02:58:31 -0700</a></h5>
+On my system x86_64-musl, using the default `.xinitrc` (from `/etc/skel/.xinitrc`):
+````
+#!/bin/sh
+#
+# ~/.xinitrc
+#
+# Executed by startx (run your window manager from here)
+if [ -d /etc/X11/xinit/xinitrc.d ]; then
+  for f in /etc/X11/xinit/xinitrc.d/*; do
+    [ -x "$f" ] &amp;&amp; . "$f"
+  done
+  unset f
+fi
+# exec gnome-session
+# exec startkde
+# exec startxfce4
+# ...or the Window Manager of your choice
+````
+when I run `startx` it doesn't work...
+Oddly enough, if I do the same in my **glibc** system, it works. :confused:
+Is it different for you @thypon ?
+</section><section id="post10">
+<h5>Andrea Brancaleoni at <a href="#post10">Sat, 26 May 2018 03:58:16 -0700</a></h5>
+I only have glibc system, I have not tried with musl.
+</section><section id="post11">
+<h5>Daniel Santana at <a href="#post11">Sun, 27 May 2018 10:50:56 -0700</a></h5>
+I also couldn't test it on musl, only glibc where it didn't work. As the results seem varied, in the next days I'll create a script to build a minimal Void Linux setup from scratch that reproduces the issue.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

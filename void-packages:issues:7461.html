@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] Firefox 55 on Musl X64 [Click on
+ login/pass field crashs the tab] (#7461)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] Firefox 55 on Musl X64 [Click on
+ login/pass field crashs the tab] (#7461)</h1>
+<section id="post1">
+<h5>chmod77 at <a href="#post1">Sun, 20 Aug 2017 16:21:04 +0000 (UTC)</a></h5>
+Yes, Duncaen. Clean profile
+With **firefox --verbose** i can grab a new error message
+**###!!! [Parent][MessageChannel] Error: (msgtype=0x800017,name=PHttpChannel::Msg_DeleteSelf) Channel error: cannot send/recv**
+I'm tried to change my xorg monitor defaults, but the error persists.
+Test with uxa / sna / DRI2 / DRI3 / Tear Free ON/OFF
+A curiosity: When click on Firefox / Preferences / Advanced / General (Tab) /
+The field: **Use hardware acceleration when available** is missing
+</section><section id="post2">
+<h5>chmod77 at <a href="#post2">Sun, 20 Aug 2017 16:47:35 +0000 (UTC)</a></h5>
+If I turn OFF the e10s (firefox multiprocess)
+**browser.tabs.remote.autostart;false**
+**browser.tabs.remote.autostart.2;false**
+The problem is gone.
+</section><section id="post3">
+<h5>chmod77 at <a href="#post3">Sun, 20 Aug 2017 10:20:15 -0700</a></h5>
+https://bugzilla.mozilla.org/show_bug.cgi?id=1371708
+</section><section id="post4">
+<h5>chmod77 at <a href="#post4">Sun, 20 Aug 2017 17:49:18 +0000 (UTC)</a></h5>
+strace -o test.log firefox
+```
+writev(2, [{iov_base="\n###!!! [Parent][MessageChannel]"..., iov_len=40}, {iov_base="(msgtype=0x800017,name=PHttpChan"..., iov_len=84}], 2) = 124
+writev(2, [{iov_base="\n\n", iov_len=2}, {iov_base=NULL, iov_len=0}], 2) = 2
+recvmsg(4, {msg_namelen=0}, 0)          = -1 EAGAIN (Resource temporarily unavailable)
+poll([{fd=4, events=POLLIN}, {fd=5, events=POLLIN}, {fd=26, events=POLLIN}, {fd=27, events=POLLIN}], 4, 0) = 0 (Timeout)
+write(12, "\0", 1)                      = 1
+recvmsg(4, {msg_namelen=0}, 0)          = -1 EAGAIN (Resource temporarily unavailable)
+poll([{fd=4, events=POLLIN}, {fd=5, events=POLLIN}, {fd=26, events=POLLIN}, {fd=27, events=POLLIN}], 4, 0) = 0 (Timeout)
+writev(2, [{iov_base="\n###!!! [Parent][MessageChannel]"..., iov_len=40}, {iov_base="(msgtype=0x280080,name=PBrowser:"..., iov_len=77}], 2) = 117
+writev(2, [{iov_base="\n\n", iov_len=2}, {iov_base=NULL, iov_len=0}], 2) = 2
+```
+</section><section id="post5">
+<h5>chmod77 at <a href="#post5">Sun, 20 Aug 2017 19:01:41 +0000 (UTC)</a></h5>
+&gt; This is the parent process, try to MOZ_DEBUG_CHILD_PROCESS=1 firefox and then attach strace to the new child process, it prints the pid and waits until a debugger is attached.
+Thanks for the tip, Duncaen :)
+Now new messages appears:
+ ```
+MOZ_DEBUG_CHILD_PROCESS=1 firefox
+  2 CHILDCHILDCHILDCHILD
+  3   debug me @ 4919
+  4
+  5 ATTENTION: default value of option force_s3tc_enable overridden by environment.
+  6
+  7 ###!!! [Parent][MessageChannel] Error: (msgtype=0x800017,name=PHttpChannel::Msg_DeleteSelf) Channel error: cannot send/recv
+  8
+  9
+ 10 ###!!! [Parent][MessageChannel] Error: (msgtype=0x280080,name=PBrowser::Msg_Destroy) Channel error: cannot send/recv
+ 11
+ 12 [Parent 27743] WARNING: pipe error (46): Connection reset by peer: file /builddir/firefox-55.0.2/ipc/chromium/src/chrome/common/ipc_channel_pos    ix.cc, line 353
+ 13
+ 14 [Parent 29641] WARNING: pipe error (60): Connection reset by peer: file /builddir/firefox-55.0.2/ipc/chromium/src/chrome/common/ipc_channel_pos    ix.cc, line 353
+```
+</section><section id="post6">
+<h5>chmod77 at <a href="#post6">Sun, 20 Aug 2017 14:53:28 -0700</a></h5>
+Thanks, Duncaen! For the explanations on #voidlinux IRC channel
+The problem is caused by dconf package. Firefox 55 is work like a charm!
+</section><section id="post7">
+<h5>chmod77 at <a href="#post7">Sun, 20 Aug 2017 21:54:11 +0000 (UTC)</a></h5>
+Closed #7461.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

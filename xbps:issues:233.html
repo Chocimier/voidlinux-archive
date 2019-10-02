@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/xbps] strange 'preserve' keyword behavior in MUSL
+ (#233)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/xbps] strange 'preserve' keyword behavior in MUSL
+ (#233)</h1>
+<section id="post1">
+<h5>paoloschi at <a href="#post1">Sun, 05 Feb 2017 08:55:38 -0800</a></h5>
+initially only my first 2 files in `/etc/grub.d` are executable
+```
+$ ll /etc/grub.d
+totale 60
+-rwxr-xr-x 1 root root  8684  4 feb 08.04 00_header
+-rwxr-xr-x 1 root root  9469  4 feb 08.04 10_linux
+-rw-r--r-- 1 root root 10451 17 dic 22.24 20_linux_xen
+-rw-r--r-- 1 root root 11301 17 dic 22.24 30_os-prober
+-rw-r--r-- 1 root root   214 17 dic 22.24 40_custom
+-rw-r--r-- 1 root root   216 17 dic 22.24 41_custom
+-rw-r--r-- 1 root root   483  4 feb 08.04 README
+```
+in `/etc/xbps.d/xbps.conf'` I put
+```
+## PRESERVING FILES
+preserve=/etc/default/grub
+preserve=/etc/grub.d/20_linux_xen
+preserve=/etc/grub.d/30_os-prober
+preserve=/etc/grub.d/40_custom
+preserve=/etc/grub.d/41_custom
+```
+or even
+```
+## PRESERVING FILES
+preserve=/etc/default/grub
+preserve=/etc/grub.d/*
+```
+at this point I reinstall the _grub_ package: on GLIBC Void, files in `/etc/grub.d` remain preserved while on MUSL Void, files are replaced (so all scripts became executable again..)
+It follows Gist URL with the full debugging for the `xbps-install` command
+```
+$ sudo xbps-install -dfy grub 2&gt;debug
+Name Action    Version           New version            Download size
+grub reinstall 2.02~rc1_1        2.02~rc1_1             -
+Size required on disk:          29MB
+Free space on disk:            145GB
+[*] Downloading binary packages
+[*] Verifying package integrity
+grub-2.02~rc1_1: verifying RSA signature...
+[*] Running transaction tasks
+grub-2.02~rc1_1: unpacking ...
+Keeping modified configuration file `/etc/default/grub'.
+[*] Configuring unpacked packages
+grub-2.02~rc1_1: configuring ...
+grub-2.02~rc1_1: installed successfully.
+0 downloaded, 1 installed, 0 updated, 1 configured, 0 removed.
+```
+https://gist.github.com/paoloschi/2024eda8d9f487e0466019dbb38d9239
+</section><section id="post2">
+<h5>Michael Gehring at <a href="#post2">Sun, 05 Feb 2017 09:15:32 -0800</a></h5>
+`preserve` is a boolean so the paths shouldn't matter at all.
+Sounds like the grub package on your glibc system for some reason already has the preserve flag set. Can you check the pkgdb on the glibc system (/var/db/xbps/pkgdb-0.38.plist)?
+In general sounds like you want to use `conf_files` to achieve what you want?
+</section><section id="post3">
+<h5>Michael Gehring at <a href="#post3">Sun, 05 Feb 2017 09:18:12 -0800</a></h5>
+Sorry, i misread the issue. Thought about the `preserve` in templates.
+</section><section id="post4">
+<h5>paoloschi at <a href="#post4">Sun, 05 Feb 2017 09:30:55 -0800</a></h5>
+from __GLIBC__ `/var/db/xbps/pkgdb-0.38.plist`
+```
+[..]
+  &lt;key&gt;grub&lt;/key&gt;
+  &lt;dict&gt;
+    &lt;key&gt;architecture&lt;/key&gt;
+    &lt;string&gt;x86_64&lt;/string&gt;
+    &lt;key&gt;build-date&lt;/key&gt;
+    &lt;string&gt;2017-02-04 08:11 CET&lt;/string&gt;
+    &lt;key&gt;conf_files&lt;/key&gt;
+    &lt;array&gt;
+      &lt;string&gt;/etc/default/grub&lt;/string&gt;
+      &lt;string&gt;/etc/grub.d/40_custom&lt;/string&gt;
+    &lt;/array&gt;
+    &lt;key&gt;filename-sha256&lt;/key&gt;
+    &lt;string&gt;966d14074c071a62c5cf3c546fa90bf5644d553255747cb62ec8daf1d349a7e=
+f&lt;/string&gt;
+    &lt;key&gt;filename-size&lt;/key&gt;
+    &lt;integer&gt;5876752&lt;/integer&gt;
+    &lt;key&gt;homepage&lt;/key&gt;
+    &lt;string&gt;http://www.gnu.org/software/grub/&lt;/string&gt;
+    &lt;key&gt;install-date&lt;/key&gt;
+    &lt;string&gt;2017-02-05 09:45 CET&lt;/string&gt;
+    &lt;key&gt;install-script&lt;/key&gt;
+    &lt;data&gt;IyEvYmluL3NoCiMKIyBHZW5lcmljIElOU1RBTEwvUkVNT1ZFIHNjcmlwdC4gQXJnd=
+W1lbnRzIHBhc3NlZCB0byB0aGlzIHNjcmlwdDoKIwojICQxID0gQUNUSU9OCVtwcmUvcG9zdF0K=
+IyAkMiA9IFBLR05BTUUKIyAkMyA9IFZFUlNJT04KIyAkNCA9IFVQREFURQlbeWVzL25vXQojICQ=
+1ID0gQ09ORl9GSUxFIChwYXRoIHRvIHhicHMuY29uZikKIyAkNiA9IEFSQ0ggKHVuYW1lIC1tKQ=
+ojCiMgTm90ZSB0aGF0IHBhdGhzIG11c3QgYmUgcmVsYXRpdmUgdG8gQ1dELCB0byBhdm9pZCBjY=
+WxsaW5nCiMgaG9zdCBjb21tYW5kcyBpZiAvYmluL3NoIChkYXNoKSBpcyBub3QgaW5zdGFsbGVk=
+IGFuZCBpdCdzCiMgbm90IHBvc3NpYmxlIHRvIGNocm9vdCgzKS4KIwoKZXhwb3J0IFBBVEg9Ii9=
+iaW46L3NiaW46L3Vzci9iaW46L3Vzci9zYmluOi91c3IvbG9jYWwvYmluOi91c3IvbG9jYWwvc2=
+JpbiIKClRSSUdHRVJTRElSPSIuL3Vzci9saWJleGVjL3hicHMtdHJpZ2dlcnMiCkFDVElPTj0iJ=
+DEiClBLR05BTUU9IiQyIgpWRVJTSU9OPSIkMyIKVVBEQVRFPSIkNCIKQ09ORl9GSUxFPSIkNSIK=
+QVJDSD0iJDYiCgojCiMgVGhlIGZvbGxvd2luZyBjb2RlIHdpbGwgcnVuIHRoZSB0cmlnZ2Vycy4=
+KIwpleHBvcnQgaW5mb19maWxlcz0iL3Vzci9zaGFyZS9pbmZvL2dydWIuaW5mby5neiAvdXNyL3=
+NoYXJlL2luZm8vZ3J1Yi1kZXYuaW5mby5neiIKCmNhc2UgIiR7QUNUSU9OfSIgaW4KcHJlKQoJO=
+zsKcG9zdCkKCSR7VFJJR0dFUlNESVJ9L2luZm8tZmlsZXMgcnVuIHBvc3QtaW5zdGFsbCAke1BL=
+R05BTUV9ICR7VkVSU0lPTn0gJHtVUERBVEV9ICR7Q09ORl9GSUxFfQoJWyAkPyAtbmUgMCBdICY=
+mIGV4aXQgJD8KCTs7CmVzYWMKCgpleGl0IDAK&lt;/data&gt;
+    &lt;key&gt;installed_size&lt;/key&gt;
+    &lt;integer&gt;30271633&lt;/integer&gt;
+    &lt;key&gt;license&lt;/key&gt;
+    &lt;string&gt;GPL-3&lt;/string&gt;
+    &lt;key&gt;maintainer&lt;/key&gt;
+    &lt;string&gt;Juan RP &amp;lt;xtraeme@voidlinux.eu&amp;gt;&lt;/string&gt;
+    &lt;key&gt;metafile-sha256&lt;/key&gt;
+    &lt;string&gt;d86d35c59c17d140c9c5d08c36dcfdbe39c3388649ef5fb5b6d02d0ed47f70a=
+5&lt;/string&gt;
+    &lt;key&gt;pkgver&lt;/key&gt;
+    &lt;string&gt;grub-2.02~rc1_1&lt;/string&gt;
+    &lt;key&gt;remove-script&lt;/key&gt;
+    &lt;data&gt;IyEvYmluL3NoCiMKIyBHZW5lcmljIElOU1RBTEwvUkVNT1ZFIHNjcmlwdC4gQXJnd=
+W1lbnRzIHBhc3NlZCB0byB0aGlzIHNjcmlwdDoKIwojICQxID0gQUNUSU9OCVtwcmUvcG9zdF0K=
+IyAkMiA9IFBLR05BTUUKIyAkMyA9IFZFUlNJT04KIyAkNCA9IFVQREFURQlbeWVzL25vXQojICQ=
+1ID0gQ09ORl9GSUxFIChwYXRoIHRvIHhicHMuY29uZikKIyAkNiA9IEFSQ0ggKHVuYW1lIC1tKQ=
+ojCiMgTm90ZSB0aGF0IHBhdGhzIG11c3QgYmUgcmVsYXRpdmUgdG8gQ1dELCB0byBhdm9pZCBjY=
+WxsaW5nCiMgaG9zdCBjb21tYW5kcyBpZiAvYmluL3NoIChkYXNoKSBpcyBub3QgaW5zdGFsbGVk=
+IGFuZCBpdCdzCiMgbm90IHBvc3NpYmxlIHRvIGNocm9vdCgzKS4KIwoKZXhwb3J0IFBBVEg9Ii9=
+iaW46L3NiaW46L3Vzci9iaW46L3Vzci9zYmluOi91c3IvbG9jYWwvYmluOi91c3IvbG9jYWwvc2=
+JpbiIKClRSSUdHRVJTRElSPSIuL3Vzci9saWJleGVjL3hicHMtdHJpZ2dlcnMiCkFDVElPTj0iJ=
+DEiClBLR05BTUU9IiQyIgpWRVJTSU9OPSIkMyIKVVBEQVRFPSIkNCIKQ09ORl9GSUxFPSIkNSIK=
+QVJDSD0iJDYiCgojCiMgVGhlIGZvbGxvd2luZyBjb2RlIHdpbGwgcnVuIHRoZSB0cmlnZ2Vycy4=
+KIwpleHBvcnQgaW5mb19maWxlcz0iL3Vzci9zaGFyZS9pbmZvL2dydWIuaW5mby5neiAvdXNyL3=
+NoYXJlL2luZm8vZ3J1Yi1kZXYuaW5mby5neiIKCmNhc2UgIiR7QUNUSU9OfSIgaW4KcHJlKQoJJ=
+HtUUklHR0VSU0RJUn0vaW5mby1maWxlcyBydW4gcHJlLXJlbW92ZSAke1BLR05BTUV9ICR7VkVS=
+U0lPTn0gJHtVUERBVEV9ICR7Q09ORl9GSUxFfQoJWyAkPyAtbmUgMCBdICYmIGV4aXQgJD8KCTs=
+7CnBvc3QpCgk7Owplc2FjCgoKZXhpdCAwCg=3D=3D&lt;/data&gt;
+    &lt;key&gt;repository&lt;/key&gt;
+    &lt;string&gt;https://repo.voidlinux.eu/current&lt;/string&gt;
+    &lt;key&gt;run_depends&lt;/key&gt;
+    &lt;array&gt;
+      &lt;string&gt;os-prober&amp;gt;=3D0&lt;/string&gt;
+      &lt;string&gt;liblzma&amp;gt;=3D5.0.0_1&lt;/string&gt;
+      &lt;string&gt;device-mapper&amp;gt;=3D2.02.110_1&lt;/string&gt;
+      &lt;string&gt;glibc&amp;gt;=3D2.8_1&lt;/string&gt;
+    &lt;/array&gt;
+    &lt;key&gt;shlib-requires&lt;/key&gt;
+    &lt;array&gt;
+      &lt;string&gt;liblzma.so.5&lt;/string&gt;
+      &lt;string&gt;libdevmapper.so.1.02&lt;/string&gt;
+      &lt;string&gt;libc.so.6&lt;/string&gt;
+    &lt;/array&gt;
+    &lt;key&gt;short_desc&lt;/key&gt;
+    &lt;string&gt;GRand Unified Bootloader 2&lt;/string&gt;
+    &lt;key&gt;state&lt;/key&gt;
+    &lt;string&gt;installed&lt;/string&gt;
+  &lt;/dict&gt;
+[..]
+```
+from __MUSL__ `/var/db/xbps/pkgdb-0.38.plist`
+```
+[..]
+  &lt;key&gt;grub&lt;/key&gt;
+  &lt;dict&gt;
+    &lt;key&gt;architecture&lt;/key&gt;
+    &lt;string&gt;x86_64-musl&lt;/string&gt;
+    &lt;key&gt;build-date&lt;/key&gt;
+    &lt;string&gt;2017-02-04 07:15 GMT&lt;/string&gt;
+    &lt;key&gt;conf_files&lt;/key&gt;
+    &lt;array&gt;
+      &lt;string&gt;/etc/default/grub&lt;/string&gt;
+      &lt;string&gt;/etc/grub.d/40_custom&lt;/string&gt;
+    &lt;/array&gt;
+    &lt;key&gt;filename-sha256&lt;/key&gt;
+    &lt;string&gt;8ec65cd3149e9b1320dae584fd4f6edbe7a8c8086362d802bda9a79b222ec5a=
+0&lt;/string&gt;
+    &lt;key&gt;filename-size&lt;/key&gt;
+    &lt;integer&gt;5909240&lt;/integer&gt;
+    &lt;key&gt;homepage&lt;/key&gt;
+    &lt;string&gt;http://www.gnu.org/software/grub/&lt;/string&gt;
+    &lt;key&gt;install-date&lt;/key&gt;
+    &lt;string&gt;2017-02-05 17:14 CET&lt;/string&gt;
+    &lt;key&gt;install-script&lt;/key&gt;
+    &lt;data&gt;IyEvYmluL3NoCiMKIyBHZW5lcmljIElOU1RBTEwvUkVNT1ZFIHNjcmlwdC4gQXJnd=
+W1lbnRzIHBhc3NlZCB0byB0aGlzIHNjcmlwdDoKIwojICQxID0gQUNUSU9OCVtwcmUvcG9zdF0K=
+IyAkMiA9IFBLR05BTUUKIyAkMyA9IFZFUlNJT04KIyAkNCA9IFVQREFURQlbeWVzL25vXQojICQ=
+1ID0gQ09ORl9GSUxFIChwYXRoIHRvIHhicHMuY29uZikKIyAkNiA9IEFSQ0ggKHVuYW1lIC1tKQ=
+ojCiMgTm90ZSB0aGF0IHBhdGhzIG11c3QgYmUgcmVsYXRpdmUgdG8gQ1dELCB0byBhdm9pZCBjY=
+WxsaW5nCiMgaG9zdCBjb21tYW5kcyBpZiAvYmluL3NoIChkYXNoKSBpcyBub3QgaW5zdGFsbGVk=
+IGFuZCBpdCdzCiMgbm90IHBvc3NpYmxlIHRvIGNocm9vdCgzKS4KIwoKZXhwb3J0IFBBVEg9Ii9=
+iaW46L3NiaW46L3Vzci9iaW46L3Vzci9zYmluOi91c3IvbG9jYWwvYmluOi91c3IvbG9jYWwvc2=
+JpbiIKClRSSUdHRVJTRElSPSIuL3Vzci9saWJleGVjL3hicHMtdHJpZ2dlcnMiCkFDVElPTj0iJ=
+DEiClBLR05BTUU9IiQyIgpWRVJTSU9OPSIkMyIKVVBEQVRFPSIkNCIKQ09ORl9GSUxFPSIkNSIK=
+QVJDSD0iJDYiCgojCiMgVGhlIGZvbGxvd2luZyBjb2RlIHdpbGwgcnVuIHRoZSB0cmlnZ2Vycy4=
+KIwpleHBvcnQgaW5mb19maWxlcz0iL3Vzci9zaGFyZS9pbmZvL2dydWIuaW5mby5neiAvdXNyL3=
+NoYXJlL2luZm8vZ3J1Yi1kZXYuaW5mby5neiIKCmNhc2UgIiR7QUNUSU9OfSIgaW4KcHJlKQoJO=
+zsKcG9zdCkKCSR7VFJJR0dFUlNESVJ9L2luZm8tZmlsZXMgcnVuIHBvc3QtaW5zdGFsbCAke1BL=
+R05BTUV9ICR7VkVSU0lPTn0gJHtVUERBVEV9ICR7Q09ORl9GSUxFfQoJWyAkPyAtbmUgMCBdICY=
+mIGV4aXQgJD8KCTs7CmVzYWMKCgpleGl0IDAK&lt;/data&gt;
+    &lt;key&gt;installed_size&lt;/key&gt;
+    &lt;integer&gt;30236412&lt;/integer&gt;
+    &lt;key&gt;license&lt;/key&gt;
+    &lt;string&gt;GPL-3&lt;/string&gt;
+    &lt;key&gt;maintainer&lt;/key&gt;
+    &lt;string&gt;Juan RP &amp;lt;xtraeme@voidlinux.eu&amp;gt;&lt;/string&gt;
+    &lt;key&gt;metafile-sha256&lt;/key&gt;
+    &lt;string&gt;7393162c38a5288ad14a10f6f1cc00ceb54237941c34dfbe0cff202215f9cd1=
+6&lt;/string&gt;
+    &lt;key&gt;pkgver&lt;/key&gt;
+    &lt;string&gt;grub-2.02~rc1_1&lt;/string&gt;
+    &lt;key&gt;remove-script&lt;/key&gt;
+    &lt;data&gt;IyEvYmluL3NoCiMKIyBHZW5lcmljIElOU1RBTEwvUkVNT1ZFIHNjcmlwdC4gQXJnd=
+W1lbnRzIHBhc3NlZCB0byB0aGlzIHNjcmlwdDoKIwojICQxID0gQUNUSU9OCVtwcmUvcG9zdF0K=
+IyAkMiA9IFBLR05BTUUKIyAkMyA9IFZFUlNJT04KIyAkNCA9IFVQREFURQlbeWVzL25vXQojICQ=
+1ID0gQ09ORl9GSUxFIChwYXRoIHRvIHhicHMuY29uZikKIyAkNiA9IEFSQ0ggKHVuYW1lIC1tKQ=
+ojCiMgTm90ZSB0aGF0IHBhdGhzIG11c3QgYmUgcmVsYXRpdmUgdG8gQ1dELCB0byBhdm9pZCBjY=
+WxsaW5nCiMgaG9zdCBjb21tYW5kcyBpZiAvYmluL3NoIChkYXNoKSBpcyBub3QgaW5zdGFsbGVk=
+IGFuZCBpdCdzCiMgbm90IHBvc3NpYmxlIHRvIGNocm9vdCgzKS4KIwoKZXhwb3J0IFBBVEg9Ii9=
+iaW46L3NiaW46L3Vzci9iaW46L3Vzci9zYmluOi91c3IvbG9jYWwvYmluOi91c3IvbG9jYWwvc2=
+JpbiIKClRSSUdHRVJTRElSPSIuL3Vzci9saWJleGVjL3hicHMtdHJpZ2dlcnMiCkFDVElPTj0iJ=
+DEiClBLR05BTUU9IiQyIgpWRVJTSU9OPSIkMyIKVVBEQVRFPSIkNCIKQ09ORl9GSUxFPSIkNSIK=
+QVJDSD0iJDYiCgojCiMgVGhlIGZvbGxvd2luZyBjb2RlIHdpbGwgcnVuIHRoZSB0cmlnZ2Vycy4=
+KIwpleHBvcnQgaW5mb19maWxlcz0iL3Vzci9zaGFyZS9pbmZvL2dydWIuaW5mby5neiAvdXNyL3=
+NoYXJlL2luZm8vZ3J1Yi1kZXYuaW5mby5neiIKCmNhc2UgIiR7QUNUSU9OfSIgaW4KcHJlKQoJJ=
+HtUUklHR0VSU0RJUn0vaW5mby1maWxlcyBydW4gcHJlLXJlbW92ZSAke1BLR05BTUV9ICR7VkVS=
+U0lPTn0gJHtVUERBVEV9ICR7Q09ORl9GSUxFfQoJWyAkPyAtbmUgMCBdICYmIGV4aXQgJD8KCTs=
+7CnBvc3QpCgk7Owplc2FjCgoKZXhpdCAwCg=3D=3D&lt;/data&gt;
+    &lt;key&gt;repository&lt;/key&gt;
+    &lt;string&gt;https://repo.voidlinux.eu/current/musl&lt;/string&gt;
+    &lt;key&gt;run_depends&lt;/key&gt;
+    &lt;array&gt;
+      &lt;string&gt;os-prober&amp;gt;=3D0&lt;/string&gt;
+      &lt;string&gt;device-mapper&amp;gt;=3D2.02.110_1&lt;/string&gt;
+      &lt;string&gt;musl&amp;gt;=3D0.9.9_1&lt;/string&gt;
+      &lt;string&gt;liblzma&amp;gt;=3D5.0.0_1&lt;/string&gt;
+    &lt;/array&gt;
+    &lt;key&gt;shlib-requires&lt;/key&gt;
+    &lt;array&gt;
+      &lt;string&gt;libdevmapper.so.1.02&lt;/string&gt;
+      &lt;string&gt;libc.so&lt;/string&gt;
+      &lt;string&gt;liblzma.so.5&lt;/string&gt;
+    &lt;/array&gt;
+    &lt;key&gt;short_desc&lt;/key&gt;
+    &lt;string&gt;GRand Unified Bootloader 2&lt;/string&gt;
+    &lt;key&gt;state&lt;/key&gt;
+    &lt;string&gt;installed&lt;/string&gt;
+  &lt;/dict&gt;
+[..]
+```
+--=20
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/xbps/issues/233#issuecomment-277534621=
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

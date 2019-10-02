@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] freetype with infinality flag fails to
+ build (xbps-src) (#3829)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] freetype with infinality flag fails to
+ build (xbps-src) (#3829)</h1>
+<section id="post1">
+<h5>John Rowley at <a href="#post1">Wed, 06 Apr 2016 11:52:15 -0700</a></h5>
+Bohoomil has since released his 2016-03-29 patchset, which applies just fine against freetype 2.6.3. Unfortunately, the patches fails to apply to fontconfig 2.11.1, while applying successfully to 2.11.94.
+Can we update fontconfig 2.11.94? I know it's not technically considered "stable" but every other distro uses it as stable, and 2.11.1 was released in early 2014.
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/3829#issuecomment-206511849
+</section><section id="post2">
+<h5>Toyam Cox at <a href="#post2">Wed, 06 Apr 2016 12:01:46 -0700</a></h5>
+[Not nearly every distro.](https://packages.gentoo.org/packages/media-libs/fontconfig)
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/3829#issuecomment-206514679
+</section><section id="post3">
+<h5>John Rowley at <a href="#post3">Wed, 06 Apr 2016 12:25:07 -0700</a></h5>
+OK, *every* distro was a slight exaggeration. :p
+And actually, after checking, the majority of the top distros on distrowatch.com seem to use 2.11.1. My bad!
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/3829#issuecomment-206522129
+</section><section id="post4">
+<h5>Anton at <a href="#post4">Tue, 26 Apr 2016 21:51:55 -0700</a></h5>
+I resolved problem, but I think it's a crutch.
+[template.copy.txt](https://github.com/voidlinux/void-packages/files/237948/template.copy.txt)
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/3829#issuecomment-214969389
+</section><section id="post5">
+<h5>maoamid at <a href="#post5">Sat, 11 Jun 2016 09:23:50 -0700</a></h5>
+can you explain please how to apply this patch? ty
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/3829#issuecomment-225372813
+</section><section id="post6">
+<h5>Toyam Cox at <a href="#post6">Mon, 13 Jun 2016 23:57:45 -0700</a></h5>
+A diff would be more useful to understand your solution.
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/3829#issuecomment-225795554
+</section><section id="post7">
+<h5>Alessio Sergi at <a href="#post7">Sat, 18 Jun 2016 12:27:20 -0700</a></h5>
+Closed #3829 via 6353b3548c72ecbdb0e0c2fc105ea77f4e843091.
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/3829#event-696797835
+</section><section id="post8">
+<h5>Anton at <a href="#post8">Tue, 21 Jun 2016 03:35:46 -0700</a></h5>
+You rewrite template file in freetype directory using my one and build
+package. But it can't work with fontconfig building.
+2016-06-11 19:23 GMT+03:00 maoamid &lt;notifications@github.com&gt;:
+&gt; can you explain please how to apply this patch? ty
+&gt;
+&gt; =E2=80=94
+&gt; You are receiving this because you commented.
+&gt; Reply to this email directly, view it on GitHub
+&gt; &lt;https://github.com/voidlinux/void-packages/issues/3829#issuecomment-2253=
+72813&gt;,
+&gt; or mute the thread
+&gt; &lt;https://github.com/notifications/unsubscribe/ADtABztyZs-Id3xIWFErIPrW9jn=
+f2HK1ks5qKuEXgaJpZM4Hvo3_&gt;
+&gt; .
+&gt;
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/3829#issuecomment-2274027=
+42=
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

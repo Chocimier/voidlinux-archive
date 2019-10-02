@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] lemonbuddy: rename to polybar and
+ update to 2.4.8 (#5192)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] lemonbuddy: rename to polybar and
+ update to 2.4.8 (#5192)</h1>
+<section id="post1">
+<h5>Toyam Cox at <a href="#post1">Sat, 04 Feb 2017 20:08:49 -0800</a></h5>
+Many times people 'cheat' with things like nopie to get the build to pass.
+Or they get the build to pass but got something else wrong.
+This is why it must be reviewed.
+But in this case I think the template is right but (I've tested it and) the upgrade process doesn't work at all.
+</section><section id="post2">
+<h5>Vintodrimmer at <a href="#post2">Sat, 04 Feb 2017 23:55:23 -0800</a></h5>
+@Duncaen That's reasonable. But isn't there some way to provide the end user with the information that package is deprecated? Maybe a new version so during the system update xbps will tell that this package has been replaced?
+The problem is that even if people do upgrade from 'lemonbuddy', their config will almost certainly not work, due to the number of changes in syntaxis and behaviour of the panel. It is close to a new product, in my opinion.
+@Vaelatern Can you provide more information on the error, please? I think it will speed up the process and help a lot.
+</section><section id="post3">
+<h5>Toyam Cox at <a href="#post3">Sun, 05 Feb 2017 01:46:04 -0800</a></h5>
+Perhaps the solution is to provide a subpackage for lemonbuddy that just has a "lemonbuddy has been depreciated in favor of &lt;pkgname&gt;" or no message just do the switch.
+Error: I build and install lemonbuddy. I then -Su. This does not show up. I then install this, old one is not removed.
+The upgrade path sucks.
+</section><section id="post4">
+<h5>Vintodrimmer at <a href="#post4">Sun, 05 Feb 2017 03:36:43 -0800</a></h5>
+@Vaelatern So, if I ask author to treat it as a completely different package, instead of update. this will be satisfactory and the package might appear in the repo faster?
+Because I personally really miss this package and would be glad to see it in the repos, even if it is not update of lemonbuddy, which, as I have mentioned, will most probably not work with the old config files.
+</section><section id="post5">
+<h5>Alessio Sergi at <a href="#post5">Sun, 05 Feb 2017 03:47:22 -0800</a></h5>
+@jaagr https://gist.github.com/asergi/a0ebc9aaf18ac6f9a7cedd18e2322198
+</section><section id="post6">
+<h5>Alessio Sergi at <a href="#post6">Sun, 05 Feb 2017 03:51:50 -0800</a></h5>
+asergi commented on this pull request.
+&gt; @@ -0,0 +1,57 @@
++# Template file for 'polybar'
++pkgname=polybar
++version=3.0.3
++revision=2
+`revision=1`
+</section><section id="post7">
+<h5>Alessio Sergi at <a href="#post7">Sun, 05 Feb 2017 03:54:11 -0800</a></h5>
+asergi commented on this pull request.
+&gt; @@ -0,0 +1,57 @@
++# Template file for 'polybar'
++pkgname=polybar
++version=3.0.3
++revision=2
++_i3ipcpp_version=0.6.2
++_xpp_version=1.3.6
++build_style=cmake
++configure_args="
++ -DENABLE_ALSA=$(vopt_if alsa ON OFF)
++ -DENABLE_CURL=$(vopt_if curl ON OFF)
++ -DENABLE_I3=$(vopt_if i3 ON OFF)
++ -DENABLE_MPD=$(vopt_if mpd ON OFF)
++ -DENABLE_NETWORK=$(vopt_if network ON OFF)"
++depends="cairo xcb-util-wm xcb-util-image xcb-util-xrm"
+`depends` line is redundant. See https://travis-ci.org/voidlinux/void-packages/jobs/195969639#L917-L935.
+</section><section id="post8">
+<h5>Alessio Sergi at <a href="#post8">Sun, 05 Feb 2017 04:08:17 -0800</a></h5>
+asergi commented on this pull request.
+&gt; + $(vopt_if mpd "libmpdclient-devel")
++ $(vopt_if network "wireless_tools-devel")"
++short_desc="A fast and easy-to-use status bar"
++maintainer="Michael Carlberg &lt;c@rlberg.se&gt;"
++license="MIT"
++homepage="https://github.com/jaagr/polybar"
++distfiles="
++ https://github.com/jaagr/polybar/archive/${version}.tar.gz
++ https://github.com/jaagr/xpp/archive/${_xpp_version}.tar.gz
++ $(vopt_if i3 https://github.com/jaagr/i3ipcpp/archive/v${_i3ipcpp_version}.tar.gz)"
++checksum="
++ c6a19345b728c2f270b816f87b06201bb86ff8a1aa52140a1340409b8bf9f2b1
++ b81993893190bf7ba19529e0da6e8b069e13e833f6a62874830b46785bee3349
++ $(vopt_if i3 7ad9c0c1e1cb9dfd07ecc2a7769eae9ac962c22db2e07be08b2186b7fd85189d)"
++
++build_options="alsa curl i3 mpd network"
+The above build options are missing the description. Example: `desc_option_i3="Enable support for i3"` and so on.
+</section><section id="post9">
+<h5>Kieran Coldron at <a href="#post9">Wed, 19 Apr 2017 14:53:33 -0700</a></h5>
+Is there any progress on getting this merged?
+</section><section id="post10">
+<h5>Vintodrimmer at <a href="#post10">Thu, 20 Apr 2017 00:21:46 -0700</a></h5>
+I don't think it will be merged, to be honest.
+They want the author to make lemonbuddy upgradeable to polybar, which is not going to happen, due to a variety of reasons.
+There is a more up to date template on his github and it builds perfectly (except on musl). You can also try to add it to VUR.
+</section><section id="post11">
+<h5>Vintodrimmer at <a href="#post11">Sun, 23 Apr 2017 01:12:38 -0700</a></h5>
+Vintodrimmer commented on this pull request.
+&gt; @@ -0,0 +1,57 @@
++# Template file for 'polybar'
++pkgname=polybar
++version=3.0.3
++revision=2
++_i3ipcpp_version=0.6.2
++_xpp_version=1.3.6
++build_style=cmake
++configure_args="
++ -DENABLE_ALSA=$(vopt_if alsa ON OFF)
++ -DENABLE_CURL=$(vopt_if curl ON OFF)
++ -DENABLE_I3=$(vopt_if i3 ON OFF)
++ -DENABLE_MPD=$(vopt_if mpd ON OFF)
++ -DENABLE_NETWORK=$(vopt_if network ON OFF)"
++depends="cairo xcb-util-wm xcb-util-image xcb-util-xrm"
+Can you explain the output, please?
+I'd like to try and properly format the template
+</section><section id="post12">
+<h5>Toyam Cox at <a href="#post12">Tue, 25 Apr 2017 19:04:55 -0700</a></h5>
+Vaelatern commented on this pull request.
+&gt; @@ -0,0 +1,9 @@
++
++  Get started with the example configuration:
++
++    $ install -Dm644 /usr/share/doc/polybar/config $HOME/.config/polybar
++    $ polybar example
++
+Way too many newlines in here. Please cut out empty lines.
+</section><section id="post13">
+<h5>Vintodrimmer at <a href="#post13">Wed, 26 Apr 2017 10:57:57 -0700</a></h5>
+It's not always pleasant to be proven wrong, but today is one of those exceptions.
+Thanks for pulling it.
+Now I can finally stop building it with every update.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

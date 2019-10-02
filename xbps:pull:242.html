@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/xbps] bin/xbps-query: exit 1 if --ownedby has no
+ result (#242)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/xbps] bin/xbps-query: exit 1 if --ownedby has no
+ result (#242)</h1>
+<section id="post1">
+<h5>Michael Gehring at <a href="#post1">Wed, 24 May 2017 15:53:53 -0700</a></h5>
+Why? No result != an error occured. Also similar #173
+</section><section id="post2">
+<h5>rox at <a href="#post2">Thu, 25 May 2017 07:22:04 -0700</a></h5>
+The `grep` command exit 1 if the result is empty. It's really wierd for me. For bash scripting, I have to be careful with this case if I'm also using `set -e`
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/xbps] xbps-install: despite '-y' option, still prompts
+ for confirmation to import public key (#208)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/xbps] xbps-install: despite '-y' option, still prompts
+ for confirmation to import public key (#208)</h1>
+<section id="post1">
+<h5>Alain Kalker at <a href="#post1">Sun, 25 Sep 2016 14:09:09 -0700</a></h5>
+@Duncaen Ah that's a good point, and almost was part of my question in a previous edit. I guess that a bootstrap script should have its own way of verifying the key (and perhaps asking the user upfront, even if the actual bootstrap will be done at a later time).
+</section><section id="post2">
+<h5>Enno Boland at <a href="#post2">Mon, 26 Sep 2016 04:07:48 -0700</a></h5>
+We should always ask this question. Regardless of -y.
+Nevertheless we should test for isatty and asume "no" if stdin isn't a tty. This prevents automatic scripts from hanging.
+For automatic installs, you should place the key in the right directory (/var/db/xbps/keys) before starting any installation.
+</section><section id="post3">
+<h5>Enno Boland at <a href="#post3">Mon, 26 Sep 2016 04:12:38 -0700</a></h5>
+```
+diff --git a/bin/xbps-install/state_cb.c b/bin/xbps-install/state_cb.c
+index 5189b9a..e851bf5 100644
+--- a/bin/xbps-install/state_cb.c
++++ b/bin/xbps-install/state_cb.c
+@@ -147,6 +147,11 @@ state_cb(const struct xbps_state_cb_data *xscd, void *cbdata _unused)
+        case XBPS_STATE_REPO_KEY_IMPORT:
+                printf("%s\n", xscd-&gt;desc);
+                printf("Fingerprint: %s\n", xscd-&gt;arg);
++               if (!isatty(STDIN_FILENO)) {
++                       rv = 0;
++                       printf("Fingerprint is untrusted\n");
++                       break;
++               }
+                rv = yesno("Do you want to import this public key?");
+                break;
+        case XBPS_STATE_SHOW_INSTALL_MSG:
+```
+</section><section id="post4">
+<h5>Alain Kalker at <a href="#post4">Mon, 26 Sep 2016 10:41:08 -0700</a></h5>
+Thanks for all the good points, I've updated my bootstrap script to fetch, verify and install the key files itself.
+</section><section id="post5">
+<h5>Sebastian Pipping at <a href="#post5">Wed, 27 Dec 2017 12:01:23 -0800</a></h5>
+Hi!
+While adding support for creating Void Linux chroots to `directory-bootstrap` of image-bootstrap (in https://github.com/hartwork/image-bootstrap/commit/ff46179698babcea0c51e52e6ffb2dac8782b08e) I came across this very issue (and happily confirm the advertised workaround to be working).
+I would like to vote for not proceeding with key import unasked for security *while* keeping `--yes` fully non-interactive, as advertised. In my mind, aborting with an error that `--yes` requires the key put in place, would work best: It would allow calling tools to pass a tty that they need for themselves, without applying tricks to call xbps in non-tty mode. Thanks!
+PS: @Gottox, we just had a quick chat at the Void Linux assembly at 34c3 on that topic.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

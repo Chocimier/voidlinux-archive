@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] chromium: update to 60.0.3112.78.
+ (#7164)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] chromium: update to 60.0.3112.78.
+ (#7164)</h1>
+<section id="post1">
+<h5>Michael Gehring at <a href="#post1">Sat, 05 Aug 2017 12:26:14 +0000 (UTC)</a></h5>
+Updated to chromium 60.0.3112.90, on musl tabs still crash after a while.
+</section><section id="post2">
+<h5>Michael Gehring at <a href="#post2">Sat, 05 Aug 2017 18:31:02 +0000 (UTC)</a></h5>
+glibc build broken by the glibc-2.26 update.
+</section><section id="post3">
+<h5>Leаh Neukirchen at <a href="#post3">Sun, 06 Aug 2017 17:03:38 +0000 (UTC)</a></h5>
+Does that help? https://github.com/OSSystems/meta-browser/blob/master/recipes-browser/chromium/files/0002-replace-struct-ucontext-with-ucontext_t.patch
+</section><section id="post4">
+<h5>Michael Gehring at <a href="#post4">Fri, 15 Sep 2017 13:33:54 +0000 (UTC)</a></h5>
+update to 61.0.3163.91, glibc builds no energy left for musl for now.
+</section><section id="post5">
+<h5>Natanael Copa at <a href="#post5">Fri, 15 Sep 2017 06:41:56 -0700</a></h5>
+this is the patch you need for musl: https://github.com/lluixhi/musl-extras/issues/10#issuecomment-328272349
+</section><section id="post6">
+<h5>Michael Gehring at <a href="#post6">Fri, 15 Sep 2017 11:59:22 -0700</a></h5>
+@ncopa thanks. musl builds now too, otherwise untested.
+</section><section id="post7">
+<h5>Michael Gehring at <a href="#post7">Sat, 16 Sep 2017 07:36:31 +0000 (UTC)</a></h5>
+Closed #7164.
+</section><section id="post8">
+<h5>Michael Gehring at <a href="#post8">Sat, 16 Sep 2017 07:36:32 +0000 (UTC)</a></h5>
+81a77d6f5f7c3256f65fa29e47087fcbf05e5f69
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

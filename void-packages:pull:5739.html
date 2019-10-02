@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] mumble: fix OpenGL overlay and TTS
+ (#5739)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] mumble: fix OpenGL overlay and TTS
+ (#5739)</h1>
+<section id="post1">
+<h5>Helmut Pozimski at <a href="#post1">Tue, 14 Feb 2017 07:20:35 -0800</a></h5>
+Hoshpak commented on this pull request.
+&gt; @@ -0,0 +1,10 @@
++--- src/mumble/mumble.pro	2017-01-29 23:28:11.271718136 +0100
+++++ src/mumble/mumble.pro	2017-01-29 23:28:18.341626410 +0100
++@@ -293,6 +293,7 @@
++ speechd {
++ 	DEFINES *= USE_SPEECHD
++ 	LIBS *= -lspeechd
+++	INCLUDEPATH *= /usr/include/speech-dispatcher
+In what way does it look wrong, because it is an absolute path? The issue is that the speech-dispatcher headers are in /usr/include/speech-dispatcher and not /usr/include. Currently the qmake scripts for mumble fail to take this into account and the compilation fails.
+</section><section id="post2">
+<h5>Helmut Pozimski at <a href="#post2">Tue, 14 Feb 2017 07:56:18 -0800</a></h5>
+Hoshpak commented on this pull request.
+&gt; @@ -0,0 +1,10 @@
++--- src/mumble/mumble.pro	2017-01-29 23:28:11.271718136 +0100
+++++ src/mumble/mumble.pro	2017-01-29 23:28:18.341626410 +0100
++@@ -293,6 +293,7 @@
++ speechd {
++ 	DEFINES *= USE_SPEECHD
++ 	LIBS *= -lspeechd
+++	INCLUDEPATH *= /usr/include/speech-dispatcher
+That seemed to work. However I'm not sure if and how environment variables from the shell are processed by and available within qmake. Since the package cannot be cross-compiled in it's current form I also couldn't test it. The speechd header file is only included in a single file so patching that file to include the header file in the correct path might be another way to solve this. I amended the commit to do that, the path stays relative this way.
+</section><section id="post3">
+<h5>Alessio Sergi at <a href="#post3">Wed, 15 Feb 2017 03:30:39 -0800</a></h5>
+Merged #5739.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

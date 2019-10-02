@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] Package Request: flaskbb (#5203)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] Package Request: flaskbb (#5203)</h1>
+<section id="post1">
+<h5>Anachron at <a href="#post1">Sun, 20 Nov 2016 11:58:00 -0800</a></h5>
+I don't get it. Why is flask packaged and flaskbb not? flaskbb ist just an application on top of flask.
+</section><section id="post2">
+<h5>Anachron at <a href="#post2">Sun, 20 Nov 2016 13:33:30 -0800</a></h5>
+Hmmm I believe it would be good to update the packages by xbps and run the migration and other stuff manually.
+But if there are no tagged releases I guess it cannot be included in main repo?
+Is there any information on why pkgs cannot be based on a commit-hash?
+</section><section id="post3">
+<h5>Toyam Cox at <a href="#post3">Wed, 23 Nov 2016 14:46:16 -0800</a></h5>
+Because commit hashes are often intermediate quality software, not deemed worthy of a release by upstream. Also because people keep bothering maintainers to update to the next day or week's commit hash, and it uses our time when we already have things to do to maintain Void.
+Also note: Flask is a utility for Python. It is system level. flaskbb uses Flask to do things. That's why we package Flask: it has a variety of uses and knows exactly what it can or can not control within a system. (Flask gets installed to a few directories, and just sits there. it doesn't require other programs be installed and then try to change their configurations before being usable.) I've heard a recommendation to use Ansible Galaxy to set up things like flaskbb, just in case that's of interest to you.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

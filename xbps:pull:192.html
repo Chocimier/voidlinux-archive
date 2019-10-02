@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/xbps] xbps-remove: fix --dry-run for --clean-cache
+ (#192)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/xbps] xbps-remove: fix --dry-run for --clean-cache
+ (#192)</h1>
+<section id="post1">
+<h5>Jan Tatje at <a href="#post1">Fri, 02 Sep 2016 14:28:57 -0700</a></h5>
+I can change it to pass whatever you want, somehow just read the variable name "arg" and thought of a string. (Even though it's void*!) Should I rather pass a bool* or an int* and use the first bit as flag? I can change it to whatever you think it's best.
+</section><section id="post2">
+<h5>Jan Tatje at <a href="#post2">Tue, 06 Sep 2016 15:28:30 -0700</a></h5>
+I changed it to pass a bool pointer.
+</section><section id="post3">
+<h5>Juan RP at <a href="#post3">Tue, 06 Sep 2016 22:47:59 -0700</a></h5>
+&gt;  		bool *done _unused)
+&gt;  {
+&gt;  	xbps_dictionary_t repo_pkgd;
+&gt;  	const char *binpkg, *rsha256;
+&gt;  	char *binpkgsig, *pkgver, *arch;
+&gt; +	bool drun;
+`bool drun = false;`
+</section><section id="post4">
+<h5>Juan RP at <a href="#post4">Tue, 06 Sep 2016 22:48:22 -0700</a></h5>
+&gt;  		bool *done _unused)
+&gt;  {
+&gt;  	xbps_dictionary_t repo_pkgd;
+&gt;  	const char *binpkg, *rsha256;
+&gt;  	char *binpkgsig, *pkgver, *arch;
+&gt; +	bool drun;
+&gt; +
+&gt; +	/* Extract drun (dry-run) flag from arg*/
+&gt; +	if (arg != NULL)
+&gt; +		drun = *(bool*)arg;
+&gt; +	else
+WIth the var initialized previously you can skip the `else` conditional.
+</section><section id="post5">
+<h5>Jan Tatje at <a href="#post5">Wed, 07 Sep 2016 12:58:29 -0700</a></h5>
+Done. Please re-review.
+</section><section id="post6">
+<h5>Enno Boland at <a href="#post6">Wed, 07 Sep 2016 13:02:36 -0700</a></h5>
+:+1:
+</section><section id="post7">
+<h5>Enno Boland at <a href="#post7">Wed, 07 Sep 2016 13:03:29 -0700</a></h5>
+Merged #192.
+</section><section id="post8">
+<h5>avoidr at <a href="#post8">Sun, 22 Oct 2017 10:04:08 +0000 (UTC)</a></h5>
+Hello. I just came across this bug myself.
+When is the next release/revision of xbps going to be?
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] New package: slstatus-1.0 (#4401)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] New package: slstatus-1.0 (#4401)</h1>
+<section id="post1">
+<h5>"Dom H." at <a href="#post1">Thu, 30 Jun 2016 12:59:37 -0700</a></h5>
+Damn, failing to build on armv*.
+Anyone able to offer any help?
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4401#issuecomment-229771126
+</section><section id="post2">
+<h5>"Dom H." at <a href="#post2">Thu, 30 Jun 2016 13:15:37 -0700</a></h5>
+&gt; +revision=1
+&gt; +build_style=gnu-makefile
+&gt; +short_desc="Suckless status monitor for dwm"
+&gt; +maintainer="Dom H. &lt;dom@hxy.io&gt;"
+&gt; +license="GPL-3"
+&gt; +homepage="https://git.nulltime.net/${pkgname}"
+&gt; +distfiles="https://git.nulltime.net/${pkgname}/snapshot/${pkgname}-${version}.tar.gz"
+&gt; +makedepends="alsa-lib-devel libX11-devel"
+&gt; +depends="alsa-lib"
+&gt; +checksum=6b3510d6bc96b39a45cb2e2e02240ed7bc23eecb9b2fe79850dfe9f3b9ffff73
+&gt; +
+&gt; +do_build() {
+&gt; +	cp ${FILESDIR}/config.h config.h
+&gt; +	sed -i 's|^CFLAGS *=|override CFLAGS +=|g' config.mk
+&gt; +	sed -i 's|^LDFLAGS *=|override LDFLAGS +=|g' config.mk
+&gt; +	make
+Thanks @Duncaen, that did the trick!
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4401/files/f251e3b9fa51e2c8c22470034261af613b85f1ee#r69202357
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

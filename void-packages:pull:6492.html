@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] New package: gradio-5.0 (#6492)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] New package: gradio-5.0 (#6492)</h1>
+<section id="post1">
+<h5>logenkain at <a href="#post1">Mon, 29 May 2017 20:37:26 -0700</a></h5>
+logenkain commented on this pull request.
+&gt; @@ -0,0 +1,16 @@
++# Template file for 'gradio'
++pkgname=gradio
++version=5.0
++revision=1
++build_style=gnu-configure
++configure_script="./autogen.sh"
++only_for_archs="x86_64 i686 x86_64-musl i686-musl"
+I suspect you may be right. I'll change it to nocross. Not sure how to actually test it though.
+</section><section id="post2">
+<h5>logenkain at <a href="#post2">Tue, 30 May 2017 16:24:05 -0700</a></h5>
+In case it's relevant: https://travis-ci.org/logenkain/void-packages/jobs/235458932
+^ arm error
+</section><section id="post3">
+<h5>Michael Aldridge at <a href="#post3">Wed, 05 Jul 2017 00:17:05 -0700</a></h5>
+I have a commit on top of this that fixes cross compiling.  It just needed a few extra packages to be available during build and then it was fine.  The build came out fine with no errors, but short of pulling out a pi I can't confirm that it actually works.  Given that our standard of "working" for new packages has been green builds on Travis, I'm merging this as it sits.
+Quite an enjoyable program, I have it running in the background at the moment.
+</section><section id="post4">
+<h5>Michael Aldridge at <a href="#post4">Wed, 05 Jul 2017 07:18:26 +0000 (UTC)</a></h5>
+Closed #6492 via 4d8a0a1b746c43f8e4f21dffb067275d8c5cb456.
+</section><section id="post5">
+<h5>silvernode at <a href="#post5">Wed, 05 Jul 2017 10:32:47 +0000 (UTC)</a></h5>
+Awesome, thanks a lot, glad this got merged. Also I am glad you like it @the-maldridge I agree that it is an enjoyable program.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

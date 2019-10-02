@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/xbps] xbps-uchroot and xbps-uunshare usability
+ improvements (#207)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/xbps] xbps-uchroot and xbps-uunshare usability
+ improvements (#207)</h1>
+<section id="post1">
+<h5>Michael Gehring at <a href="#post1">Sun, 02 Oct 2016 08:32:44 -0700</a></h5>
+ebfe commented on this pull request.
+&gt;  	cmd = argv[1];
+ 	cmdargs = argv + 1;
+ 	/* Never allow chrootdir == / */
+ 	if (strcmp(chrootdir, "/") == 0)
+ 		die("/ is not allowed to be used as chrootdir");
++	/* Make chrootdir absolute */
++	if (chrootdir[0] != '/') {
+use realpath(3)?
+&gt; @@ -157,14 +157,22 @@ main(int argc, char **argv)
+ 	if (argc &lt; 2)
+ 		usage(argv0);
+-	chrootdir = argv[0];
++	chrootdir = argv[-1];
+huh?
+</section><section id="post2">
+<h5>Juan RP at <a href="#post2">Wed, 25 Oct 2017 00:14:42 -0700</a></h5>
+Merged #207.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

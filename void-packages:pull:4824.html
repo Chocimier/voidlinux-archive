@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] New package: rpm-4.12.0 (#4824)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] New package: rpm-4.12.0 (#4824)</h1>
+<section id="post1">
+<h5>Toyam Cox at <a href="#post1">Tue, 27 Sep 2016 19:05:35 -0700</a></h5>
+Vaelatern commented on this pull request.
+&gt; +pkgname=rpm
++version=4.12.0
++revision=1
++build_style=gnu-configure
++configure_args="--with-external-db"
++hostmakedepends="pkg-config"
++makedepends="zlib-devel nss-devel file-devel popt-devel libarchive-devel db-devel lua52-devel"
++short_desc="The RPM Package Manager"
++maintainer="Renato Aguiar &lt;contact@renatoaguiar.org&gt;"
++license="GPL-3"
++homepage="http://rpm.org"
++distfiles="http://rpm.org/releases/rpm-4.12.x/${pkgname}-${version}.tar.bz2"
++checksum=770d5cd1aa9430affa6ddd336a81dae79704962478f6b336d5b694c3e02113a2
++
++do_configure() {
++	./configure ${configure_args} CPPFLAGS="$(pkg-config --cflags nss)"
+Ah, I suppose not. Perhaps in a `pre_configure` then?
+</section><section id="post2">
+<h5>Leah Neukirchen at <a href="#post2">Thu, 06 Jul 2017 11:12:26 -0700</a></h5>
+Closed #4824.
+</section><section id="post3">
+<h5>Leah Neukirchen at <a href="#post3">Thu, 06 Jul 2017 11:12:26 -0700</a></h5>
+4.13.0.1 is current, please update and reopen.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

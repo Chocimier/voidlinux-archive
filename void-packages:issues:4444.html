@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] freetype-2.6.4_1 broke full RGB
+ subpixel hinting (#4444)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] freetype-2.6.4_1 broke full RGB
+ subpixel hinting (#4444)</h1>
+<section id="post1">
+<h5>"Suraj N. Kurapati" at <a href="#post1">Sun, 02 Oct 2016 10:03:57 -0700</a></h5>
+I had no luck setting that `FT2_SUBPIXEL_HINTING` environment variable :scream: but this worked:
+```sh
+export FREETYPE_PROPERTIES="truetype:interpreter-version=35"
+```
+The only remaining issue is that Chromium [ignores the override](https://bugs.chromium.org/p/chromium/issues/detail?id=649362), so I had to downgrade freetype:
+```sh
+sudo xdowngrade /var/cache/xbps/freetype-{,devel-}2.6.5_1.x86_64.xbps
+sudo xbps-pkgdb -m hold freetype freetype-devel
+```
+</section><section id="post2">
+<h5>Christian Neukirchen at <a href="#post2">Thu, 17 Nov 2016 05:25:43 -0800</a></h5>
+Closed #4444.
+</section><section id="post3">
+<h5>Christian Neukirchen at <a href="#post3">Thu, 17 Nov 2016 05:25:43 -0800</a></h5>
+You can now locally build freetype with a different config: 22325e1
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

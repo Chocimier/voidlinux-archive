@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/xbps] xbps-query suddenly needs root permissions
+ (#232)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/xbps] xbps-query suddenly needs root permissions
+ (#232)</h1>
+<section id="post1">
+<h5>zqqw at <a href="#post1">Sun, 26 Feb 2017 18:36:38 -0800</a></h5>
+```
+# Template file for 'xbps-triggers'
+pkgname=xbps-triggers
+version=0.102
+revision=3
+noarch=yes
+bootstrap=yes
+short_desc="The XBPS triggers for Void Linux"
+maintainer="Juan RP &lt;xtraeme@voidlinux.eu&gt;"
+homepage="http://www.voidlinux.eu"
+license="Simplified BSD"
+do_install() {
+        _triggersdir=usr/libexec/${pkgname}
+        for f in ${FILESDIR}/*; do
+                _trigger=$(basename $f)
+                vinstall ${FILESDIR}/${_trigger} 750 ${_triggersdir}
+                echo "# end" &gt;&gt; ${DESTDIR}/${_triggersdir}/${_trigger}
+        done
+        vmkdir var/db/xbps
+        cd ${DESTDIR}/var/db/xbps
+        ln -sf ../../../${_triggersdir} triggers
+}
+```
+Here is the directory being created above by vmkdir -
+I was recently using that to make directories and they didn't have restrictive permissions:
+vmkdir usr/share/examples/${pkgname}
+$ ls -lh /usr/share/examples
+total 0
+drwxr-xr-x 1 root root 58 Feb 26 14:20 audit
+So something else must have done that, unless it was like that on the install image.
+</section><section id="post2">
+<h5>zqqw at <a href="#post2">Mon, 27 Feb 2017 06:31:09 -0800</a></h5>
+That's why I have never seen this issue myself then.
+etc$ sudo ag UMASK
+security/namespace.init
+18:                mask=$(awk '/^UMASK/{gsub("#.*$", "", $2); print $2; exit}' /etc/login.defs)
+login.defs
+67:#	UMASK		Default "umask" value.
+77:UMASK			077
+My UMASK is not restrictive. I have never set this myself, but I have locked the root account and only use sudo in the single user account. Those with problems often seem to have a root account they use as well, and perhaps they have changed the UMASK manually or unknowingly by installing some package.
+</section><section id="post3">
+<h5>Vintodrimmer at <a href="#post3">Tue, 27 Jun 2017 06:20:36 -0700</a></h5>
+Good day,
+Is there any easy way to temporary fix this, if it has already occured?
+</section><section id="post4">
+<h5>Michael Gehring at <a href="#post4">Tue, 27 Jun 2017 06:24:38 -0700</a></h5>
+&gt; Is there any easy way to temporary fix this, if it has already occured?
+Change permission on `/var/db/xbps/pkgdb-0.38.plist`
+</section><section id="post5">
+<h5>zqqw at <a href="#post5">Tue, 27 Jun 2017 06:55:07 -0700</a></h5>
+And to prevent it happening again, as Duncaen said:
+Workaround is to set a less restrictive umask in sudo.
+Or you could try to build xbps using his patch set:
+Fix pkgdb and files plist permissions with restictive umask. #234
+That should be "restrictive" Duncaen, perhaps that's why it hasn't been merged yet, Travis will be unhappy.
+</section><section id="post6">
+<h5>Vintodrimmer at <a href="#post6">Tue, 27 Jun 2017 11:13:01 -0700</a></h5>
+Thank you!
+Unfortunately, it did not help. It appears that not only `/var/db/xbps/pkgd=
+b-0.38.plist` was modified, but pretty much every file int the directory.
+I've compared to the remote machine, where the `xbps-query` works from user=
+ and and got the following result:
+Local laptop:
+```
+# ls -lh /var/db/xbps/*
+-rw-r--r-- 1 root root 1.3M Jun 27 18:45 /var/db/xbps/pkgdb-0.38.plist
+lrwxrwxrwx 1 root root   34 Oct 27  2016 /var/db/xbps/triggers -&gt; ../../../
+/var/db/xbps/https___repo_voidlinux_eu_current:
+total 1.3M
+-rw-r----- 1 root root 1.3M Jun 27 14:39 x86_64-repodata
+/var/db/xbps/https___repo_voidlinux_eu_current_multilib:
+total 484K
+-rw-r----- 1 root root 477K Jun 27 14:39 x86_64-repodata
+/var/db/xbps/https___repo_voidlinux_eu_current_multilib_nonfree:
+total 12K
+-rw-r----- 1 root root 7.9K Jun 14 04:23 x86_64-repodata
+/var/db/xbps/https___repo_voidlinux_eu_current_nonfree:
+total 16K
+-rw-r----- 1 root root 12K Jun 27 09:12 x86_64-repodata
+/var/db/xbps/keys:
+total 8.0K
+-rw-r--r-- 1 root root 1.4K Apr 13 10:35 60:ae:0c:d6:f0:95:17:80:bc:93:46:7
+```
+Remote machine:
+```
+=E2=95=B0=E2=94=80&gt;$ ls -lh /var/db/xbps/*
+-rw-r--r-- 1 root root 1.5M Jun 27 20:41 /var/db/xbps/pkgdb-0.38.plist
+lrwxrwxrwx 1 root root   34 Oct 27  2016 /var/db/xbps/triggers -&gt; ../../../
+/var/db/xbps/http___repo3_voidlinux_eu_current_:
+total 0
+/var/db/xbps/http___repo_voidlinux_eu_current:
+total 1.3M
+-rw-r--r-- 1 root root 1.3M Apr  6 16:17 x86_64-repodata
+/var/db/xbps/https___repo_voidlinux_eu_current:
+total 1.3M
+-rw-r--r-- 1 root root 1.3M Jun 27 17:12 x86_64-repodata
+/var/db/xbps/https___repo_voidlinux_eu_current_nonfree:
+total 16K
+-rw-r--r-- 1 root root 12K Jun 27 10:12 x86_64-repodata
+/var/db/xbps/keys:
+total 8.0K
+-rw-r--r-- 1 root root 1.4K Apr 13 11:35 60:ae:0c:d6:f0:95:17:80:bc:93:46:7
+```
+After setting the correct permissions to the `/var/db/xbps/pkgdb-0.38.plist=
+`, nothing changed. I tried changing it for the other files too and screwed=
+ up a little, so I ended up removing the directory alltogether and creating=
+ a new one from root.
+Seems to be working now, but I will definitely try a different umask for su=
+do, as I use it on a daily basis.
+--=20
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/xbps/issues/232#issuecomment-311440654=
+</section><section id="post7">
+<h5>zqqw at <a href="#post7">Tue, 27 Jun 2017 13:16:31 -0700</a></h5>
+It wasn't only the files, it was the permissions of the directory itself, ie "." (dot, the present directory). If you look carefully at the earlier posts you will see the difference.
+</section><section id="post8">
+<h5>Juan RP at <a href="#post8">Wed, 25 Oct 2017 00:13:27 -0700</a></h5>
+Closed #232 via #234.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

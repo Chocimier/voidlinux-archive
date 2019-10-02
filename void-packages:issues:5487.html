@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] musl builders date/time issue? (#5487)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] musl builders date/time issue? (#5487)</h1>
+<section id="post1">
+<h5>Juan RP at <a href="#post1">Wed, 11 Jan 2017 10:41:14 -0800</a></h5>
+I guess the glibc builders, the arm ones also have this problem.
+</section><section id="post2">
+<h5>Juan RP at <a href="#post2">Wed, 11 Jan 2017 10:42:40 -0800</a></h5>
+Sorry, the arm musl builders are the ones exhibing this problem, not the glibc ones.
+</section><section id="post3">
+<h5>Juan RP at <a href="#post3">Wed, 11 Jan 2017 10:52:17 -0800</a></h5>
+Please clean all of them. To be sure.
+2017-01-11 19:45 GMT+01:00 Duncan Overbruck &lt;notifications@github.com&gt;:
+&gt; Ah fixed now, forgot to clean the last few builds before 100, I cleaned=
+&gt; aarch64 too.
+&gt;
+&gt; =E2=80=94
+&gt; You are receiving this because you modified the open/close state.
+&gt; Reply to this email directly, view it on GitHub
+&gt; &lt;https://github.com/voidlinux/void-packages/issues/5487#issuecomment-27=
+1957599&gt;,
+&gt; or mute the thread
+&gt; &lt;https://github.com/notifications/unsubscribe-auth/AA0fqSE3fEos55lV-ruz=
+oDSYomSDUXTGks5rRSNdgaJpZM4LdlYf&gt;
+&gt; .
+&gt;
+-- =
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/5487#issuecomment-27195=
+9299=
+</section><section id="post4">
+<h5>Juan RP at <a href="#post4">Wed, 11 Jan 2017 11:48:33 -0800</a></h5>
+```
+=&gt; linux4.4-4.4.41_1: verifying checksum for distfile 'linux-4.4.41.tar.xz'... ln: failed to create hard link '/host/sources/by_sha256/8a6d847f5ffa3188d5c9d266ebaca5bb77c8af7637bd3bf74ab6747d5e7646fc_linux-4.4.41.tar.xz' =&gt; '/host/sources/linux4.4-4.4.41/linux-4.4.41.tar.xz': Permission denied```
+</section><section id="post5">
+<h5>Michael Aldridge at <a href="#post5">Fri, 13 Jan 2017 11:50:22 -0800</a></h5>
+The root cause was determined to be a collision of build IDs when the buildmaster was recovered after an LVM crash earlier in the month.  I recommend closing this ticket.
+</section><section id="post6">
+<h5>Jürgen Buchmüller at <a href="#post6">Thu, 23 Feb 2017 05:41:32 -0800</a></h5>
+@Duncaen perhaps this is related @chneukirchen 's findings in #5801 (builders use `chpst -u`).
+</section><section id="post7">
+<h5>Michael Aldridge at <a href="#post7">Mon, 03 Jul 2017 05:47:00 +0000 (UTC)</a></h5>
+Closed #5487.
+</section><section id="post8">
+<h5>Michael Aldridge at <a href="#post8">Mon, 03 Jul 2017 05:47:01 +0000 (UTC)</a></h5>
+This issue was resolved some time ago.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

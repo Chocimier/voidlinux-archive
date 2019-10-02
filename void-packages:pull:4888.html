@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] New package: volctl-0.4 (#4888)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] New package: volctl-0.4 (#4888)</h1>
+<section id="post1">
+<h5>Michael Gehring at <a href="#post1">Tue, 04 Oct 2016 17:13:02 -0700</a></h5>
+#4702
+</section><section id="post2">
+<h5>Teldra at <a href="#post2">Tue, 04 Oct 2016 17:23:42 -0700</a></h5>
+teldra commented on this pull request.
+&gt; +revision=1
++build_style=python-module
++hostmakedepends="python-devel python-setuptools git"
++makedepends="python-gobject"
++depends="python pulseaudio desktop-file-utils"
++short_desc="Lightweight volume control that sits in your systray"
++maintainer="xo &lt;oh@rotce.de&gt;"
++license="GPL-2"
++homepage="https://buzz.github.io/volctl/"
++#distfiles="https://github.com/buzz/volctl/archive/${version}.tar.gz"
++#checksum=31b7079767172c03653af380181272ade50f04f7ca32c69725239ea8116f0640
++
++wrksrc=volctl
++
++do_fetch() {
++	git clone https://github.com/buzz/volctl.git volctl
+oh, yes. sry. i just forgot.
+should i close the pr and wait for release, just wait for release or use the old version, with major bug?
+</section><section id="post3">
+<h5>Toyam Cox at <a href="#post3">Sat, 03 Dec 2016 20:58:50 -0800</a></h5>
+Closed #4888 via 90ca6d18367cff3670f055e69339d56d9da33982.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] cups: build with gssapi support (#5649)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] cups: build with gssapi support (#5649)</h1>
+<section id="post1">
+<h5>Helmut Pozimski at <a href="#post1">Tue, 31 Jan 2017 00:26:15 -0800</a></h5>
+I made the changes you requested. Building the package with gssapi support was the whole point of the pull request, the build option was added because @xtraeme requested it. So adding it just not to use it would be useless from my point of view. I see no harm in building cups with gssapi support, it is done this way by many distributions and is apparently now considered to be the default by upstream.
+But I agree that the most important thing is to get cups working again so I don't want to argue to much about that. I've ammended the PR again to remove the option as default and pull in a patch taken from alpine to the cupsd.conf which removes the need to have the package built with gssapi enabled to start the daemon.
+</section><section id="post2">
+<h5>Helmut Pozimski at <a href="#post2">Tue, 31 Jan 2017 06:25:50 -0800</a></h5>
+done
+</section><section id="post3">
+<h5>Alessio Sergi at <a href="#post3">Sun, 05 Feb 2017 04:15:50 -0800</a></h5>
+Remove the old `--disable-gssapi` flag. Thanks.
+</section><section id="post4">
+<h5>Helmut Pozimski at <a href="#post4">Sun, 05 Feb 2017 04:19:32 -0800</a></h5>
+done. Thanks for pointing that out, I didn't notice it.
+</section><section id="post5">
+<h5>Alessio Sergi at <a href="#post5">Sun, 05 Feb 2017 06:37:54 -0800</a></h5>
+Merged #5649.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

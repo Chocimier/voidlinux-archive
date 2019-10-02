@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] Added lttng-ust and liburcu (#3979)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] Added lttng-ust and liburcu (#3979)</h1>
+<section id="post1">
+<h5>Simon THOBY at <a href="#post1">Thu, 07 Apr 2016 04:40:25 -0700</a></h5>
+&gt; @@ -2419,3 +2419,13 @@ liburcu-mb.so.4 liburcu-0.9.1_1
+&gt;  liburcu-qsbr.so.4 liburcu-0.9.1_1
+&gt;  liburcu-signal.so.4 liburcu-0.9.1_1
+&gt;  liburcu.so.4 liburcu-0.9.1_1
+&gt; +liblttng-ust-tracepoint.so.0
+Yeah, it was a copy/paste error
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/3979/files/eaa9ee3a79c45ce7564b68261a8e5624ffb42b08..7c06e78a29bf29e9514c77713e865135018a84ad#r58857317
+</section><section id="post2">
+<h5>Simon THOBY at <a href="#post2">Fri, 06 May 2016 03:15:23 -0700</a></h5>
+I guess anybody is interested in it currently, and I'm more using Rust than .Net currently. SO I don't really plan to maintain this. That's why I close this PR. Feel free to reopen a new PR from your own fork (of void-packages, ofc) if you want it to be merged.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/3979#issuecomment-217404271
+</section><section id="post3">
+<h5>Simon THOBY at <a href="#post3">Fri, 06 May 2016 03:15:23 -0700</a></h5>
+Closed #3979.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/3979#event-652487734
+</section><section id="post4">
+<h5>Peter Jas at <a href="#post4">Sun, 26 Jun 2016 06:49:41 -0700</a></h5>
+@mjeanson, is there anyone at lttng using void linux? I am using Void Linux musl (Void Linux also comes with glibc). I guess musl variant would require the same patch you did for Alpine/aports.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/3979#issuecomment-228602319
+</section><section id="post5">
+<h5>Michael Jeanson at <a href="#post5">Mon, 27 Jun 2016 13:13:45 -0700</a></h5>
+Yes, you'll need the same patches as those in Alpine for everything to build and work properly on Musl.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/3979#issuecomment-228861400
+</section><section id="post6">
+<h5>Toyam Cox at <a href="#post6">Mon, 27 Jun 2016 13:38:30 -0700</a></h5>
+Nope. Those patches were upstreamed.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/3979#issuecomment-228867909
+</section><section id="post7">
+<h5>Toyam Cox at <a href="#post7">Mon, 27 Jun 2016 13:38:42 -0700</a></h5>
+Even Alpine doesn't have them anymore.
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/3979#issuecomment-228867963
+</section><section id="post8">
+<h5>Peter Jas at <a href="#post8">Mon, 27 Jun 2016 15:38:24 -0700</a></h5>
+@mjeanson, the lttng-ust v2.8.1 package has landed in the xbps repos (as you yourself upstreamed all the musl patches for 2.8.1 :smile:) But you are right, for lttng-tools, however, we would require your patches.
+@Vaelatern, Note that for dotnet, we just need user-space lib (lttng-ust). However, it would be nice to have lttng-tools for kernel event tracing etc. available for the platform as Alpine now does with @mjeanson's benign patches: http://git.alpinelinux.org/cgit/aports/tree/testing/lttng-tools. :)
+---
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/3979#issuecomment-228897099
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

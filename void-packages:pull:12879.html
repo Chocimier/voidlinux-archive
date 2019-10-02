@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] an: rebuild missing package in repos
+ (#12879)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] an: rebuild missing package in repos
+ (#12879)</h1>
+<section id="post1">
+<h5>Michael Gehring at <a href="#post1">Fri, 30 Mar 2018 17:44:18 +0000 (UTC)</a></h5>
+ebfe requested changes on this pull request.
+&gt; @@ -3,7 +3,7 @@ pkgname=an
+ version=1.2
+ revision=1
+ build_style=gnu-makefile
+-make_install_args='INSTALLDIR=$(DESTDIR)/usr/bin'
++make_install_args="INSTALLDIR=$(DESTDIR)/usr/bin"
+This doesn't work and messes with the masterdir. Also see package content.
+</section><section id="post2">
+<h5>cr6git at <a href="#post2">Sat, 31 Mar 2018 10:09:22 +0000 (UTC)</a></h5>
+cr6git commented on this pull request.
+&gt; @@ -3,7 +3,7 @@ pkgname=an
+ version=1.2
+ revision=1
+ build_style=gnu-makefile
+-make_install_args='INSTALLDIR=$(DESTDIR)/usr/bin'
++make_install_args="INSTALLDIR=$(DESTDIR)/usr/bin"
+@ebfe I'm sure your comment makes sense, but I don't get it. I don't see what is wrong here?
+</section><section id="post3">
+<h5>John Zimmermann at <a href="#post3">Sat, 31 Mar 2018 03:13:11 -0700</a></h5>
+Johnnynator commented on this pull request.
+&gt; @@ -3,7 +3,7 @@ pkgname=an
+ version=1.2
+ revision=1
+ build_style=gnu-makefile
+-make_install_args='INSTALLDIR=$(DESTDIR)/usr/bin'
++make_install_args="INSTALLDIR=$(DESTDIR)/usr/bin"
+Hes probably saying that (DESTDIR) should be ${DESTDIR}.
+</section><section id="post4">
+<h5>cr6git at <a href="#post4">Sat, 31 Mar 2018 10:34:38 +0000 (UTC)</a></h5>
+cr6git commented on this pull request.
+&gt; @@ -3,7 +3,7 @@ pkgname=an
+ version=1.2
+ revision=1
+ build_style=gnu-makefile
+-make_install_args='INSTALLDIR=$(DESTDIR)/usr/bin'
++make_install_args="INSTALLDIR=$(DESTDIR)/usr/bin"
+@Johnnynator oh!! :hushed: good catch! I just noticed it.
+</section><section id="post5">
+<h5>cr6git at <a href="#post5">Sat, 31 Mar 2018 10:41:36 +0000 (UTC)</a></h5>
+cr6git commented on this pull request.
+&gt; @@ -3,7 +3,7 @@ pkgname=an
+ version=1.2
+ revision=1
+ build_style=gnu-makefile
+-make_install_args='INSTALLDIR=$(DESTDIR)/usr/bin'
++make_install_args="INSTALLDIR=$(DESTDIR)/usr/bin"
+@Johnnynator it's even worse: now the binary is missing in the resulting package??
+</section><section id="post6">
+<h5>John Zimmermann at <a href="#post6">Sat, 31 Mar 2018 03:51:59 -0700</a></h5>
+Johnnynator commented on this pull request.
+&gt; @@ -3,7 +3,7 @@ pkgname=an
+ version=1.2
+ revision=1
+ build_style=gnu-makefile
+-make_install_args='INSTALLDIR=$(DESTDIR)/usr/bin'
++make_install_args="INSTALLDIR=$(DESTDIR)/usr/bin"
+Actually $() is the way GNU Make handles variables. So it was correct. You have to use `'` instead `"` so the $() doesn't get executed.
+</section><section id="post7">
+<h5>John Zimmermann at <a href="#post7">Sat, 31 Mar 2018 10:53:00 +0000 (UTC)</a></h5>
+Johnnynator commented on this pull request.
+&gt; @@ -3,7 +3,7 @@ pkgname=an
+ version=1.2
+ revision=1
+ build_style=gnu-makefile
+-make_install_args='INSTALLDIR=$(DESTDIR)/usr/bin'
++make_install_args="INSTALLDIR=$(DESTDIR)/usr/bin"
+As you can see in the travis log
+```
+=&gt; an-1.2_1: running post-install hook: 98-lib32 ...
+/void-packages/srcpkgs/an/template: line 6: DESTDIR: command not found
+```
+</section><section id="post8">
+<h5>Michael Gehring at <a href="#post8">Sat, 31 Mar 2018 10:53:37 +0000 (UTC)</a></h5>
+ebfe commented on this pull request.
+&gt; @@ -3,7 +3,7 @@ pkgname=an
+ version=1.2
+ revision=1
+ build_style=gnu-makefile
+-make_install_args='INSTALLDIR=$(DESTDIR)/usr/bin'
++make_install_args="INSTALLDIR=$(DESTDIR)/usr/bin"
+http://wiki.bash-hackers.org/syntax/quoting `'` vs '`"`
+</section><section id="post9">
+<h5>cr6git at <a href="#post9">Sat, 31 Mar 2018 04:03:16 -0700</a></h5>
+cr6git commented on this pull request.
+&gt; @@ -3,7 +3,7 @@ pkgname=an
+ version=1.2
+ revision=1
+ build_style=gnu-makefile
+-make_install_args='INSTALLDIR=$(DESTDIR)/usr/bin'
++make_install_args="INSTALLDIR=$(DESTDIR)/usr/bin"
+I've found another solution: `sed` this wrong Makefile.
+Also, hostmakedepends="icu-devel" wasn't needed, I will remove it.
+I think it's necessary to bumb the revision then...
+</section><section id="post10">
+<h5>Leаh Neukirchen at <a href="#post10">Sun, 01 Apr 2018 04:01:17 -0700</a></h5>
+Merged #12879.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] grub: remove grub-utils subpackage
+ (51f7ae0)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] grub: remove grub-utils subpackage
+ (51f7ae0)</h1>
+<section id="post1">
+<h5>Juan RP at <a href="#post1">Wed, 24 May 2017 00:19:50 -0700</a></h5>
+So what's the reason for this? I've splitted this to avoid extra deps while building the live images... what was your reason?
+</section><section id="post2">
+<h5>Leah Neukirchen at <a href="#post2">Wed, 24 May 2017 05:19:16 -0700</a></h5>
+os-prober needs grub-mount now.
+i guess grub-mkfont is the only program that could be split for deps?
+</section><section id="post3">
+<h5>Leah Neukirchen at <a href="#post3">Wed, 24 May 2017 06:07:27 -0700</a></h5>
+I'm not sure the live images needs os-prober tho, perhaps it should not be a dependency of grub?
+</section><section id="post4">
+<h5>Juan RP at <a href="#post4">Wed, 24 May 2017 07:29:21 -0700</a></h5>
+You are right. I agree.
+El 24/5/2017 15:07, "Leah Neukirchen" &lt;notifications@github.com&gt; escribi=C3=
+=B3:
+I'm not sure the live images needs os-prober tho, perhaps it should not b=
+e
+a dependency of grub?
+=E2=80=94
+You are receiving this because you commented.
+Reply to this email directly, view it on GitHub
+&lt;https://github.com/voidlinux/void-packages/commit/51f7ae0bce775a6fb7b763=
+320c0cd8fe8a6060fd#commitcomment-22262596&gt;,
+or mute the thread
+&lt;https://github.com/notifications/unsubscribe-auth/AA0fqbnR77akqgkSCcovNa=
+CdMj2rcVWoks5r9CuOgaJpZM4Nksch&gt;
+.
+-- =
+You are receiving this because you authored the thread.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/commit/51f7ae0bce775a6fb7b7633=
+20c0cd8fe8a6060fd#commitcomment-22263689=
+</section><section id="post5">
+<h5>Leah Neukirchen at <a href="#post5">Wed, 24 May 2017 07:40:38 -0700</a></h5>
+Shall we revert the split then, and make os-proper depend on grub-utils again?
+</section><section id="post6">
+<h5>Leah Neukirchen at <a href="#post6">Wed, 24 May 2017 07:45:49 -0700</a></h5>
+I will move grub-mount to grub, this is cleaner. fuse is just a small dep.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] New package: attract (#5281)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] New package: attract (#5281)</h1>
+<section id="post1">
+<h5>Pedro Narciso García Revington at <a href="#post1">Sat, 03 Dec 2016 16:42:57 -0800</a></h5>
+@revington pushed 1 commit.
+b94ab96  CPATH exported at pre_build
+</section><section id="post2">
+<h5>Pedro Narciso García Revington at <a href="#post2">Sat, 03 Dec 2016 16:48:05 -0800</a></h5>
+@revington pushed 1 commit.
+661cd80  Make linter happy again
+</section><section id="post3">
+<h5>Pedro Narciso García Revington at <a href="#post3">Sat, 03 Dec 2016 16:48:09 -0800</a></h5>
+@Duncaen:
+Oh! Sorry. I thought it worked because `./xbps-src build attract` did not throw any error. Now I can see it failing by running `./xbps-src pkg attract`. I exported `CPATH` as suggested but same problem. It is my first package. Any idea?
+</section><section id="post4">
+<h5>Pedro Narciso García Revington at <a href="#post4">Sat, 03 Dec 2016 17:26:08 -0800</a></h5>
+Oh I see. /usr/local is hardcoded on the makefile. I'll checkout how to workaround that
+</section><section id="post5">
+<h5>Toyam Cox at <a href="#post5">Mon, 05 Dec 2016 06:01:46 -0800</a></h5>
+Sed or a patch. Patches preferred, but sed works.
+</section><section id="post6">
+<h5>Pedro Narciso García Revington at <a href="#post6">Tue, 06 Dec 2016 10:46:27 -0800</a></h5>
+@revington pushed 1 commit.
+108f0a0  working
+</section><section id="post7">
+<h5>Jürgen Buchmüller at <a href="#post7">Tue, 06 Dec 2016 11:09:02 -0800</a></h5>
+Now squash those 4 commits using `git rebase -i HEAD~5`, set the commit message to `New package: attract-2.2.0` and force push with `git push -f`.
+</section><section id="post8">
+<h5>Jürgen Buchmüller at <a href="#post8">Tue, 06 Dec 2016 11:15:38 -0800</a></h5>
+pullmoll commented on this pull request.
+&gt;  homepage="http://attractmode.org/"
+ distfiles="https://github.com/mickelson/attract/archive/v${version}.tar.gz"
+ checksum=d350a078dec7d97498846adb56fb54210e2d4bab484a8c2cd558ce197194b07b
++patch_args="-p1"
+Instead of using patch_args="-p1" you could remove the a/ and b/ from the patch itself.
+Self created patches should not set patch_args, but use the default, which is -p0.
+</section><section id="post9">
+<h5>Jürgen Buchmüller at <a href="#post9">Tue, 06 Dec 2016 11:17:02 -0800</a></h5>
+When modifying your branch and adding changes, you can use `git commit --amend` to avoid creating new commits. Then do a `git push -f` to overwrite the HEAD of your branch.
+</section><section id="post10">
+<h5>Jürgen Buchmüller at <a href="#post10">Tue, 06 Dec 2016 13:15:52 -0800</a></h5>
+Closed #5281 via d92d4c71a6a62a33821dbe64ff9b1dcfbd58b5da.
+</section><section id="post11">
+<h5>Jürgen Buchmüller at <a href="#post11">Tue, 06 Dec 2016 13:19:59 -0800</a></h5>
+I took your template and modified the Makefile.patch to use Void's CC, CXX, CFLAGS and LDFLAGS. No need to set nopie=yes. Cross compiling works, and the musl libc works with a small patch.
+</section><section id="post12">
+<h5>Pedro Narciso García Revington at <a href="#post12">Tue, 06 Dec 2016 16:01:18 -0800</a></h5>
+Awesome @pullmoll thank you very much! GIT is being used at the Makefile to determine some flags. Sorry, this was my first package :(
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

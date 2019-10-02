@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] New package: cava-gui-0.5.0 (#7422)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] New package: cava-gui-0.5.0 (#7422)</h1>
+<section id="post1">
+<h5>Toyam Cox at <a href="#post1">Mon, 04 Sep 2017 11:06:50 -0700</a></h5>
+The template is decent. I'd recommend the following patch:
+```
+diff --git a/srcpkgs/cava-gui/template b/srcpkgs/cava-gui/template
+index 39a6ebacc0..320f69a763 100644
+--- a/srcpkgs/cava-gui/template
++++ b/srcpkgs/cava-gui/template
+@@ -1,19 +1,19 @@
+-# Template file for 'Cava'
++# Template file for 'cava-gui'
+ pkgname=cava-gui
+ version=0.5.0
+ revision=1
+-_pkgname=cava
++wrksrc="cava-${version}"
+ build_style=gnu-configure
+ hostmakedepends="automake libtool"
+-makedepends="alsa-lib-devel pulseaudio-devel fftw-devel ncurses-devel iniparser-devel SDL2-devel libX11-devel"
++makedepends="alsa-lib-devel pulseaudio-devel fftw-devel ncurses-devel
++ iniparser-devel SDL2-devel libX11-devel"
+ short_desc="Console-based Audio Visualizer for ALSA (GUI branch)"
+ maintainer="nik123 &lt;pavlica.nikola@gmail.com&gt;"
+ homepage="https://github.com/nikp123/cava"
+ license="MIT"
+-distfiles="https://github.com/nikp123/${_pkgname}/archive/${version}.tar.gz"
++distfiles="https://github.com/nikp123/cava/archive/${version}.tar.gz"
+ checksum="4a017b2445edcd6338fcd2aeb3ab911f077ca2bf49b3f5c5d5453e6576d9dd00"
+ conflicts=cava
+-wrksrc="cava-${version}"
+ pre_configure() {
+        NOCONFIGURE=1 ./autogen.sh
+```
+@voidlinux/pkg-committers is this a template we want? My concern is it seems to be a fork of a maintainer project, and essentially a flavor.
+</section><section id="post2">
+<h5>lemmi at <a href="#post2">Tue, 05 Sep 2017 06:19:27 +0000 (UTC)</a></h5>
+@voidlinux/pkg-committers @nikp123 seems to me the original project is not dead yet. Is there any chance that
+cava-gui can be merged back to cava?
+</section><section id="post3">
+<h5>nik123 at <a href="#post3">Thu, 07 Sep 2017 03:01:02 -0700</a></h5>
+@lemmi Hardly. I tried multiple times to merge, seems like my code needs to be tested a lot before merging, plus I will probably break someone else's pull request because of the huge code difference (about 50KiB). So I will maintain this fork until it's ready to merge.
+</section><section id="post4">
+<h5>nik123 at <a href="#post4">Thu, 07 Sep 2017 10:23:11 +0000 (UTC)</a></h5>
+@nikp123 pushed 1 commit.
+601f6d5  Updated template
+</section><section id="post5">
+<h5>nik123 at <a href="#post5">Thu, 07 Sep 2017 10:27:02 +0000 (UTC)</a></h5>
+@voidlinux/pkg-commiters @Vaelatern @lemmi Patched and rebased.
+</section><section id="post6">
+<h5>nik123 at <a href="#post6">Thu, 07 Sep 2017 10:36:10 +0000 (UTC)</a></h5>
+@nikp123 pushed 1 commit.
+a544957  Removed whitespace lolz
+</section><section id="post7">
+<h5>lemmi at <a href="#post7">Thu, 07 Sep 2017 12:10:19 +0000 (UTC)</a></h5>
+@nikp123 If you feel this is more or less a development fork for cava, I'd consider not merging it. We prefer having mostly stable software in the repo. In case you think this is stable and a worthy addition, we can go ahead an merge this.
+</section><section id="post8">
+<h5>nik123 at <a href="#post8">Thu, 07 Sep 2017 11:02:24 -0700</a></h5>
+@lemmi Ok, then it will need to wait a while. Since it is constantly updated with features, I'm not sure about the stability part.
+Thanks for the notice, I don't want to ruin this repo accidentally.
+</section><section id="post9">
+<h5>lemmi at <a href="#post9">Sun, 10 Sep 2017 22:38:07 +0000 (UTC)</a></h5>
+@nikp123 Thanks for the honesty. I'll close this PR then. Feel free to open a new one when your fork is stable or merged back.
+</section><section id="post10">
+<h5>lemmi at <a href="#post10">Sun, 10 Sep 2017 15:38:08 -0700</a></h5>
+Closed #7422.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

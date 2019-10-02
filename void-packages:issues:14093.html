@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] liblzma `configure' breaks xz, making
+ system fail to update (#14093)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] liblzma `configure' breaks xz, making
+ system fail to update (#14093)</h1>
+<section id="post1">
+<h5>Goosewood at <a href="#post1">Thu, 03 May 2018 07:19:54 -0700</a></h5>
+```shell
+[DEBUG] [pkgdb] initialized ok.
+[DEBUG] Added `xbps-0.52_6' into the dependency list (https://repo.voidlinux.eu/current)
+[DEBUG] Finding required dependencies for 'xbps-0.52_6':
+[DEBUG] xbps-0.52_6: requires dependency 'ca-certificates&gt;=0': installed `ca-certificates-20170717_2'.
+[DEBUG] xbps-0.52_6: requires dependency 'xbps-triggers&gt;=0': installed `xbps-triggers-0.104_1'.
+[DEBUG] xbps-0.52_6: requires dependency 'glibc&gt;=2.26_1': installed `glibc-2.26_3'.
+[DEBUG] xbps-0.52_6: requires dependency 'libarchive&gt;=3.1.2_1': installed `libarchive-3.3.2_4', must be configured.
+[DEBUG] libarchive-3.3.2_4: finding dependencies:
+[DEBUG]  libarchive-3.3.2_4: requires dependency 'libcrypto43&gt;=2.7.2_1': installed `libcrypto43-2.7.2_1'.
+[DEBUG]  libarchive-3.3.2_4: requires dependency 'acl&gt;=2.2.47_1': installed `acl-2.2.52_4'.
+[DEBUG]  libarchive-3.3.2_4: requires dependency 'liblzma&gt;=5.0.0_1': installed `liblzma-5.2.4_1', must be configured.
+[DEBUG]  liblzma-5.2.4_1: finding dependencies:
+[DEBUG]   liblzma-5.2.4_1: requires dependency 'glibc&gt;=2.26_1': installed `glibc-2.26_3'.
+[DEBUG] Added `liblzma-5.2.4_1' into the dependency list (https://repo.voidlinux.eu/current)
+[DEBUG]  libarchive-3.3.2_4: requires dependency 'bzip2&gt;=1.0.5_1': installed `bzip2-1.0.6_12'.
+[DEBUG]  libarchive-3.3.2_4: requires dependency 'zlib&gt;=1.2.3_1': installed `zlib-1.2.11_2'.
+[DEBUG]  libarchive-3.3.2_4: requires dependency 'glibc&gt;=2.26_1': installed `glibc-2.26_3'.
+[DEBUG] Added `libarchive-3.3.2_4' into the dependency list (https://repo.voidlinux.eu/current)
+[DEBUG] xbps-0.52_6: requires dependency 'libxbps-0.52_6': installed `libxbps-0.52_3', must be updated
+[DEBUG] libxbps-0.52_6: finding dependencies:
+[DEBUG]  libxbps-0.52_6: requires dependency 'libssl45&gt;=2.7.2_1': installed `libssl45-2.7.2_1'.
+[DEBUG]  libxbps-0.52_6: requires dependency 'glibc&gt;=2.26_1': installed `glibc-2.26_3'.
+[DEBUG]  libxbps-0.52_6: requires dependency 'zlib&gt;=1.2.3_1': installed `zlib-1.2.11_2'.
+[DEBUG]  libxbps-0.52_6: requires dependency 'libarchive&gt;=3.1.2_1':  (libarchive-3.3.2_4 queued)
+[DEBUG] Added `libxbps-0.52_6' into the dependency list (https://repo.voidlinux.eu/current)
+[DEBUG] xbps-0.52_6: requires dependency 'libssl45&gt;=2.7.2_1': installed `libssl45-2.7.2_1'.
+[DEBUG] xbps-0.52_6: requires dependency 'libcrypto43&gt;=2.7.2_1': installed `libcrypto43-2.7.2_1'.
+liblzma-5.2.4_1 (configure) breaks installed pkg `xz-5.2.3_1'
+Transaction aborted due to unresolved dependencies.
+[DEBUG] [pkgdb] released ok.
+```
+No I don't have it on hold...
+</section><section id="post2">
+<h5>Goosewood at <a href="#post2">Thu, 03 May 2018 19:10:39 +0000 (UTC)</a></h5>
+![2018-05-03-150954_402x128_scrot](https://user-images.githubusercontent.com/36601318/39597643-163bad2a-4ee4-11e8-9e9d-22cefe31d575.png)
+You sure?
+</section><section id="post3">
+<h5>newbluemoon at <a href="#post3">Thu, 03 May 2018 12:30:56 -0700</a></h5>
+And what happens when you try `xbps-install -Sf liblzma`?
+</section><section id="post4">
+<h5>Goosewood at <a href="#post4">Sat, 05 May 2018 18:40:18 +0000 (UTC)</a></h5>
+![This](https://user-images.githubusercontent.com/36601318/39666483-30fd71ae-5072-11e8-988d-f46378d674de.png)
+</section><section id="post5">
+<h5>newbluemoon at <a href="#post5">Sat, 05 May 2018 18:45:12 +0000 (UTC)</a></h5>
+Just an idea: put xbps on hold, update system, unhold xbps, update again.
+</section><section id="post6">
+<h5>Goosewood at <a href="#post6">Sat, 05 May 2018 19:08:01 +0000 (UTC)</a></h5>
+Nope - no difference
+</section><section id="post7">
+<h5>newbluemoon at <a href="#post7">Sat, 05 May 2018 19:16:51 +0000 (UTC)</a></h5>
+The only idea I have left to work around this bug is to manually download
+https://repo.voidlinux.eu/current/liblzma-5.2.4_1.x86_64.xbps
+https://repo.voidlinux.eu/current/xz-5.2.4_1.x86_64.xbps
+and then use `xdowngrade` from the xtools package:
+    xdowngrade liblzma-5.2.4_1.x86_64.xbps xz-5.2.4_1.x86_64.xbps
+(could be that this needs to be done with a couple more packages)
+</section><section id="post8">
+<h5>Goosewood at <a href="#post8">Sat, 05 May 2018 19:19:20 +0000 (UTC)</a></h5>
+Okay - so I got it, not using your method but works
+put liblzma on hold
+update xbps
+update system (including xz)
+unhold
+update again
+That worked, thank you! I'll be closing this now as it seems it was a system specific error.
+</section><section id="post9">
+<h5>Goosewood at <a href="#post9">Sat, 05 May 2018 19:19:22 +0000 (UTC)</a></h5>
+Closed #14093.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

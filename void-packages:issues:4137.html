@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] runit writing to disk continually on
+ desktop but not laptop (#4137)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] runit writing to disk continually on
+ desktop but not laptop (#4137)</h1>
+<section id="post1">
+<h5>nkcyham at <a href="#post1">Thu, 05 May 2016 08:36:34 -0700</a></h5>
+@Duncaen
+root       683  0.0  0.0   4224  1272 ?        Ss   18:21   0:00 runsvdir -P /run/runit/runsvdir/current log:  supervise: warning: unable to stat control/u: not a directory runsv supervise: fatal: unable to start ./run: file does not exist runsv current: fatal: unable to start ./run: file does not exist runsv supervise: warning: unable to stat control/u: not a directory runsv current: fatal: unable to start ./run: file does not exist runsv supervise: fatal: unable to start ./run: file does not exist
+root       698  0.1  0.0   4072  1112 ?        Ss   18:21   0:01 runsv supervise
+root       699  0.1  0.0   4072  1196 ?        Ss   18:21   0:01 runsv current
+root       700  0.0  0.0   4072   636 ?        Ss   18:21   0:00 runsv dhcpcd
+root       701  0.0  0.0   4072   680 ?        Ss   18:21   0:00 runsv uuidd
+root       702  0.0  0.0   4072   676 ?        Ss   18:21   0:00 runsv dbus
+root       703  0.0  0.0   4072   696 ?        Ss   18:21   0:00 runsv dcron
+root       704  0.0  0.0   4072   660 ?        Ss   18:21   0:00 runsv agetty-tty6
+root       705  0.0  0.0   4072   700 ?        Ss   18:21   0:00 runsv agetty-tty4
+root       706  0.0  0.0   4072   656 ?        Ss   18:21   0:00 runsv udevd
+root       707  0.0  0.0   4072   700 ?        Ss   18:21   0:00 runsv sshd
+root       709  0.0  0.0   4072   636 ?        Ss   18:21   0:00 runsv agetty-tty1
+root       712  0.0  0.0   4072   664 ?        Ss   18:21   0:00 runsv alsa
+root       726  0.0  0.0   4072   636 ?        Ss   18:21   0:00 runsv gpm
+root       729  0.0  0.0   4072   676 ?        Ss   18:21   0:00 runsv acpid
+root       730  0.0  0.0   4072   636 ?        Ss   18:21   0:00 runsv agetty-tty2
+root       731  0.0  0.0   4072   712 ?        Ss   18:21   0:00 runsv ntpd
+root       738  0.0  0.0   4072   636 ?        Ss   18:21   0:00 runsv wpa_supplicant
+root       739  0.0  0.0   4072   688 ?        Ss   18:21   0:00 runsv agetty-tty5
+root       740  0.0  0.0   4072   652 ?        Ss   18:21   0:00 runsv agetty-tty3
+root      2519  0.0  0.0  10768  2180 pts/0    S+   18:34   0:00 grep runsv
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/4137#issuecomment-217188410
+</section><section id="post2">
+<h5>nkcyham at <a href="#post2">Thu, 05 May 2016 08:43:07 -0700</a></h5>
+@Duncaen
+[1841][root@5b4az:/home/neoklis]&gt; ls -lsa /run/runit/runsvdir/current
+0 lrwxrwxrwx 1 root root 27 May  5 18:21 /run/runit/runsvdir/current -&gt; /etc/runit/runsvdir/current
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/4137#issuecomment-217190149
+</section><section id="post3">
+<h5>nkcyham at <a href="#post3">Thu, 05 May 2016 08:45:51 -0700</a></h5>
+@Duncaen
+Sorry about that:
+[1842][root@5b4az:/home/neoklis]&gt; ls -lsa /run/runit/runsvdir/current/
+total 12
+4 drwxr-xr-x 3 root root 4096 May  5 16:46 .
+4 drwxr-xr-x 4 root root 4096 Mar 30 09:21 ..
+0 lrwxrwxrwx 1 root root   13 Jan  4 17:22 acpid -&gt; /etc/sv/acpid
+0 lrwxrwxrwx 1 root root   19 Apr 26 07:17 agetty-tty1 -&gt; /etc/sv/agetty-tty1
+0 lrwxrwxrwx 1 root root   19 Apr 26 07:17 agetty-tty2 -&gt; /etc/sv/agetty-tty2
+0 lrwxrwxrwx 1 root root   19 Apr 26 07:17 agetty-tty3 -&gt; /etc/sv/agetty-tty3
+0 lrwxrwxrwx 1 root root   19 Apr 26 07:17 agetty-tty4 -&gt; /etc/sv/agetty-tty4
+0 lrwxrwxrwx 1 root root   19 Apr 26 07:17 agetty-tty5 -&gt; /etc/sv/agetty-tty5
+0 lrwxrwxrwx 1 root root   19 Apr 26 07:17 agetty-tty6 -&gt; /etc/sv/agetty-tty6
+0 lrwxrwxrwx 1 root root   12 Jan  5 05:22 alsa -&gt; /etc/sv/alsa
+0 lrwxrwxrwx 1 root root   27 Feb  2 20:40 current -&gt; /etc/runit/runsvdir/current
+0 lrwxrwxrwx 1 root root   13 Jan  5 06:18 dbus -&gt; /etc/sv/dbus/
+0 lrwxrwxrwx 1 root root   13 Jan  5 05:22 dcron -&gt; /etc/sv/dcron
+0 lrwxrwxrwx 1 root root   14 Jan  8 21:39 dhcpcd -&gt; /etc/sv/dhcpcd
+0 lrwxrwxrwx 1 root root   11 Jan  5 05:22 gpm -&gt; /etc/sv/gpm
+0 lrwxrwxrwx 1 root root   12 Jan  5 05:22 ntpd -&gt; /etc/sv/ntpd
+0 lrwxrwxrwx 1 root root   12 Jan  4 17:22 sshd -&gt; /etc/sv/sshd
+4 drwx------ 3 root root 4096 May  5 18:44 supervise
+0 lrwxrwxrwx 1 root root   13 Apr 26 07:17 udevd -&gt; /etc/sv/udevd
+0 lrwxrwxrwx 1 root root   13 Jan  4 17:22 uuidd -&gt; /etc/sv/uuidd
+0 lrwxrwxrwx 1 root root   22 Jan  5 05:22 wpa_supplicant -&gt; /etc/sv/wpa_supplicant
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/4137#issuecomment-217190848
+</section><section id="post4">
+<h5>Neoklis at <a href="#post4">Thu, 05 May 2016 09:42:55 -0700</a></h5>
+@Duncaen
+Thanks! I stop, thankfully, before ruining my SSD.... but I also had to delete the stray supervise directory before it worked.
+I honestly have no idea how this happened. All I did was to update with xbps-install -Syu. The link and directory could not have been created accidentally, or deliberately, since I had such little knowledge of runit.
+Well, all is well that ends well....
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/4137#issuecomment-217206299
+</section><section id="post5">
+<h5>Neoklis at <a href="#post5">Thu, 05 May 2016 09:45:02 -0700</a></h5>
+Closed #4137.
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/4137#event-651659987
+</section><section id="post6">
+<h5>Neoklis at <a href="#post6">Thu, 05 May 2016 09:45:02 -0700</a></h5>
+I just thought, it may have happened to others but unless they have disk i/o monitoring, as in conky, it might not be noticed.
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/4137#issuecomment-217206857
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

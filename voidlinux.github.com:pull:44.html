@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/voidlinux.github.com] Add FAQ (#44)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/voidlinux.github.com] Add FAQ (#44)</h1>
+<section id="post1">
+<h5>Enno Boland at <a href="#post1">Tue, 25 Jul 2017 07:59:27 -0700</a></h5>
+There's already an FAQ on the wiki. Do you think they could conflict?
+--
+You are receiving this because you authored the thread.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/voidlinux.github.com/pull/44#issuecomment-317765519
+</section><section id="post2">
+<h5>Toyam Cox at <a href="#post2">Tue, 25 Jul 2017 15:07:38 +0000 (UTC)</a></h5>
+Vaelatern commented on this pull request.
+&gt; +```
++
++Extra options can be passed to most services using a `conf` file in the service directory.
++
++```
++$ cat /etc/sv/sshd/run
++#!/bin/sh
++ssh-keygen -A &gt;/dev/null 2&gt;&amp;1 # Will generate host keys if they don't already exist
++[ -r conf ] &amp;&amp; . ./conf
++exec /usr/bin/sshd -D $OPTS
++# echo 'OPTS="-p 2222"' &gt;&gt;/etc/sv/sshd/conf
++```
++
++### Cron
++
++Void Linux comes without a default cron daemon, you can choose one of multiple cron implementations, by installing the package and enabling the system service.
+Mention how any cron agent can be enabled just by enabling the one symlink (via alternatives)?
+--
+You are receiving this because you authored the thread.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/voidlinux.github.com/pull/44#pullrequestreview-52095440
+</section><section id="post3">
+<h5>Toyam Cox at <a href="#post3">Tue, 25 Jul 2017 15:09:09 +0000 (UTC)</a></h5>
+Vaelatern commented on this pull request.
+&gt; +title: Enter the void - FAQ
++---
++* TOC
++{:toc}
++
++# Introduction
++
++# Installation
++
++Void Linux provides a dialog based installation script, which can be used for most basic setups.
++The script however does not work for slightly more specific setups, in this case you should use the manual installation method.
++
++The following features are **not** supported by the installation script:
++
++* LVM
++* Luks
+`* ZFS`
+--
+You are receiving this because you authored the thread.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/voidlinux.github.com/pull/44#pullrequestreview-52094752
+</section><section id="post4">
+<h5>Toyam Cox at <a href="#post4">Tue, 25 Jul 2017 15:10:12 +0000 (UTC)</a></h5>
+Vaelatern commented on this pull request.
+&gt; +# usermod -aG socklog &lt;your username&gt;
++# ln -s /etc/sv/socklog-unix /var/service/
++# ln -s /etc/sv/nanoklogd /var/service/
++```
++
++Other syslog implementations like `rsyslog` and `metalog` are available in the package repository too.
++
++## Changing the default shell
++
++The default shell for users can be changed with the `chsh(1)` tool.
++
++```
++$ chsh -s /bin/bash &lt;user name&gt;
++```
++
++A list of available shells can be retrieved with the `chsh(1)` list command.
+`that you have already installed`
+--
+You are receiving this because you authored the thread.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/voidlinux.github.com/pull/44#pullrequestreview-52095721
+</section><section id="post5">
+<h5>Toyam Cox at <a href="#post5">Tue, 25 Jul 2017 08:12:27 -0700</a></h5>
+I don't think multiple FAQs would conflict. Like an A/B test, one would eventually win.
+--
+You are receiving this because you authored the thread.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/voidlinux.github.com/pull/44#issuecomment-317770119
+</section><section id="post6">
+<h5>Leаh Neukirchen at <a href="#post6">Wed, 26 Jul 2017 11:41:30 +0000 (UTC)</a></h5>
+chneukirchen commented on this pull request.
+&gt; @@ -98,6 +98,62 @@ The installer has to be executed as `root` user, if you logged in as `anon` you
+ ## Manual installation
++## Post installation
++
++### Audio setup
++
++To setup audio on your Void Linux system you have to decide if you want to use [PulseAudio](#pulseaudio) or just [alsa](#alsa).
++
++Some applications require PulseAudio, especially closed source programs.
++
++#### Alsa
++
++Install the `alsa-utils` package make sure your user is part of the `audio` group to access audio devices.
++
++```
++# xbps-install -S alsa-utils
++# usermod -a -G &lt;username&gt; audio
+wrong argument order, no?
+--
+You are receiving this because you authored the thread.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/voidlinux.github.com/pull/44#pullrequestreview-52331805
+</section><section id="post7">
+<h5>Enno Boland at <a href="#post7">Wed, 26 Jul 2017 11:43:32 +0000 (UTC)</a></h5>
+Gottox commented on this pull request.
+&gt; @@ -98,6 +98,62 @@ The installer has to be executed as `root` user, if you logged in as `anon` you
+ ## Manual installation
++## Post installation
++
++### Audio setup
++
++To setup audio on your Void Linux system you have to decide if you want to use [PulseAudio](#pulseaudio) or just [alsa](#alsa).
++
++Some applications require PulseAudio, especially closed source programs.
++
++#### Alsa
++
++Install the `alsa-utils` package make sure your user is part of the `audio` group to access audio devices.
++
++```
++# xbps-install -S alsa-utils
++# usermod -a -G &lt;username&gt; audio
+Yea, audio &lt;username&gt;
+--
+You are receiving this because you authored the thread.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/voidlinux.github.com/pull/44#discussion_r129548883
+</section><section id="post8">
+<h5>Enno Boland at <a href="#post8">Wed, 26 Jul 2017 11:51:50 +0000 (UTC)</a></h5>
+Gottox commented on this pull request.
+&gt; +To use the kernel module options you can create a file like `/etc/modprobe.d/alsa.conf` with following content.
++
++```
++options snd_usb_audio index=0
++```
++
++Alternatively using the alsa configuration file `/etc/asound.conf` or the per-user configuration file `~/.asoundrc` to set a different card as the default.
++
++```
++defaults.ctl.card 2;
++defaults.pcm.card 2;
++```
++
++#### PulseAudio
++
++PulseAudio depends on `dbus` and `ConsoleKit2` after installing pulse you need to enable the corresponding system services.
+That's not true, pa does not depend on ConsoleKit.
+&gt; +defaults.pcm.card 2;
++```
++
++#### PulseAudio
++
++PulseAudio depends on `dbus` and `ConsoleKit2` after installing pulse you need to enable the corresponding system services.
++
++```
++# xbps-install -S alsa-utils pulseaudio ConsoleKit2
++# ln -s /etc/sv/dbus /var/service/
++# ln -s /etc/sv/cgmanager /var/service/
++# ln -s /etc/sv/consolekit /var/service/
++```
++
++To get PulseAudio working correctly you need to make sure that your session is started with a ConsoleKit seat and a dbus session bus. Some display managers do that for you, in other cases where you just start a Xorg session with `startx` you have to start them from `.xinitrc`.
++
+I'm running pa and elogind. consolekit isn't even installed. I'm actually not sure if a loginmanager is needed at all if the permissions are correct.
+--
+You are receiving this because you authored the thread.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/voidlinux.github.com/pull/44#pullrequestreview-52332562
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

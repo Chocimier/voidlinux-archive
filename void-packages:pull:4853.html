@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] New package: mbpfan-1.9.1 (#4853)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] New package: mbpfan-1.9.1 (#4853)</h1>
+<section id="post1">
+<h5>Toyam Cox at <a href="#post1">Sun, 02 Oct 2016 12:10:32 -0700</a></h5>
+Vaelatern requested changes on this pull request.
+&gt; @@ -0,0 +1,24 @@
++# Template file for 'mbpfan'
++pkgname=mbpfan
++version=1.9.1
++revision=1
++only_for_archs="x86_64 i686 x86_64-musl i686-musl"
+Please add a comment explaining your reasoning for the restriction (about those being the only arches close to possible on the macbookpro).
+&gt; +only_for_archs="x86_64 i686 x86_64-musl i686-musl"
++build_style=gnu-makefile
++short_desc="Macbook Pro Fan Control Daemon"
++maintainer='noah &lt;nsawyer1993@gmail.com&gt;'
++license="GPL-3"
++homepage="https://github.com/dgraziotin/mbpfan"
++distfiles="${homepage}/archive/v${version}.tar.gz"
++checksum="a7cf850a393ebfce21427b992436b84cc4b20e1cb8d673d45d2c8b991c69e68c"
++
++pre_build() {
++	sed -i 's/sbin/bin/' Makefile
++}
++
++do_install() {
++	make install
++}
+Not sure why you still have a `do_install()`, can you either remove it or explain why it is necessary?
+</section><section id="post2">
+<h5>Pizza-Boy at <a href="#post2">Sun, 02 Oct 2016 12:55:49 -0700</a></h5>
+Alright, I've managed to really goof up the commits on this package somehow, and I don't really know how to clear it.
+If necessary I could just delete this branch and push the changes again in a new pull request.
+</section><section id="post3">
+<h5>Toyam Cox at <a href="#post3">Sun, 02 Oct 2016 13:20:17 -0700</a></h5>
+Please don't.
+</section><section id="post4">
+<h5>Toyam Cox at <a href="#post4">Sun, 02 Oct 2016 13:20:37 -0700</a></h5>
+The way to fix is likely to rebase on voidlinux/void-packages master branch
+</section><section id="post5">
+<h5>Pizza-Boy at <a href="#post5">Mon, 03 Oct 2016 07:50:27 -0700</a></h5>
+Looks like the rebase fixed everything.
+</section><section id="post6">
+<h5>Pizza-Boy at <a href="#post6">Mon, 03 Oct 2016 07:50:47 -0700</a></h5>
+Sorry for the confusion, I'm still figuring out git.
+</section><section id="post7">
+<h5>Jürgen Buchmüller at <a href="#post7">Mon, 03 Oct 2016 08:23:56 -0700</a></h5>
+The `make install` does not honor the value of `$DESTDIR`. It installs into `/usr/bin` instead of `$DESTDIR/usr/bin`. See https://travis-ci.org/voidlinux/void-packages/jobs/164653827#L661
+</section><section id="post8">
+<h5>Pizza-Boy at <a href="#post8">Mon, 03 Oct 2016 12:15:10 -0700</a></h5>
+Alright, I think I've got it installing to the right location. Whole thing was a real pain in the ass because the Makefile doesn't have any way to change the destination directory by default--just patched it in myself through `sed` commands. Let me know if there's an easier way to do that.
+</section><section id="post9">
+<h5>Pizza-Boy at <a href="#post9">Mon, 03 Oct 2016 12:34:32 -0700</a></h5>
+Corrected the file to use `vbin` and `vinstall` instead--think this should be simpler.
+</section><section id="post10">
+<h5>Pizza-Boy at <a href="#post10">Mon, 03 Oct 2016 13:32:14 -0700</a></h5>
+So after doing some testing on my system, there appears to be a bug in the 1.9.1 version of mbpfan that causes a buffer overflow error when running tests, doing other things, etc.
+It looks like it's been reported and fixed upstream in the master git repository, but I didn't want to use that because it seems that stable versions of software are preferred.
+I know the flag that needs to be changed for gcc (_FORTIFY_SOURCE=2 to _FORTIFY_SOURCE=1), but I'm not sure what the easiest way to do this'd be. Alternatively, we could pull the master repository (but that's not a stable release, technically), which should have this issue patched out, I think. Or maybe write a patch for it.
+</section><section id="post11">
+<h5>Pizza-Boy at <a href="#post11">Mon, 03 Oct 2016 13:45:07 -0700</a></h5>
+Alright, setting `nopie` to something turns off the hardening features that cause the issue and make the program install correctly. Would it be alright for a non-hardened package to be installed, or should we pursue a different avenue?
+</section><section id="post12">
+<h5>Jürgen Buchmüller at <a href="#post12">Mon, 03 Oct 2016 14:27:42 -0700</a></h5>
+Hardened packages are, of course, preferred, but if it's too much of a hassle I guess we can live with it.
+There's always a chance that someone takes a look and improves things, once a package is merged.
+</section><section id="post13">
+<h5>Jürgen Buchmüller at <a href="#post13">Mon, 03 Oct 2016 14:27:54 -0700</a></h5>
+pullmoll approved this pull request.
+</section><section id="post14">
+<h5>Pizza-Boy at <a href="#post14">Mon, 03 Oct 2016 14:45:57 -0700</a></h5>
+I'm sure that someone who knows C++ could write a patch integrating the changes upstream, but I'm not that guy (because I know nothing about C++).
+</section><section id="post15">
+<h5>Toyam Cox at <a href="#post15">Tue, 04 Oct 2016 22:34:07 -0700</a></h5>
+Vaelatern requested changes on this pull request.
+&gt; +pkgname=mbpfan
++version=1.9.1
++revision=1
++only_for_archs="x86_64 i686 x86_64-musl i686-musl" #Package is restricted to these arches because it's Macbook-specific and Macbooks only have these arches.
++build_style=gnu-makefile
++nopie="YES" #Hardening is disabled because it causes buffer overflow errors with this version of mbpfan. A more elegant solution would be patching the source files themselves.
++short_desc="Macbook Pro Fan Control Daemon"
++maintainer='noah &lt;nsawyer1993@gmail.com&gt;'
++license="GPL-3"
++homepage="https://github.com/dgraziotin/mbpfan"
++distfiles="${homepage}/archive/v${version}.tar.gz"
++checksum="a7cf850a393ebfce21427b992436b84cc4b20e1cb8d673d45d2c8b991c69e68c"
++
++do_install() {
++	vbin bin/mbpfan
++	vinstall mbpfan.conf 644 etc
+This implies you need a `conf_files="/etc/mbpfan.conf"`
+This line should also be `vconf` unless you have a reason.
+</section><section id="post16">
+<h5>Toyam Cox at <a href="#post16">Mon, 10 Oct 2016 13:30:48 -0700</a></h5>
+Vaelatern approved this pull request.
+</section><section id="post17">
+<h5>Toyam Cox at <a href="#post17">Mon, 10 Oct 2016 13:31:01 -0700</a></h5>
+Merged #4853.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

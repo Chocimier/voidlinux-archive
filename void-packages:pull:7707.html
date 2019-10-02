@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] New package: gcompat-0.0.1 (#7707)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] New package: gcompat-0.0.1 (#7707)</h1>
+<section id="post1">
+<h5>Daniel James at <a href="#post1">Sun, 17 Sep 2017 22:43:25 +0000 (UTC)</a></h5>
+Ping @Vaelatern @Duncaen @xtraeme @ebfe
+</section><section id="post2">
+<h5>Michael Aldridge at <a href="#post2">Sun, 17 Sep 2017 21:07:29 -0700</a></h5>
+@djames1 Please don't ping random people.  Your PR will be reviewed when time is available.
+That being said, this looks like its okay to merge; even if its doing scary things to the linker.
+The one change I want is the license to come from somewhere that isn't the void-packages tree.  Presumably this is in the source some where; please use that copy.
+</section><section id="post3">
+<h5>Daniel James at <a href="#post3">Sun, 17 Sep 2017 21:23:14 -0700</a></h5>
+@the-maldridge the source tarball does not contain the license at all, however their github repository does. That is why I included the license file from their git repository. There are multiple files in the tree that include a license file in the ${FILESDIR}, examples being: discord, graphviz, btsync, ksh, shadow, hfsprogs, evilwm, lsof, mksh, and jenkins.
+</section><section id="post4">
+<h5>Michael Aldridge at <a href="#post4">Mon, 18 Sep 2017 04:37:08 +0000 (UTC)</a></h5>
+Attempting to lecture a maintainer on package policy tends to decrease the number of people willing to review your PRs...
+If the license is at a fixed location you may use xbps-uhelper fetch to retrieve it in a post_build() from a URL based on the git tag just before using vlicense to install it.  This is the preferred way to do it as if you version it in xbps-src and the license changes, it is very likely that the package will no longer carry with it the correct license terms.
+As far as the packages above, we have several packages with -git versions as well and yet policy precludes git packages entirely.  Not everything is perfectly in compliance at all times.
+</section><section id="post5">
+<h5>Daniel James at <a href="#post5">Sun, 17 Sep 2017 21:42:49 -0700</a></h5>
+@the-maldridge I wasn't trying to come across as lecturing you. I was just wanting to make 100% sure that I was not being misguided in any way by reading other packages for guidance. I apologize if my comment sounded harsh, that was not my intention at all.
+The git tag for release 0.0.1 does not include a license file either. When they release 0.0.2, I will change the package to pull the license from the tarball, as their changes since 0.0.1 add a LICENSE file.
+Thanks!
+</section><section id="post6">
+<h5>Michael Aldridge at <a href="#post6">Mon, 18 Sep 2017 04:46:03 +0000 (UTC)</a></h5>
+Duly noted.  As soon as https://github.com/AdelieLinux/gcompat/issues/2 closes please make sure the license is removed from our source tree and the correct path is used.
+As this makes changes to the way the linker works I am going to request one other maintainer from @voidlinux/pkg-committers replies with a shipit before merging.
+</section><section id="post7">
+<h5>Toyam Cox at <a href="#post7">Sun, 17 Sep 2017 22:50:13 -0700</a></h5>
+You can just add the license url to distfiles. distfiles and checksum are space separated lists. It requires a tiny bit more magic to make work, but it's all documented.
+</section><section id="post8">
+<h5>Toyam Cox at <a href="#post8">Sun, 17 Sep 2017 22:51:08 -0700</a></h5>
+Vaelatern commented on this pull request.
+&gt; @@ -0,0 +1,32 @@
++# Template file for 'gcompat'
++pkgname=gcompat
++version=0.0.1
++revision=1
++wrksrc="${pkgname}-${pkgname}-${version}"
++only_for_archs="aarch64-musl armv6l-musl armv7l-musl i686-musl x86_64-musl"
+and when we add a new musl arch, this will break, but it can stand for now.
+</section><section id="post9">
+<h5>Michael Aldridge at <a href="#post9">Sun, 17 Sep 2017 22:52:36 -0700</a></h5>
+the-maldridge commented on this pull request.
+&gt; @@ -0,0 +1,32 @@
++# Template file for 'gcompat'
++pkgname=gcompat
++version=0.0.1
++revision=1
++wrksrc="${pkgname}-${pkgname}-${version}"
++only_for_archs="aarch64-musl armv6l-musl armv7l-musl i686-musl x86_64-musl"
+veto! this breaks my armv5tel repo.  This should be done the correct way or at the least include mipsel and armvte{,l}.
+</section><section id="post10">
+<h5>Toyam Cox at <a href="#post10">Sun, 17 Sep 2017 22:53:23 -0700</a></h5>
+Vaelatern commented on this pull request.
+&gt; +maintainer="Daniel James &lt;djames@orcadian.net&gt;"
++homepage="https://github.com/AdelieLinux/gcompat"
++license="ISC"
++distfiles="https://github.com/AdelieLinux/gcompat/archive/${pkgname}-${version}.tar.gz"
++checksum=138f4094977268a762415da10c05bcf87fae948faa8ff13a9b8b4ff4d64c91e6
++
++case "$XBPS_TARGET_MACHINE" in
++	aarch64-musl) _glibc="ld-linux-aarch64.so.1" _musl="ld-musl-aarch64.so.1";;
++	armv6l-musl) _glibc="ld-linux-armhf.so.3" _musl="ld-musl-armhf.so.1";;
++	armv7l-musl) _glibc="ld-linux-armhf.so.3" _musl="ld-musl-armhf.so.1";;
++	i686-musl) _glibc="ld-linux.so.2" _musl="ld-musl-x86.so.1";;
++	x86_64-musl) _glibc="ld-linux-x86-64.so.2" _musl="ld-musl-x86_64.so.1";;
++esac
++
++make_build_args="LINKER_PATH=/lib/${_musl} LOADER_NAME=${_glibc}"
++make_install_args="LINKER_PATH=/lib/${_musl} LOADER_NAME=${_glibc} PREFIX=/usr DESTDIR=${DESTDIR}"
+`PREFIX` and `DESTDIR` definitely redundant.
+As for the linker changes, I'll need to review further. Other maintainers: go right ahead and review yourself, I'm not going to review it today.
+</section><section id="post11">
+<h5>Enno Boland at <a href="#post11">Mon, 18 Sep 2017 08:37:54 +0000 (UTC)</a></h5>
+Gottox commented on this pull request.
+&gt; @@ -0,0 +1,32 @@
++# Template file for 'gcompat'
++pkgname=gcompat
++version=0.0.1
++revision=1
++wrksrc="${pkgname}-${pkgname}-${version}"
++only_for_archs="aarch64-musl armv6l-musl armv7l-musl i686-musl x86_64-musl"
+Looks like an issue for https://github.com/voidlinux/void-packages/pull/3109 again.
+</section><section id="post12">
+<h5>Daniel James at <a href="#post12">Mon, 18 Sep 2017 18:07:00 +0000 (UTC)</a></h5>
+To give some insight onto what exactly happens here, this package creates a file called libgcompat.so.0 in /usr/lib. This file is a shim that basically translates some glibc functions into musl linker functions.
+It then creates a symlink to that file with in the location that the glibc linker would be in if this were a glibc system. Since that file should not exist on a musl system, and all the binaries already on the musl system should be linked against musl's linker, there should be no linker issues.
+</section><section id="post13">
+<h5>Daniel James at <a href="#post13">Mon, 18 Sep 2017 18:46:05 +0000 (UTC)</a></h5>
+Currently working on building glibc and musl for all arches so that way I can add all musl arches to the case statement.
+</section><section id="post14">
+<h5>Enno Boland at <a href="#post14">Tue, 19 Sep 2017 06:48:27 +0000 (UTC)</a></h5>
+My two cents: I believe that our musl port should be musl only. So even if we merge, there must be a rule that we only merge stuff that links directly to musl and must not use gcompat.
+personally I would prefer to use a containerization framework like snap or flatpak for those apps instead.
+</section><section id="post15">
+<h5>Michael Aldridge at <a href="#post15">Tue, 19 Sep 2017 06:50:29 +0000 (UTC)</a></h5>
+I think that is a good idea, there should be a linter check that makes sure this isn't in any package's depends line.
+While I like the idea of using containerization and chroots, I also have some software which aren't available in such formats and aren't good candidates for packaging due to commercial reasons.
+</section><section id="post16">
+<h5>Leаh Neukirchen at <a href="#post16">Tue, 19 Sep 2017 05:10:06 -0700</a></h5>
+This gcompat can still be useful to bootstrap compilers etc.
+And ofc for users directly.
+</section><section id="post17">
+<h5>Enno Boland at <a href="#post17">Tue, 19 Sep 2017 12:18:34 +0000 (UTC)</a></h5>
+@chneukirchen good point!
+</section><section id="post18">
+<h5>Toyam Cox at <a href="#post18">Wed, 20 Sep 2017 07:02:35 -0700</a></h5>
+Vaelatern commented on this pull request.
+&gt; @@ -0,0 +1,32 @@
++# Template file for 'gcompat'
++pkgname=gcompat
++version=0.0.1
++revision=1
++wrksrc="${pkgname}-${pkgname}-${version}"
++only_for_archs="aarch64-musl armv6l-musl armv7l-musl i686-musl x86_64-musl"
+Then adding, for now, the `case` statement is the correct way to go, @djames1
+</section><section id="post19">
+<h5>Toyam Cox at <a href="#post19">Wed, 20 Sep 2017 07:06:02 -0700</a></h5>
+Vaelatern commented on this pull request.
+&gt; +
++Redistributions in binary form must reproduce the above copyright
++notice, this list of conditions and the following disclaimers in
++the documentation and/or other materials provided with the distribution.=
++
++Neither the names of Ad=C3=A9lie Linux, nor the names of its contributor=
+s, may
++be used to endorse or promote products derived from this Software withou=
+t
++specific prior written permission.
++
++THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
++EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
++MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
++IN NO EVENT SHALL THE CONTRIBUTORS OR COPYRIGHT HOLDERS BE LIABLE
++FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
++CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
++WITH THE SOFTWARE.
+Can we please get this license from outside our repo?
+-- =
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/7707#pullrequestreview-63=
+986248=
+</section><section id="post20">
+<h5>Toyam Cox at <a href="#post20">Wed, 20 Sep 2017 14:06:18 +0000 (UTC)</a></h5>
+Vaelatern commented on this pull request.
+&gt; +case "$XBPS_TARGET_MACHINE" in
++	aarch64-musl) _glibc="ld-linux-aarch64.so.1" _musl="ld-musl-aarch64.so.1";;
++	armv6l-musl) _glibc="ld-linux-armhf.so.3" _musl="ld-musl-armhf.so.1";;
++	armv7l-musl) _glibc="ld-linux-armhf.so.3" _musl="ld-musl-armhf.so.1";;
++	i686-musl) _glibc="ld-linux.so.2" _musl="ld-musl-x86.so.1";;
++	x86_64-musl) _glibc="ld-linux-x86-64.so.2" _musl="ld-musl-x86_64.so.1";;
++esac
++
++make_build_args="LINKER_PATH=/lib/${_musl} LOADER_NAME=${_glibc}"
++make_install_args="LINKER_PATH=/lib/${_musl} LOADER_NAME=${_glibc} PREFIX=/usr DESTDIR=${DESTDIR}"
++
++pre_build() {
++	sed -i 's/gcc/$(CC)/g' Makefile
++}
++
++do_install() {
+`post_install`?
+</section><section id="post21">
+<h5>Daniel James at <a href="#post21">Fri, 22 Sep 2017 23:01:41 +0000 (UTC)</a></h5>
+Finally have time to fix the issues that were mentioned in the comments.
+</section><section id="post22">
+<h5>Daniel James at <a href="#post22">Fri, 22 Sep 2017 23:22:40 +0000 (UTC)</a></h5>
+djames1 commented on this pull request.
+&gt; +case "$XBPS_TARGET_MACHINE" in
++	aarch64-musl) _glibc="ld-linux-aarch64.so.1" _musl="ld-musl-aarch64.so.1";;
++	armv6l-musl) _glibc="ld-linux-armhf.so.3" _musl="ld-musl-armhf.so.1";;
++	armv7l-musl) _glibc="ld-linux-armhf.so.3" _musl="ld-musl-armhf.so.1";;
++	i686-musl) _glibc="ld-linux.so.2" _musl="ld-musl-x86.so.1";;
++	x86_64-musl) _glibc="ld-linux-x86-64.so.2" _musl="ld-musl-x86_64.so.1";;
++esac
++
++make_build_args="LINKER_PATH=/lib/${_musl} LOADER_NAME=${_glibc}"
++make_install_args="LINKER_PATH=/lib/${_musl} LOADER_NAME=${_glibc} PREFIX=/usr DESTDIR=${DESTDIR}"
++
++pre_build() {
++	sed -i 's/gcc/$(CC)/g' Makefile
++}
++
++do_install() {
+@Vaelatern are you saying that copying the license should be done in the post_install?
+</section><section id="post23">
+<h5>Daniel James at <a href="#post23">Fri, 22 Sep 2017 22:07:21 -0700</a></h5>
+@djames1 pushed 1 commit.
+34f4f86  After a lot of research and compiling, added all archs, including armv5 and mips archs.
+</section><section id="post24">
+<h5>Daniel James at <a href="#post24">Sat, 23 Sep 2017 05:20:17 +0000 (UTC)</a></h5>
+@Vaelatern when I try to pull LICENSE file from https://raw.githubusercontent.com/AdelieLinux/gcompat/master/LICENSE I get the following error: `ERROR: gcompat-0.0.1_1: unknown distfile suffix for LICENSE.`
+After looking at https://github.com/voidlinux/void-packages/blob/master/Manual.md I see that the file extension needs to be in the extension list there. Is there another way to do this?
+</section><section id="post25">
+<h5>Daniel James at <a href="#post25">Fri, 22 Sep 2017 22:35:46 -0700</a></h5>
+@djames1 pushed 1 commit.
+c9c53fe  Fixed changes I did not account for originally in build process
+</section><section id="post26">
+<h5>Michael Aldridge at <a href="#post26">Sat, 23 Sep 2017 05:38:03 +0000 (UTC)</a></h5>
+@djames1 you need to set skip_extraction on the license file.
+adding skip_extraction="LICENSE" should work.
+</section><section id="post27">
+<h5>Daniel James at <a href="#post27">Fri, 22 Sep 2017 22:59:57 -0700</a></h5>
+@djames1 pushed 1 commit.
+bc64789  Removed license, made script fetch license instead
+</section><section id="post28">
+<h5>Daniel James at <a href="#post28">Fri, 22 Sep 2017 23:02:41 -0700</a></h5>
+@the-maldridge that seems to have worked. PR should be ready for review again.
+Summary of changes:
+- Added support for all musl archs that we currently support
+- Modified template to fetch LICENSE from AdelieLinux's repo
+- Changed do_install to post_install
+- Added more make_build_args and make_install_args to fix errors in build I didn't catch originally.
+</section><section id="post29">
+<h5>Michael Aldridge at <a href="#post29">Fri, 22 Sep 2017 23:32:13 -0700</a></h5>
+cursory LGTM
+</section><section id="post30">
+<h5>Daniel James at <a href="#post30">Mon, 25 Sep 2017 07:49:52 -0700</a></h5>
+@djames1 pushed 1 commit.
+934e00a  undo changes to shlib
+</section><section id="post31">
+<h5>Daniel James at <a href="#post31">Mon, 25 Sep 2017 07:51:34 -0700</a></h5>
+Undid changes to common/shlibs because no package should ever depend on gcompat.
+</section><section id="post32">
+<h5>Toyam Cox at <a href="#post32">Mon, 25 Sep 2017 15:24:10 +0000 (UTC)</a></h5>
+Closed #7707 via 30af613b1ff04a8b01179c70b7fd0660fee7dbbb.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

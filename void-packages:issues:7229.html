@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] xbps-remove "failed to remove directory
+ `/boot'" (#7229)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] xbps-remove "failed to remove directory
+ `/boot'" (#7229)</h1>
+<section id="post1">
+<h5>Leаh Neukirchen at <a href="#post1">Tue, 01 Aug 2017 08:20:30 -0700</a></h5>
+Perhaps EBUSY should be ignored then, too?
+</section><section id="post2">
+<h5>zqqw at <a href="#post2">Tue, 01 Aug 2017 14:11:56 -0700</a></h5>
+I don't see why it should be trying to remove /boot anyway. Say - stretching a point admittedly - /boot was empty because the /boot partition was unmounted, and this was somehow being run from a chroot or something weird, then it might remove /boot and cause a problem? Several packages use /boot so why does the kernel think it owns this directory? But if the situation never arises, as a lack of previous bug reports might show then - whatever.
+</section><section id="post3">
+<h5>zqqw at <a href="#post3">Fri, 13 Oct 2017 21:19:09 +0000 (UTC)</a></h5>
+Closed #7229.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

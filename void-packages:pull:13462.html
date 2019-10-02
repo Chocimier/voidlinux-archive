@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] slock: add config.h support (#13462)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] slock: add config.h support (#13462)</h1>
+<section id="post1">
+<h5>José Miguel Sánchez García at <a href="#post1">Sat, 14 Apr 2018 05:20:38 -0700</a></h5>
+jmi2k commented on this pull request.
+&gt; @@ -11,6 +11,10 @@ homepage="http://tools.suckless.org/slock"
+ distfiles="http://dl.suckless.org/tools/slock-${version}.tar.gz"
+ checksum=b53849dbc60109a987d7a49b8da197305c29307fd74c12dc18af0d3044392e6a
++pre_build() {
++	cp ${FILESDIR}/config.h config.h
+You proposed that in [my last pull request](https://github.com/voidlinux/void-packages/pull/10779), and I didn't address it so blame on me I think. I'll make it inmediately after this PR.
+</section><section id="post2">
+<h5>José Miguel Sánchez García at <a href="#post2">Mon, 16 Apr 2018 18:22:09 +0000 (UTC)</a></h5>
+@jmi2k pushed 1 commit.
+c588cb0  slock: don't keep default config.h in the repo
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

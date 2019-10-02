@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] New package: OpenDoas-0.1 (#4250)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] New package: OpenDoas-0.1 (#4250)</h1>
+<section id="post1">
+<h5>Toyam Cox at <a href="#post1">Sun, 29 May 2016 11:57:54 -0700</a></h5>
+Can we have a lowercase name? Since the uppercase names are so confusing to find...
+---
+You are receiving this because you authored the thread.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4250#issuecomment-222376670
+</section><section id="post2">
+<h5>Toyam Cox at <a href="#post2">Sun, 29 May 2016 11:58:26 -0700</a></h5>
+&gt; @@ -0,0 +1,8 @@
+&gt; +#
+&gt; +# This script sets up correct perms for usr/bin/doas.
+&gt; +#
+&gt; +case "${ACTION}" in
+&gt; +post)
+&gt; +	chmod 4111 usr/bin/doas
+Can't be done in `post_install()`?
+---
+You are receiving this because you authored the thread.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4250/files/536a77465cb260aba720fc42249295b66329f2de#r65009788
+</section><section id="post3">
+<h5>Toyam Cox at <a href="#post3">Sun, 29 May 2016 13:56:39 -0700</a></h5>
+&gt; @@ -0,0 +1,8 @@
+&gt; +#
+&gt; +# This script sets up correct perms for usr/bin/doas.
+&gt; +#
+&gt; +case "${ACTION}" in
+&gt; +post)
+&gt; +	chmod 4111 usr/bin/doas
+Please see `pkgname=iputils` line 29
+---
+You are receiving this because you authored the thread.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4250/files/536a77465cb260aba720fc42249295b66329f2de#r65011271
+</section><section id="post4">
+<h5>Toyam Cox at <a href="#post4">Sun, 29 May 2016 14:02:55 -0700</a></h5>
+&gt; @@ -0,0 +1,8 @@
+&gt; +#
+&gt; +# This script sets up correct perms for usr/bin/doas.
+&gt; +#
+&gt; +case "${ACTION}" in
+&gt; +post)
+&gt; +	chmod 4111 usr/bin/doas
+I know this example because I broke it in the libressl version bump.
+---
+You are receiving this because you authored the thread.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4250/files/536a77465cb260aba720fc42249295b66329f2de#r65011395
+</section><section id="post5">
+<h5>Christian Neukirchen at <a href="#post5">Mon, 30 May 2016 06:53:11 -0700</a></h5>
+&gt; @@ -0,0 +1,4 @@
+&gt; +#%PAM-1.0
+Perhaps add an commented example for pam_timestamp here?
+---
+You are receiving this because you authored the thread.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4250/files/4db46af4601a1f31d86d3386baa51aa301cdc34b#r65074781
+</section><section id="post6">
+<h5>Enno Boland at <a href="#post6">Thu, 02 Jun 2016 12:58:35 -0700</a></h5>
+So excited! Could this replace sudo in base?
+---
+You are receiving this because you authored the thread.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4250#issuecomment-223404201
+</section><section id="post7">
+<h5>Enno Boland at <a href="#post7">Fri, 03 Jun 2016 22:50:11 -0700</a></h5>
+Merged #4250.
+---
+You are receiving this because you authored the thread.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/4250#event-681857295
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

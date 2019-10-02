@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] dbus: dbus-uuidgen not run on install
+ (#3993)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] dbus: dbus-uuidgen not run on install
+ (#3993)</h1>
+<section id="post1">
+<h5>Toyam Cox at <a href="#post1">Wed, 06 Apr 2016 21:30:29 -0700</a></h5>
+This matches my experience. Anybody else know if the line has been acting correctly? @Duncaen you have noticed this behaviour as well, when I asked for help on starting dbus programs, if I recall correctly.
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/3993#issuecomment-206691981
+</section><section id="post2">
+<h5>Juan RP at <a href="#post2">Thu, 07 Apr 2016 00:23:55 -0700</a></h5>
+dbus-uuidgen is run in its runit service.
+Thanks
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/3993#issuecomment-206734341
+</section><section id="post3">
+<h5>Juan RP at <a href="#post3">Thu, 07 Apr 2016 00:23:55 -0700</a></h5>
+Closed #3993.
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/3993#event-617942422
+</section><section id="post4">
+<h5>Juan RP at <a href="#post4">Thu, 07 Apr 2016 00:25:21 -0700</a></h5>
+Err sorry, I meant that `dbus-uuidgen` is already in its INSTALL script.
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/3993#issuecomment-206735196
+</section><section id="post5">
+<h5>Juan RP at <a href="#post5">Thu, 07 Apr 2016 00:27:34 -0700</a></h5>
+@the-maldridge INSTALL scripts are run before or after the unpacking phase.
+- in `pre` the action is run *before* unpacking.
+- in `post` the action is run *after* unpacking, and runs in the *configuration* phase.
+xbps separates those two phases. If you are setting XBPS_ARCH or XBPS_TARGET_ARCH, the configuration phase might be skipped.
+Take a look at void-mklive/mkrootfs.sh for details.
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/3993#issuecomment-206737063
+</section><section id="post6">
+<h5>Michael Aldridge at <a href="#post6">Thu, 07 Apr 2016 00:30:51 -0700</a></h5>
+While it is in the INSTALL script, it is not actually generating the uuid.  This is reproducable in a new void install quite readily by trying to install dbus, starting it, and then trying to use something that depends on it like awesome.  On request I can build a VM and get the exact error, but it appears to be something generic out of dbus.
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/3993#issuecomment-206737823
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] Tracking issue: Python 3.6 (#6023)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] Tracking issue: Python 3.6 (#6023)</h1>
+<section id="post1">
+<h5>Helmut Pozimski at <a href="#post1">Tue, 29 Aug 2017 02:17:48 -0700</a></h5>
+p7 reported in IRC that libixion11 and liborcus11 still need to be rebuilt, I created #7524 for that. Besides that, two more packages still seem to link to python 3.5:
+```
+python3-editdistance-0.3.1_1: libpython3.5m.so.1.0 (https://repo.voidlinux.eu/current)
+python3-regex-2017.06.23_2: libpython3.5m.so.1.0 (https://repo.voidlinux.eu/current)
+```
+python3-regex was removed from void-packages in 9130426b346c9a76d0f1a112f36c36cb7829caaf , the other one in 6771d706a35272b9d00a98dcb45654733b7b782e . Perhaps these should be removed from the repository to ensure they won't cause confusion in the future.
+</section><section id="post2">
+<h5>Alessio Sergi at <a href="#post2">Wed, 13 Sep 2017 07:13:26 +0000 (UTC)</a></h5>
+&gt; python-tornado depends on python-backports_abc which has 3.5 stuff?
+`python-backports_abc` is needed for Python &lt; 3.5
+&gt; pytthon3 alternative gets lost during update? (even needed?)
+It's a `xbps-alternatives` issue. That said, the `python3` alternatives group is a legacy of the old `python3.4` package when we could have multiple python3.x versions at the same time. OK to remove now.
+&gt; lots of obsolete python3.4 packages can be removed now, 10 months after python 3.5
+It's on the roadmap. Hope 10 months are enough.
+&gt; python-ipython_ipykernel fails to build on aarch64 builder (but not locally oO)
+Cannot reproduce. I guess is like the `ctop` package, it fails to detect the default locale/encoding and fallback to C locale.
+&gt; p7 reported in IRC that libixion11 and liborcus11 still need to be rebuilt, I created #7524 for that.
+Both weren't update on purpose. They're no longer needed since 700b682a5472228d5b0813e0ff108dbe19725a6b and should be removed instead.
+</section><section id="post3">
+<h5>tom-i at <a href="#post3">Mon, 18 Sep 2017 15:16:26 +0000 (UTC)</a></h5>
+I have some problem with Python3 on ranger too:
+`zsh: /usr/bin/ranger: bad interpreter: /usr/bin/python3: no such file or directory`
+Is there any solution how to solve that?
+</section><section id="post4">
+<h5>Leаh Neukirchen at <a href="#post4">Mon, 18 Sep 2017 08:55:21 -0700</a></h5>
+Yes, just set the alternative again.
+</section><section id="post5">
+<h5>Leаh Neukirchen at <a href="#post5">Wed, 03 Jan 2018 19:06:55 +0000 (UTC)</a></h5>
+Closed #6023.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

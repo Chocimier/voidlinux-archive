@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] sway does not start or XDG_RUNTIME_DIR
+ and /run/user/$(id -u) (#9812)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] sway does not start or XDG_RUNTIME_DIR
+ and /run/user/$(id -u) (#9812)</h1>
+<section id="post1">
+<h5>Giorgio Gallo at <a href="#post1">Wed, 06 Dec 2017 06:01:27 -0800</a></h5>
+Thanks @Duncaen!
+I tried both `pam_rundir` and `elogind`  and, out of the box, neither seems to set `XDG_RUNTIME_DIR`.
+Do you think they should? Or should sway depend on some new virtual package "xdg-base-directory" implemented by two "xdg-base-directory-elogind" and "xdg-base-directory-pam_rundir"?
+Or... am I getting void linux wrong (hey, I'm new here!) and it's actually ok for a (non-mainstream) package not to work out of the box?
+</section><section id="post2">
+<h5>Giorgio Gallo at <a href="#post2">Wed, 06 Dec 2017 16:10:58 +0000 (UTC)</a></h5>
+**Closing this issue now**: sway is currently quite experimental and it's f=
+ine if it doesn't work (plus, they are refactoring anyway:  swaywm/sway#139=
+0).
+As for `pam_elogind`, @Duncaen, I can confirm that the module is set to be =
+loaded in my `/etc/pam.d/system-login`, but still after log in `XDG_RUNTIME=
+_DIR` is not set and no `/run/user/$(id -u)` directory is created.
+From `man pam_elogind`:
+&gt; [...]
+&gt;
+&gt; On login, this module =E2=80=94 in conjunction with systemd-logind.servic=
+e =E2=80=94
+ensures the following:
+&gt;
+ &gt; 1. If it does not exist yet, the user runtime directory /run/user/$UID i=
+s either created or mounted as new "tmpfs" file system with quota applied, =
+and its ownership changed to the user that is logging in.
+&gt;
+&gt; [...]
+My guess is that it doesn't work because on this virtual machine I'm playin=
+g with a super-minimal install and I need some other package on top of elog=
+ind:
+```
+$ xbps-query -m
+base-system-0.112_3
+elogind-234.4_1
+grub-x86_64-efi-2.02_1
+```
+Do you see any value in me investigating this or can I just forget about it?
+(ie: I'll just create my own `XDG_RUNTIME_DIR` since I ~~hate~~ don't care =
+very much about pam, but I'll gladly look into this if you smell it could l=
+ead to improving the distro).
+--=20
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/9812#issuecomment-3496878=
+02=
+</section><section id="post3">
+<h5>Giorgio Gallo at <a href="#post3">Wed, 06 Dec 2017 16:11:51 +0000 (UTC)</a></h5>
+Closed #9812.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

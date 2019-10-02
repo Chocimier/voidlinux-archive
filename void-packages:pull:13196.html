@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Re: [voidlinux/void-packages] st: fix PIE build (#13196)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>Re: [voidlinux/void-packages] st: fix PIE build (#13196)</h1>
+<section id="post1">
+<h5>maxice8 at <a href="#post1">Tue, 03 Apr 2018 22:36:54 +0000 (UTC)</a></h5>
+On Tue, Apr 03, 2018 at 10:31:41PM +0000, Duncan Overbruck wrote:
+&gt; And its enabled in our gcc by default iirc.
+&gt;=20
+&gt; =E2=80=94
+&gt; You are receiving this because you commented.
+&gt; Reply to this email directly, view it on GitHub, or mute the thread.*
+&gt;=20
+Running with checksec -f returns all positive.
+--=20
+You are receiving this because you commented.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/pull/13196#issuecomment-378421384=
+</section><section id="post2">
+<h5>John Zimmermann at <a href="#post2">Tue, 03 Apr 2018 16:06:04 -0700</a></h5>
+@Nicop06 be sure that your masterdir is up to date (`./xbps-src bootstrap-update`)
+</section><section id="post3">
+<h5>Nicolas Porcel at <a href="#post3">Sun, 08 Apr 2018 10:22:03 +0000 (UTC)</a></h5>
+You are right. I did not manage to run `bootstrap-update`, but doing a `git clean -fdx` and `./xbps binary-boostrap` did solve the problem.
+</section><section id="post4">
+<h5>Nicolas Porcel at <a href="#post4">Sun, 08 Apr 2018 10:22:03 +0000 (UTC)</a></h5>
+Closed #13196.
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="utf-8" />
+<title>[voidlinux/void-packages] Package Request for lttng-ust (#4377)</title>
+<style>section{white-space:pre-wrap;}</style>
+</head>
+<body>
+<main>
+<h1>[voidlinux/void-packages] Package Request for lttng-ust (#4377)</h1>
+<section id="post1">
+<h5>Peter Jas at <a href="#post1">Sun, 26 Jun 2016 16:39:41 -0700</a></h5>
+PR https://github.com/voidlinux/void-packages/pull/3979
+@t0b1nux (or someone else familiar with void packaging system), if that is not a big trouble, could you reopen that PR and update the checksum and version? I checked with @Duncaen and that PR seems good to go.
+If need be, please take a look at lttng-tools and lttng-ust that were recently ported to Alpine Linux (musl-libc):
+* https://github.com/alpinelinux/aports/tree/master/testing/lttng-tools
+* https://github.com/alpinelinux/aports/tree/master/testing/lttng-ust
+(credit: @mjeanson, @Barthalion)
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/4377
+</section><section id="post2">
+<h5>Peter Jas at <a href="#post2">Sun, 26 Jun 2016 18:46:52 -0700</a></h5>
+Thank you @Vaelatern for quickly providing the port! I have successfully built CoreCLR master 100% with 0 patches on Void Linux x86_64 musl variant.
+```sh
+# clone
+git clone https://github.com/dotnet/coreclr
+# build
+coreclr/build.sh
+# test
+coreclr/src/pal/tests/palsuite/runpaltests.sh $(pwd)/coreclr/bin/obj/Linux.x64.Debug
+# one test failing, same as Alpine, discussion=&gt; https://github.com/dotnet/coreclr/issues/5872
+```
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/4377#issuecomment-228638217
+</section><section id="post3">
+<h5>Peter Jas at <a href="#post3">Sun, 26 Jun 2016 18:46:52 -0700</a></h5>
+Closed #4377.
+---
+You are receiving this because you were mentioned.
+Reply to this email directly or view it on GitHub:
+https://github.com/voidlinux/void-packages/issues/4377#event-704401464
+</section>
+</main>
+<nav><a href="index.html">Issues list</a></nav>
+</body>
+</html>
